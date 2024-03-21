@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ASP.Blog.DAL\ASP.Blog.DAL_SqlLite_test.csproj" />
+  </ItemGroup>
+
+</Project>
