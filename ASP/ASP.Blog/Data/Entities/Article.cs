@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ASP.Blog.Data.Tables
+namespace ASP.Blog.Data.Entities
 {
     public class Article
     {
