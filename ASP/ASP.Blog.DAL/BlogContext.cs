@@ -10,9 +10,14 @@ namespace ASP.Blog.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Article_Tags> Article_Tags { get; set; }
-        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+        //public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+        public BlogContext()
         {
             Database.EnsureCreated();
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=NORKA\\SQLEXPRESS;Database=MVC_StartApp;Integrated Security = true;Trust Server Certificate=True;Trusted_Connection=True;");
         }
     }
 }
