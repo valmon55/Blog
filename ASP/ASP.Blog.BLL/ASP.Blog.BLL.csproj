@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ASP.Blog.DAL\ASP.Blog.DAL.csproj" />
     <ProjectReference Include="..\ASP.Blog.DAL\ASP.Blog.DAL_SqlLite_test.csproj" />
   </ItemGroup>
 
