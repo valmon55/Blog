@@ -1,13 +1,14 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.Blog.BLL
+namespace ASP.Blog.BLL.Controllers
 {
-    public class MappingProfile : Profile
+    public class UserController : Controller
     {
+
     }
 }
