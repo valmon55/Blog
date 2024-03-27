@@ -45,6 +45,5 @@ namespace ASP.Blog.DAL.Repositories
                 Delete(item);
             }
         }
-
     }
 }

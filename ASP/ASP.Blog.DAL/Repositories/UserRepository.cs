@@ -30,9 +30,10 @@ namespace ASP.Blog.DAL.Repositories
             {
                 var item = new User()
                 {
-                    ID = user.ID,
-                    First_Name = user.First_Name,
-                    Last_Name = user.Last_Name
+                    ID = newUser.ID,
+                    First_Name = newUser.First_Name,
+                    Last_Name = newUser.Last_Name,
+                    userRole = newUser.userRole
                 };
 
                 Update(item);
