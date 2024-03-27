@@ -1,9 +1,10 @@
 ﻿using ASP.Blog.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP.Blog.Data
 {
-    public class BlogContext : DbContext
+    public class BlogContext : IdentityDbContext<User>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Article> Articles { get; set; }

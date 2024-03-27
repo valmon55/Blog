@@ -15,4 +15,13 @@
     <ProjectReference Include="..\ASP.Blog.DAL\ASP.Blog.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Article\" />
+    <Folder Include="ViewModels\Account\" />
+    <Folder Include="ViewModels\Comment\" />
+    <Folder Include="ViewModels\Role\" />
+    <Folder Include="ViewModels\Tag\" />
+    <Folder Include="ViewModels\User\" />
+  </ItemGroup>
+
 </Project>
