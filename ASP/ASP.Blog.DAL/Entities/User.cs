@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASP.Blog.DAL.Entities;
+using System;
 
 namespace ASP.Blog.Data.Entities
 {
@@ -9,10 +10,10 @@ namespace ASP.Blog.Data.Entities
         public string Last_Name { get; set; }
         public UserRole userRole { get; set; }
     }
-    public enum UserRole
-    {
-        User,
-        Moderator,
-        Admin
-    }
+    //public enum UserRole
+    //{
+    //    User,
+    //    Moderator,
+    //    Admin
+    //}
 }
