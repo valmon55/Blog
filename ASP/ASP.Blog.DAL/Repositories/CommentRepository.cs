@@ -30,8 +30,10 @@ namespace ASP.Blog.DAL.Repositories
                 var item = new Comment()
                 {
                     ID = newComment.ID,
+                    CommentDate = newComment.CommentDate,
                     Comment_Text= newComment.Comment_Text,
                     Article = newComment.Article,
+                    User = newComment.User,
                 };
 
                 Update(item);
