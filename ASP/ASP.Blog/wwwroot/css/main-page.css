@@ -1,0 +1,21 @@
+﻿.row{
+    display:flex;
+    flex-wrap:wrap;
+}
+.side{
+    flex:75%;
+    padding:20px;
+}
+.main{
+    flex:25%;
+    padding:20px;
+}
+.footer{
+    padding:20px;
+    text-align:center;
+}
+.topnav{
+    padding:20px;
+    text-align:center;
+    width:100%;
+}

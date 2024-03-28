@@ -29,6 +29,13 @@ namespace ASP.Blog.BLL.Controllers
         }
 
         [Route("Register")]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View("Register");
+        }
+
+        [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -36,5 +43,26 @@ namespace ASP.Blog.BLL.Controllers
             { }
             return View("Register",model);
         }
+        [Route("Update")]
+        [HttpPost]
+        public async Task<IActionResult> Update(UserEditViewModel model)
+        { 
+            if (ModelState.IsValid) 
+            { 
+            
+            } 
+            return View("Update", model);
+        }
+        [Route("Remove")]
+        [HttpPost]
+        public async Task<IActionResult> Remove(UserEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View("Update", model);
+        }
+
     }
 }

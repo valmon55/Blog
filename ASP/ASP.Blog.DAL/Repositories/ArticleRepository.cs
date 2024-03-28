@@ -23,19 +23,9 @@ namespace ASP.Blog.DAL.Repositories
         {
             Set.Add(article);
         }
-        public void UpdateArticle(Article article, Article newArticle)
+        public void UpdateArticle(Article article)
         {
-            if (GetArticles().Where(x => x.ID == article.ID).FirstOrDefault() != null)
-            {
-                var item = new Article()
-                {
-                    ID = newArticle.ID,
-                    Content = newArticle.Content,
-                    User = newArticle.User,
-                };
-
-                Update(item);
-            }
+            Update(article);
         }
         public void DeleteArticle(Article article)
         {

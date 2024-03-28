@@ -1,0 +1,56 @@
+﻿@model ASP.Blog.BLL.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-action="Regirter" asp-controller="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="First_Name"></label><br />
+        <input asp-for="First_Name" />
+        <span asp-validation-for="First_Name"></span>
+    </div>
+    <div>
+        <label asp-for="Last_Name"></label><br />
+        <input asp-for="Last_Name" />
+        <span asp-validation-for="Last_Name"></span>
+    </div>
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Day"></label><br />
+        <input asp-for="Day" />
+        <span asp-validation-for="Day"></span>
+    </div>
+    <div>
+        <label asp-for="Month"></label><br />
+        <input asp-for="Month" />
+        <span asp-validation-for="Month"></span>
+    </div>
+    <div>
+        <label asp-for="Year"></label><br />
+        <input asp-for="Year" />
+        <span asp-validation-for="Year"></span>
+    </div>
+    <div>
+        <label asp-for="PasswordReg"></label><br />
+        <input asp-for="PasswordReg" />
+        <span asp-validation-for="PasswordReg"></span>
+    </div>
+    <div>
+        <label asp-for="PasswordConfirm"></label><br />
+        <input asp-for="PasswordConfirm" />
+        <span asp-validation-for="PasswordConfirm"></span>
+    </div>
+    <div>
+        <input type="submit" value="Регистрация" />
+    </div>
+</form>
