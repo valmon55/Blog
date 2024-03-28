@@ -9,5 +9,9 @@ namespace ASP.Blog.BLL
 {
     public class MappingProfile : Profile
     {
+        public MappingProfile() 
+        { 
+            //CreateMap
+        }
     }
 }

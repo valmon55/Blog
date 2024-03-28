@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.Blog.BLL.ViewModels.Account
+namespace ASP.Blog.BLL.ViewModels
 {
-    public class RegisterViewModel
+    public class UserEditViewModel
     {
-
     }
 }

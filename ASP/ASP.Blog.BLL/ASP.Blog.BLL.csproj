@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModels\Account\" />
     <Folder Include="ViewModels\Article\" />
     <Folder Include="ViewModels\Comment\" />
     <Folder Include="ViewModels\Role\" />

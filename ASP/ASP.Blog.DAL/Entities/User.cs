@@ -10,6 +10,7 @@ namespace ASP.Blog.Data.Entities
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }
+        public string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public UserRole userRole { get; set; }
     }
