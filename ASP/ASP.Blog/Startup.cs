@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using ASP.Blog.Data.Entities;
 
 namespace ASP.Blog
 {
@@ -39,9 +41,15 @@ namespace ASP.Blog
 
             services
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
-                //.AddUnitOfWork()
-                //.AddEntityFrameworkStores<BlogContext>();
-                ;
+                .AddIdentity<User, IdentityRole>(opts =>
+                {
+                    opts.Password.RequiredLength = 6;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequireDigit = false;
+                })                                
+                .AddEntityFrameworkStores<BlogContext>()
+            ;
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

@@ -15,10 +15,14 @@ namespace ASP.Blog.Data
         {
             Database.EnsureCreated();
         }
-    //public BlogContext()
-    //    {
-    //        Database.EnsureCreated();
-    //    }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+        //public BlogContext()
+        //    {
+        //        Database.EnsureCreated();
+        //    }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    optionsBuilder.UseSqlServer("Data Source=NORKA\\SQLEXPRESS;Database=MVC_StartApp;Integrated Security = true;Trust Server Certificate=True;Trusted_Connection=True;");
