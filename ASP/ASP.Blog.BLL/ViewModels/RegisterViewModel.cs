@@ -44,8 +44,10 @@ namespace ASP.Blog.BLL.ViewModels
         [Display(Name = "Подтвердить пароль", Prompt = "Введите пароль еще раз")]
         public string PasswordConfirm { get; set; }
 
-
-
+        [Required(ErrorMessage ="Поле Логин обязательно для заполнения")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Логин", Description = "Введите логин")]
+        public string Login { get; set; }
 
     }
 }

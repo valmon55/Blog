@@ -6,7 +6,7 @@ namespace ASP.Blog.Data.Entities
 {
     public class User : IdentityUser
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }

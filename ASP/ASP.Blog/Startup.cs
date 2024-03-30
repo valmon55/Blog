@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using ASP.Blog.Data.Entities;
+using ASP.Blog.DAL.UoW;
 
 namespace ASP.Blog
 {
@@ -38,7 +39,10 @@ namespace ASP.Blog
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-
+            
+            services.AddMvc();
+            //services.AddUnitOfWork();
+            
             services
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
                 .AddIdentity<User, IdentityRole>(opts =>
