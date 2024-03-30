@@ -4,24 +4,4 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ASP.Blog.DAL\ASP.Blog.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Account\" />
-    <Folder Include="ViewModels\Article\" />
-    <Folder Include="ViewModels\Comment\" />
-    <Folder Include="ViewModels\Role\" />
-    <Folder Include="ViewModels\Tag\" />
-    <Folder Include="ViewModels\User\" />
-  </ItemGroup>
-
 </Project>

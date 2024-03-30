@@ -41,7 +41,7 @@ namespace ASP.Blog
             services.AddSingleton(mapper);
             
             services.AddMvc();
-            services.AddUow();
+            //services.AddUow();
             //services.AddUnitOfWork();
             
             services

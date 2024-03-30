@@ -5,7 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ASP.Blog.BLL\ASP.Blog.BLL.csproj" />
+    <Folder Include="ViewModels\Account\" />
+    <Folder Include="ViewModels\Article\" />
+    <Folder Include="ViewModels\Comment\" />
+    <Folder Include="ViewModels\Role\" />
+    <Folder Include="ViewModels\Tag\" />
+    <Folder Include="ViewModels\User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
   </ItemGroup>
 
 </Project>

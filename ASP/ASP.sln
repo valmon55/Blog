@@ -5,10 +5,6 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASP.Blog", "ASP.Blog\ASP.Blog.csproj", "{4B9D03C2-D24E-4277-ACB1-724CFC3D679D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASP.Blog.BLL", "ASP.Blog.BLL\ASP.Blog.BLL.csproj", "{55FB00E8-53E0-4046-92AE-FDA460BC3432}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.Blog.DAL", "ASP.Blog.DAL\ASP.Blog.DAL.csproj", "{D5F2910B-951F-4604-BC98-2181D054E42D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{4B9D03C2-D24E-4277-ACB1-724CFC3D679D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B9D03C2-D24E-4277-ACB1-724CFC3D679D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B9D03C2-D24E-4277-ACB1-724CFC3D679D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55FB00E8-53E0-4046-92AE-FDA460BC3432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55FB00E8-53E0-4046-92AE-FDA460BC3432}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55FB00E8-53E0-4046-92AE-FDA460BC3432}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55FB00E8-53E0-4046-92AE-FDA460BC3432}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5F2910B-951F-4604-BC98-2181D054E42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5F2910B-951F-4604-BC98-2181D054E42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5F2910B-951F-4604-BC98-2181D054E42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5F2910B-951F-4604-BC98-2181D054E42D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
