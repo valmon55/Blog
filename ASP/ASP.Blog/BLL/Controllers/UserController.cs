@@ -37,11 +37,29 @@ namespace ASP.Blog.BLL.Controllers
 
         [Route("Register")]
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid) 
-            { }
-            return View("Register",model);
+            {
+                var user = _mapper.Map<User>(model);
+                var result = await _userManager.CreateAsync(user, model.PasswordReg);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index","Home");
+                }
+                else
+                {
+                    foreach(var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    
+                }
+            }
+            return View(model);
+            //return RedirectToAction("Index");
         }
         [Route("Update")]
         [HttpPost]
