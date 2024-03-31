@@ -43,6 +43,9 @@ namespace ASP.Blog.BLL.Controllers
             if (ModelState.IsValid) 
             {
                 var user = _mapper.Map<User>(model);
+                //почему-то не заполняется, но оно нужно для регистрации
+                user.NormalizedEmail = user.Email.ToUpper();
+
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
@@ -76,17 +79,30 @@ namespace ASP.Blog.BLL.Controllers
             {
                 var user = _mapper.Map<User>(model);
                 IdentityUser signedUser = _userManager.FindByEmailAsync(user.Email).Result;
-
-                var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
-                if (result.Succeeded)
+                if (signedUser != null)
                 {
-                    return RedirectToAction("Index","Home");
+                    var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Неверный логин или пароль");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неверный логин или пароль");
+                    ModelState.AddModelError("", $"Логин {user.Email} не найден");
                 }
             }
+            return RedirectToAction("Index", "Home");
+        }
+        [Route("Logout")]
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
