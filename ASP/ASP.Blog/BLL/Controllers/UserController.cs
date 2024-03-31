@@ -61,6 +61,14 @@ namespace ASP.Blog.BLL.Controllers
             return View(model);
             //return RedirectToAction("Index");
         }
+
+        [Route("Login")]
+        [HttpGet]
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
+
         [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(UserEditViewModel model)

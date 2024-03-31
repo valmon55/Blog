@@ -17,6 +17,7 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
+            CreateMap<LoginViewModel, User>();
         }
     }
 }
