@@ -32,7 +32,8 @@ namespace ASP.Blog.BLL.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Register");
+            //return View("Register");
+            return View(new RegisterViewModel());
         }
 
         [Route("Register")]
