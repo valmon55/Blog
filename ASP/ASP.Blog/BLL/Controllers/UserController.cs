@@ -68,6 +68,27 @@ namespace ASP.Blog.BLL.Controllers
         {
             return View();
         }
+        [Route("Login")]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid) 
+            {
+                var user = _mapper.Map<User>(model);
+                IdentityUser signedUser = _userManager.FindByEmailAsync(user.Email).Result;
+
+                var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index","Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неверный логин или пароль");
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
         [Route("Update")]
         [HttpPost]

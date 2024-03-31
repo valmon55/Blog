@@ -11,10 +11,10 @@ namespace ASP.Blog.BLL.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Имя")]
+        [Display(Name = "Имя", Prompt = "Введите имя")]
         public string First_Name { get; set; }
         [Required]
-        [Display(Name = "Фамилия")]
+        [Display(Name = "Фамилия", Prompt = "Введите фамилию")]
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }
         [Required(ErrorMessage = "Поле Email обязательно к заполнению")]
