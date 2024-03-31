@@ -44,7 +44,7 @@ namespace ASP.Blog.BLL.Controllers
             {
                 var user = _mapper.Map<User>(model);
                 //почему-то не заполняется, но оно нужно для регистрации
-                user.NormalizedEmail = user.Email.ToUpper();
+                //user.NormalizedEmail = user.Email.ToUpper();
 
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
