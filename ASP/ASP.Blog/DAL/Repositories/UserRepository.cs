@@ -29,6 +29,7 @@ namespace ASP.Blog.DAL.Repositories
             if (_db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault() == null)
             {
                 _db.User_Roles.Add(new UserRole() { ID = 1, RoleName = "User", Description = "Ordinary User" });
+                _db.SaveChanges();
             }
 
             _user.userRole = _db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault();
