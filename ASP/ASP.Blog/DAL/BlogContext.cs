@@ -1,4 +1,5 @@
-﻿using ASP.Blog.Data.Entities;
+﻿using ASP.Blog.DAL.Entities;
+using ASP.Blog.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,12 @@ namespace ASP.Blog.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Article_Tags> Article_Tags { get; set; }
+        public DbSet<UserRole> User_Roles { get; set; }
         public BlogContext(DbContextOptions<BlogContext> options) : base(options)
         {
             Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.Migrate();
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.Data;
 using ASP.Blog.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,11 @@ namespace ASP.Blog.DAL.Repositories
         }
         public Article GetArticleById(int id)
         {
-            return Set.AsEnumerable().Where(x => x.ID == id).FirstOrDefault();
+            return Set.Where(x => x.ID == id).FirstOrDefault();
+        }
+        public List<Article> GetArticleByUserId(string userId)
+        {
+            return Set.Include(x => x.UserId == userId).ToList();
         }
         public void AddArticle(Article article)
         {
@@ -29,12 +34,7 @@ namespace ASP.Blog.DAL.Repositories
         }
         public void DeleteArticle(Article article)
         {
-            var item = GetArticles().Where(x => x.ID == article.ID).FirstOrDefault();
-            if (item != null)
-            {
-                Delete(item);
-            }
+            Delete(article);
         }
-
     }
 }

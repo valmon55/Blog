@@ -20,31 +20,21 @@ namespace ASP.Blog.DAL.Repositories
         {
             return Set.AsEnumerable().Where(x => x.ID == id).FirstOrDefault();
         }
+        public UserRole GetUserRoleByName(string roleName)
+        {
+            return Set.Where(x => x.RoleName == roleName).FirstOrDefault();
+        }
         public void AddUserRole(UserRole userRole)
         {
             Set.Add(userRole);
         }
-        public void UpdateUserRole(UserRole userRole, UserRole newUserRole)
+        public void UpdateUserRole(UserRole userRole)
         {
-            if (GetUserRoles().Where(x => x.ID == userRole.ID).FirstOrDefault() != null)
-            {
-                var item = new UserRole()
-                {
-                    ID = newUserRole.ID,
-                    RoleName = newUserRole.RoleName,
-                    Description = newUserRole.Description,
-                };
-
-                Update(item);
-            }
+            Update(userRole);
         }
         public void DeleteUserRole(UserRole userRole)
         {
-            var item = GetUserRoles().Where(x => x.ID == userRole.ID).FirstOrDefault();
-            if (item != null)
-            {
-                Delete(item);
-            }
+            Delete(userRole);
         }
 
     }

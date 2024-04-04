@@ -1,4 +1,5 @@
-﻿using ASP.Blog.Data;
+﻿using ASP.Blog.DAL.Entities;
+using ASP.Blog.Data;
 using ASP.Blog.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,28 @@ namespace ASP.Blog.DAL.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        public UserRepository(BlogContext db) : base(db) { }
+        BlogContext _db;
+        public UserRepository(BlogContext db) : base(db) { _db = db; }
 
         public List<User> GetUsers() 
         {
             return Set.ToList();
         }
-        //public User GetUserById(int id)
-        //{
-        //    return Set.AsEnumerable().Where(x => x.Id == id.).FirstOrDefault();
-        //}
+        public User GetUserById(string UserId)
+        {
+            return Set.Where(x => x.Id == UserId).FirstOrDefault();
+        }
         public void AddUser(User user)
         {
-            Set.Add(user);
+            var _user = user;
+
+            if (_db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault() == null)
+            {
+                _db.User_Roles.Add(new UserRole() { ID = 1, RoleName = "User", Description = "Ordinary User" });
+            }
+
+            _user.userRole = _db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault();
+            Set.Add(user); 
         }
         public void UpdateUser(User user)
         {
@@ -30,11 +40,6 @@ namespace ASP.Blog.DAL.Repositories
         }
         public void DeleteUser(User user)
         {
-            //var item = GetUsers().Where(x => x.ID == user.ID).FirstOrDefault();
-            //if (item != null)
-            //{
-            //    Delete(item);
-            //}
             Delete(user);
         }
     }

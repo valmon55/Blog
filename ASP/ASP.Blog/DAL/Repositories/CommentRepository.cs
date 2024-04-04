@@ -23,29 +23,13 @@ namespace ASP.Blog.DAL.Repositories
         {
             Set.Add(comment);
         }
-        public void UpdateComment(Comment comment, Comment newComment)
+        public void UpdateComment(Comment comment)
         {
-            if (GetComments().Where(x => x.ID == comment.ID).FirstOrDefault() != null)
-            {
-                var item = new Comment()
-                {
-                    ID = newComment.ID,
-                    CommentDate = newComment.CommentDate,
-                    Comment_Text= newComment.Comment_Text,
-                    Article = newComment.Article,
-                    User = newComment.User,
-                };
-
-                Update(item);
-            }
+            Update(comment);
         }
         public void DeleteComment(Comment comment)
         {
-            var item = GetComments().Where(x => x.ID == comment.ID).FirstOrDefault();
-            if (item != null)
-            {
-                Delete(item);
-            }
+            Delete(comment);
         }
     }
 }

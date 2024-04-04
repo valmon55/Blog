@@ -24,26 +24,13 @@ namespace ASP.Blog.DAL.Repositories
         {
             Set.Add(tag);
         }
-        public void UpdateTag(Tag tag, Tag newTag)
+        public void UpdateTag(Tag tag)
         {
-            if (GetTags().Where(x => x.ID == tag.ID).FirstOrDefault() != null)
-            {
-                var item = new Tag()
-                {
-                    ID = newTag.ID,
-                    Tag_Name = newTag.Tag_Name
-                };
-
-                Update(item);
-            }
+            Update(tag);
         }
         public void DeleteTag(Tag tag)
         {
-            var item = GetTags().Where(x => x.ID == tag.ID).FirstOrDefault();
-            if (item != null)
-            {
-                Delete(item);
-            }
+            Delete(tag);
         }
     }
 }
