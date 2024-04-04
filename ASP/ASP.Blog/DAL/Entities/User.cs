@@ -12,6 +12,7 @@ namespace ASP.Blog.Data.Entities
         public string Middle_Name { get; set; }
         //public string Email { get; set; }
         public DateTime BirthDate { get; set; }
+        public int UserRoleId { get; set; }
         public UserRole userRole { get; set; }
     }
     //public enum UserRole

@@ -6,6 +6,7 @@ namespace ASP.Blog.Data.Entities
     {
         public int ID { get; set; }
         public string Content { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }

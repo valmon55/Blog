@@ -2,6 +2,7 @@
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -106,7 +107,7 @@ namespace ASP.Blog.BLL.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
+        [Authorize]
         [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(UserEditViewModel model)
