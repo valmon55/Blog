@@ -32,7 +32,7 @@ namespace ASP.Blog.DAL.Repositories
             }
 
             _user.userRole = _db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault();
-            Set.Add(user); 
+            //Set.Add(user); 
         }
         public void UpdateUser(User user)
         {
