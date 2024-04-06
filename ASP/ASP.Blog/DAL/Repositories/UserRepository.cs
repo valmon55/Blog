@@ -22,17 +22,20 @@ namespace ASP.Blog.DAL.Repositories
         {
             return Set.Where(x => x.Id == UserId).FirstOrDefault();
         }
-        public void AddUser(User user)
+        public void AddUser(User user, UserRole userRole = null)
         {
-            var _user = user;
-
-            if (_db.Roles.Where(x => x.Name == "User").FirstOrDefault() == null)
+            if (userRole != null)
             {
-                _db.Roles.Add(new UserRole() { Name = "User", Description = "Ordinary User" });
-                _db.SaveChanges();
-            }
 
-            //_user.userRole = _db.UserRoles.Where(x => x.;
+                var _user = user;
+
+                if (_db.Roles.Where(x => x.Name == "User").FirstOrDefault() == null)
+                {
+                    _db.Roles.Add(new UserRole() { Name = "User", Description = "Ordinary User" });
+                    _db.SaveChanges();
+                }
+                //_user.userRole = _db.UserRoles.Where(x => x.;
+            }
             Set.Add(user); 
         }
         public void UpdateUser(User user)
