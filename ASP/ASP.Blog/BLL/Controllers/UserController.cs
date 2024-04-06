@@ -18,15 +18,18 @@ namespace ASP.Blog.BLL.Controllers
         private IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<User> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
         public UserController(UserManager<User> userManager,
-                SignInManager<User> signInManager, IUnitOfWork unitOfWork, IMapper mapper)
+                SignInManager<User> signInManager, 
+                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<User> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
+            _roleManager = roleManager;
         }
 
         [Route("Register")]
@@ -47,7 +50,7 @@ namespace ASP.Blog.BLL.Controllers
                 var user = _mapper.Map<User>(model);
                 //почему-то не заполняется, но оно нужно для регистрации
                 //user.NormalizedEmail = user.Email.ToUpper();
-
+                
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {

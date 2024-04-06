@@ -16,13 +16,13 @@ namespace ASP.Blog.DAL.Repositories
         {
             return Set.ToList();
         }
-        public UserRole GetUserRoleById(int id)
+        public UserRole GetUserRoleById(string id)
         {
-            return Set.AsEnumerable().Where(x => x.ID == id).FirstOrDefault();
+            return Set.AsEnumerable().Where(x => x.Id == id).FirstOrDefault();
         }
         public UserRole GetUserRoleByName(string roleName)
         {
-            return Set.Where(x => x.RoleName == roleName).FirstOrDefault();
+            return Set.Where(x => x.Name == roleName).FirstOrDefault();
         }
         public void AddUserRole(UserRole userRole)
         {

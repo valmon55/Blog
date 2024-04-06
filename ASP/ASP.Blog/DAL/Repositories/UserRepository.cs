@@ -26,14 +26,14 @@ namespace ASP.Blog.DAL.Repositories
         {
             var _user = user;
 
-            if (_db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault() == null)
+            if (_db.Roles.Where(x => x.Name == "User").FirstOrDefault() == null)
             {
-                _db.User_Roles.Add(new UserRole() { ID = 1, RoleName = "User", Description = "Ordinary User" });
+                _db.Roles.Add(new UserRole() { Name = "User", Description = "Ordinary User" });
                 _db.SaveChanges();
             }
 
-            _user.userRole = _db.User_Roles.Where(x => x.RoleName == "User").FirstOrDefault();
-            //Set.Add(user); 
+            //_user.userRole = _db.UserRoles.Where(x => x.;
+            Set.Add(user); 
         }
         public void UpdateUser(User user)
         {
