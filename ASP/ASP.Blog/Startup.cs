@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using ASP.Blog.Data.Entities;
 using ASP.Blog.DAL.UoW;
+using ASP.Blog.DAL.Entities;
 
 namespace ASP.Blog
 {
@@ -47,7 +48,7 @@ namespace ASP.Blog
             
             services
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
-                .AddIdentity<User, IdentityRole>(opts =>
+                .AddIdentity<User, UserRole>(opts =>
                 {
                     opts.Password.RequiredLength = 6;
                     opts.Password.RequireNonAlphanumeric = false;

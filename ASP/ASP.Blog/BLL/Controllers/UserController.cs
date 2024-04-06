@@ -1,4 +1,5 @@
 ﻿using ASP.Blog.BLL.ViewModels;
+using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
@@ -18,12 +19,12 @@ namespace ASP.Blog.BLL.Controllers
         private IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<User> _roleManager;
+        private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager, 
-                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<User> roleManager)
+                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -55,6 +56,18 @@ namespace ASP.Blog.BLL.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    
+                    var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
+
+                    if ( (_roleManager.GetRoleNameAsync(userRole).Result ?? String.Empty) != "User")
+                    {
+                        await _roleManager.CreateAsync(userRole);
+                    }
+
+                    var currentUser = await _userManager.FindByIdAsync(user.Id);
+                    await _userManager.AddToRoleAsync(currentUser, userRole.Name);
+
                     return RedirectToAction("Index","Home");
                 }
                 else
