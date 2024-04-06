@@ -60,12 +60,12 @@ namespace ASP.Blog.BLL.Controllers
                     
                     var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
 
-                    if ( (_roleManager.GetRoleNameAsync(userRole).Result ?? String.Empty) != "User")
+                    if ( _roleManager.GetRoleNameAsync(userRole).Result != "User")
                     {
                         await _roleManager.CreateAsync(userRole);
                     }
 
-                    var currentUser = await _userManager.FindByIdAsync(user.Id);
+                    var currentUser = await _userManager.FindByIdAsync(Convert.ToString(user.Id));
                     await _userManager.AddToRoleAsync(currentUser, userRole.Name);
 
                     return RedirectToAction("Index","Home");
