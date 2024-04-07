@@ -49,21 +49,26 @@ namespace ASP.Blog.BLL.Controllers
             if (ModelState.IsValid) 
             {
                 var user = _mapper.Map<User>(model);
-                //почему-то не заполняется, но оно нужно для регистрации
-                //user.NormalizedEmail = user.Email.ToUpper();
                 
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-
                     
                     var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
 
-                    if ( _roleManager.GetRoleNameAsync(userRole).Result != "User")
+                    try
                     {
                         await _roleManager.CreateAsync(userRole);
                     }
+                    catch(Exception ex) 
+                    { 
+                        ModelState.AddModelError(string.Empty, ex.Message);
+                    }
+                    //if ( _roleManager.GetRoleNameAsync(userRole).Result != "User")
+                    //{
+                    //    await _roleManager.CreateAsync(userRole);
+                    //}
 
                     var currentUser = await _userManager.FindByIdAsync(Convert.ToString(user.Id));
                     await _userManager.AddToRoleAsync(currentUser, userRole.Name);
