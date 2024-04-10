@@ -3,12 +3,17 @@ using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
+using System.Security.Claims;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,32 +55,22 @@ namespace ASP.Blog.BLL.Controllers
             {
                 var user = _mapper.Map<User>(model);
 
-                /// При создании пользователя создается запись в таблице AspNetUsers
-                /// А также создается запись в [AspNetRoles] для этого пользователя.
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     
-                    var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
+                    //var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
+                    //var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
+                    var userRole = new UserRole() { Name = "Moderator", Description = "Модератор" };
 
-                    try
+                    if (_roleManager.GetRoleNameAsync(userRole).Result != userRole.Name)
                     {
-                        ///Видимо не создает роль, почему?
                         await _roleManager.CreateAsync(userRole);
                     }
-                    catch(Exception ex) 
-                    { 
-                        ModelState.AddModelError(string.Empty, ex.Message);
-                    }
-                    
-                    /// и соответствующая ей запись в [AspNetRoles]
-                    //if ( _roleManager.GetRoleNameAsync(userRole).Result != "User")
-                    //{
-                    //    await _roleManager.CreateAsync(userRole);
-                    //}
 
                     var currentUser = await _userManager.FindByIdAsync(Convert.ToString(user.Id));
+
                     ///добавляет в таблицу [AspNetUserRoles] соответствие между ролью и пользователем
                     await _userManager.AddToRoleAsync(currentUser, userRole.Name);
 
@@ -107,18 +102,38 @@ namespace ASP.Blog.BLL.Controllers
             if (ModelState.IsValid) 
             {
                 var user = _mapper.Map<User>(model);
-                IdentityUser signedUser = _userManager.FindByEmailAsync(user.Email).Result;
+                User signedUser = _userManager.FindByEmailAsync(user.Email).Result;
+                //UserRole userRole = _roleManager.
+                if (signedUser is null)
+                    throw new AuthenticationException("Пользователь не найден!");
+                //В модели не хранится пароль -> Нужно сравнивать в хешированным model.Password
+                //if(signedUser.PasswordHash != model.Password) 
                 if (signedUser != null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
-                    if (result.Succeeded)
+                    var claims = new List<Claim>()
                     {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Неверный логин или пароль");
-                    }
+                        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.userRole.Name)
+                    };
+                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                        claims,
+                        "AppCookie",
+                        ClaimsIdentity.DefaultNameClaimType,
+                        ClaimsIdentity.DefaultRoleClaimType
+                        );
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity)
+                        );
+                    //var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
+                    //if (result.Succeeded)
+                    //{
+                    //    return RedirectToAction("Index", "Home");
+                    //}
+                    //else
+                    //{
+                    //    ModelState.AddModelError("", "Неверный логин или пароль");
+                    //}
                 }
                 else
                 {
