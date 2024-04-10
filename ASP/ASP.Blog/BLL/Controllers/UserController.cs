@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +90,14 @@ namespace ASP.Blog.BLL.Controllers
             //return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
+        [Route("test")]
+        [HttpGet]
+        public async Task<IActionResult> Test()
+        {
+            return View();
+        }
+
         [Route("Login")]
         [HttpGet]
         public async Task<IActionResult> Login()
@@ -102,18 +111,23 @@ namespace ASP.Blog.BLL.Controllers
             if (ModelState.IsValid) 
             {
                 var user = _mapper.Map<User>(model);
-                User signedUser = _userManager.FindByEmailAsync(user.Email).Result;
-                //UserRole userRole = _roleManager.
+                //User signedUser = _userManager.FindByEmailAsync(user.Email).Result;
+                User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
+                var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 if (signedUser is null)
                     throw new AuthenticationException("Пользователь не найден!");
                 //В модели не хранится пароль -> Нужно сравнивать в хешированным model.Password
-                //if(signedUser.PasswordHash != model.Password) 
+                //if(signedUser.PasswordHash != 
+                //    _userManager.PasswordHasher.HashPassword(signedUser, model.Password))
+                //    throw new AuthenticationException("Неверный пароль!");
+
                 if (signedUser != null)
                 {
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.userRole.Name)
+                        //new Claim(ClaimsIdentity.DefaultRoleClaimType, user.userRole.Name)
+                        new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
                     };
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(
                         claims,
@@ -122,9 +136,11 @@ namespace ASP.Blog.BLL.Controllers
                         ClaimsIdentity.DefaultRoleClaimType
                         );
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity)
-                        );
+                    await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent:false, claims);
+
+                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    //    new ClaimsPrincipal(claimsIdentity)
+                    //    );
                     //var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
                     //if (result.Succeeded)
                     //{

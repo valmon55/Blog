@@ -56,6 +56,18 @@ namespace ASP.Blog
                 })                                
                 .AddEntityFrameworkStores<BlogContext>()
             ;
+            services.AddAuthentication(options => options.DefaultScheme = "Cookies")
+                .AddCookie("Cookies", options =>
+                {
+                    options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = redirectContext =>
+                        {
+                            redirectContext.HttpContext.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
 
             services.AddControllersWithViews();
             services.AddRazorPages();
