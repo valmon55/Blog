@@ -115,11 +115,11 @@ namespace ASP.Blog.BLL.Controllers
                 User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
                 var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 if (signedUser is null)
-                    throw new AuthenticationException("Пользователь не найден!");
+                    ModelState.AddModelError("", "Неверный логин!");
                 //В модели не хранится пароль -> Нужно сравнивать в хешированным model.Password
                 //if(signedUser.PasswordHash != 
                 //    _userManager.PasswordHasher.HashPassword(signedUser, model.Password))
-                //    throw new AuthenticationException("Неверный пароль!");
+                //    ModelState.AddModelError("", "Неверный пароль!");
 
                 if (signedUser != null)
                 {
@@ -137,6 +137,8 @@ namespace ASP.Blog.BLL.Controllers
                         );
 
                     await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent:false, claims);
+
+                    //await _signInManager.Context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
                     //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     //    new ClaimsPrincipal(claimsIdentity)
