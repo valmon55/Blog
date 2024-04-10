@@ -49,7 +49,9 @@ namespace ASP.Blog.BLL.Controllers
             if (ModelState.IsValid) 
             {
                 var user = _mapper.Map<User>(model);
-                
+
+                /// При создании пользователя создается запись в таблице AspNetUsers
+                /// А также создается запись в [AspNetRoles] для этого пользователя.
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
@@ -59,18 +61,22 @@ namespace ASP.Blog.BLL.Controllers
 
                     try
                     {
+                        ///Видимо не создает роль, почему?
                         await _roleManager.CreateAsync(userRole);
                     }
                     catch(Exception ex) 
                     { 
                         ModelState.AddModelError(string.Empty, ex.Message);
                     }
+                    
+                    /// и соответствующая ей запись в [AspNetRoles]
                     //if ( _roleManager.GetRoleNameAsync(userRole).Result != "User")
                     //{
                     //    await _roleManager.CreateAsync(userRole);
                     //}
 
                     var currentUser = await _userManager.FindByIdAsync(Convert.ToString(user.Id));
+                    ///добавляет в таблицу [AspNetUserRoles] соответствие между ролью и пользователем
                     await _userManager.AddToRoleAsync(currentUser, userRole.Name);
 
                     return RedirectToAction("Index","Home");
