@@ -91,11 +91,12 @@ namespace ASP.Blog.BLL.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("test")]
+        [Route("Test")]
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            return View();
+            return View("Test");
+            //return RedirectToAction("Test");
         }
 
         [Route("Login")]
