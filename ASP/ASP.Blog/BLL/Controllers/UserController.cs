@@ -95,7 +95,7 @@ namespace ASP.Blog.BLL.Controllers
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            return View("Test");
+            return View();
             //return RedirectToAction("Test");
         }
 
@@ -168,7 +168,7 @@ namespace ASP.Blog.BLL.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(UserEditViewModel model)
@@ -179,6 +179,7 @@ namespace ASP.Blog.BLL.Controllers
             } 
             return View("Update", model);
         }
+        [Authorize(Roles = "Admin")]
         [Route("Remove")]
         [HttpPost]
         public async Task<IActionResult> Remove(UserEditViewModel model)
