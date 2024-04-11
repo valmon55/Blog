@@ -75,6 +75,8 @@ namespace ASP.Blog.BLL.Controllers
                     ///добавляет в таблицу [AspNetUserRoles] соответствие между ролью и пользователем
                     await _userManager.AddToRoleAsync(currentUser, userRole.Name);
 
+                    await _signInManager.RefreshSignInAsync(currentUser);
+
                     return RedirectToAction("Index","Home");
                 }
                 else
