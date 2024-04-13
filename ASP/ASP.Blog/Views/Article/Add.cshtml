@@ -1,5 +1,11 @@
 ﻿@model ASP.Blog.BLL.ViewModels.Article.ArticleModel
 
+@using ASP.Blog.Data.Entities;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager;
+@inject UserManager<User> UserManager;
+
+
 @{
     ViewData["Title"] = "Добавление статьи";
 }
@@ -8,11 +14,19 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
 <h2>Добавление статьи</h2>
-<div>
-    <span>Автор: </span>
-    <div>
-        <textarea name="article" placeholder="Текст статьи"></textarea>
-    <div>
-        <input type="submit" value="Добавить"/>
-    </div>
+<div>    
+@*    @if (SignInManager.IsSignedIn(User))
+    {
+        <span>Автор: </span> 
+        <div>
+            <textarea name="article" placeholder="Текст статьи"></textarea>
+        <div>
+            <input type="submit" value="Добавить"/>
+        </div>
+    }
+    else
+    {
+        <h4>Статью может написать авторизованный пользователь.</h4>
+        <h6>Войдите или зарегистрируйтесь.</h6>
+    }*@
 </div>
