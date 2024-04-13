@@ -1,4 +1,5 @@
 ﻿using ASP.Blog.BLL.ViewModels;
+using ASP.Blog.BLL.ViewModels.Article;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
 using System;
@@ -16,9 +17,12 @@ namespace ASP.Blog.BLL
             CreateMap<RegisterViewModel, User>()
                 .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
-                //.ForMember(x => x.NormalizedEmail, opt => opt.MapFrom(c => c.Email.ToUpper()))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
             CreateMap<LoginViewModel, User>();
+            CreateMap<ArticleModel,Article>()
+                .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
+                .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
+                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.User.Id));
         }
     }
 }

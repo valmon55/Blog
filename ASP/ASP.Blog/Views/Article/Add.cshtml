@@ -1,0 +1,18 @@
+﻿@model ASP.Blog.BLL.ViewModels.Article.ArticleModel
+
+@{
+    ViewData["Title"] = "Добавление статьи";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Добавление статьи</h2>
+<div>
+    <span>Автор: </span>
+    <div>
+        <textarea name="article" placeholder="Текст статьи"></textarea>
+    <div>
+        <input type="submit" value="Добавить"/>
+    </div>
+</div>
