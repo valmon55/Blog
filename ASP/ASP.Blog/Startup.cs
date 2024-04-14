@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity;
 using ASP.Blog.Data.Entities;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.DAL.Entities;
+using ASP.Blog.DAL.Repositories;
 
 namespace ASP.Blog
 {
@@ -48,6 +49,11 @@ namespace ASP.Blog
             
             services
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
+                .AddUnitOfWork()
+                .AddCustomRepository<Article, ArticleRepository>
+                .AddCustomRepository<Comment, CommentRepository>
+                .AddCustomRepository<Tag, TagRepository>
+                .AddCustomRepository<Article_Tags, Article_TagsRepository>
                 .AddIdentity<User, UserRole>(opts =>
                 {
                     opts.Password.RequiredLength = 6;

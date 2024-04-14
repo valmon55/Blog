@@ -1,4 +1,5 @@
-﻿using ASP.Blog.DAL.Entities;
+﻿using ASP.Blog.DAL.Configs;
+using ASP.Blog.DAL.Entities;
 using ASP.Blog.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,10 @@ namespace ASP.Blog.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration<Article>(new ArticleConfiguration());
+            builder.ApplyConfiguration<Comment>(new CommentConfiguration());
+            builder.ApplyConfiguration<Tag>(new TagConfiguration());
+            builder.ApplyConfiguration<Article_Tags>(new Article_TagsConfiguration());
         }
         //public BlogContext()
         //    {

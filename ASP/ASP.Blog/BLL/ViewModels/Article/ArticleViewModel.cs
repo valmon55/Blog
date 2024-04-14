@@ -7,5 +7,6 @@ namespace ASP.Blog.BLL.ViewModels.Article
         public string Content { get; set; }
         public User User { get; set; }
         public ArticleViewModel(User user) => User = user;
+        public ArticleViewModel() { }
     }
 }

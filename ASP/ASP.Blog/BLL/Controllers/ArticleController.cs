@@ -3,8 +3,11 @@ using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace ASP.Blog.Controllers
 {
@@ -26,23 +29,46 @@ namespace ASP.Blog.Controllers
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
         }
+        [Authorize]
         [Route("Add")]
         [HttpGet]
-        public IActionResult Add() 
+        public async Task<IActionResult> Add() 
         {
             ///TODO: Как передать сюда авторизованного пользователя?
-            return View(new ArticleViewModel());    
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return View(new ArticleViewModel(user));    
         }
+        [Route("Add")]
+        [HttpPost]
+        public async Task<IActionResult> Add(ArticleViewModel model)
+        {
+            if(ModelState.IsValid) 
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                model.User = user;
+                var article = _mapper.Map<Article>(model);
+                var repo = _unitOfWork.GetRepository<Article>();
+                repo.Create(article);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Ошибка в модели!");
+            }
+            return RedirectToAction("Index","Home");
+        }
+        
         [Route("AllArticles")]
         [HttpGet]
         public IActionResult AllArticles() 
         {
             return View(new AllArticlesViewModel());
         }
-        [Route("Article=")]
+        [Route("Get")]
         [HttpGet]
-        public IActionResult UserArticles() 
-        { 
+        public async Task<IActionResult> Get(ArticleViewModel article) 
+        {
+            var author = await _userManager.FindByIdAsync(article.User.Id);
+            Console.WriteLine($"Автор: {author.First_Name} {author.Email}");
             return View();
         }
     }

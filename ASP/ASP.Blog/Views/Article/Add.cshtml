@@ -20,7 +20,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <form method="post" asp-controller="Article" asp-acttion="Add">
-            <span>Автор: </span> 
+            <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
             <div>
                 <textarea name="article" placeholder="Текст статьи" asp-for="Content" ></textarea>
             <div>

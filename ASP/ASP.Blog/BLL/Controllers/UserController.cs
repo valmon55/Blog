@@ -129,15 +129,15 @@ namespace ASP.Blog.BLL.Controllers
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                        //new Claim(ClaimsIdentity.DefaultRoleClaimType, user.userRole.Name)
+                        //new Claim("UserId", user.Id),
                         new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
                     };
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                        claims,
-                        "AppCookie",
-                        ClaimsIdentity.DefaultNameClaimType,
-                        ClaimsIdentity.DefaultRoleClaimType
-                        );
+                    //ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                    //    claims,
+                    //    "AppCookie",
+                    //    ClaimsIdentity.DefaultNameClaimType,
+                    //    ClaimsIdentity.DefaultRoleClaimType
+                    //    );
 
                     await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent:false, claims);
 
