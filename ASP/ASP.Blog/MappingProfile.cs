@@ -19,10 +19,11 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
             CreateMap<LoginViewModel, User>();
-            CreateMap<ArticleModel,Article>()
+            CreateMap<ArticleViewModel,Article>()
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
                 .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.User.Id));
+            CreateMap<AllArticlesViewModel, List<ArticleViewModel>>();
         }
     }
 }

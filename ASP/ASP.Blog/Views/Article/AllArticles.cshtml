@@ -13,24 +13,21 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-<h2>Добавление статьи</h2>
+<h2>Все статьи</h2>
 <div>    
     @*@if (Model.User is not null)*@
-    @*TODO: Как получить здесь авторизованного пользователя?*@
-    @if (SignInManager.IsSignedIn(User))
+@*    @if (SignInManager.IsSignedIn(User))
     {
-        <form method="post" asp-controller="Article" asp-acttion="Add">
-            <span>Автор: </span> 
-            <div>
-                <textarea name="article" placeholder="Текст статьи" asp-for="Content" ></textarea>
-            <div>
-                <input type="submit" value="Добавить"/>
-            </div>
-        </form>
+        <span>Автор: </span> 
+        <div>
+            <textarea name="article" placeholder="Текст статьи"></textarea>
+        <div>
+            <input type="submit" value="Добавить"/>
+        </div>
     }
     else
     {
         <h4>Статью может написать авторизованный пользователь.</h4>
         <h6>Войдите или зарегистрируйтесь.</h6>
-    }
+    }*@
 </div>

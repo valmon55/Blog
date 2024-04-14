@@ -30,7 +30,20 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult Add() 
         {
-            return View(new ArticleModel());    
+            ///TODO: Как передать сюда авторизованного пользователя?
+            return View(new ArticleViewModel());    
+        }
+        [Route("AllArticles")]
+        [HttpGet]
+        public IActionResult AllArticles() 
+        {
+            return View(new AllArticlesViewModel());
+        }
+        [Route("Article=")]
+        [HttpGet]
+        public IActionResult UserArticles() 
+        { 
+            return View();
         }
     }
 }
