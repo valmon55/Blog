@@ -18,6 +18,7 @@ using ASP.Blog.Data.Entities;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
+using ASP.Blog.DAL.Extentions;
 
 namespace ASP.Blog
 {
@@ -42,18 +43,18 @@ namespace ASP.Blog
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             
-            services.AddMvc();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddMvc();
+            //services.AddScoped<IUnitOfWork, UnitOfWork>();
             //services.AddUoW();
             //services.AddUnitOfWork();
             
             services
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
                 .AddUnitOfWork()
-                .AddCustomRepository<Article, ArticleRepository>
-                .AddCustomRepository<Comment, CommentRepository>
-                .AddCustomRepository<Tag, TagRepository>
-                .AddCustomRepository<Article_Tags, Article_TagsRepository>
+                .AddCustomRepository<Article, ArticleRepository>()
+                .AddCustomRepository<Comment, CommentRepository>()
+                .AddCustomRepository<Tag, TagRepository>()
+                .AddCustomRepository<Article_Tags, Article_TagsRepository>()
                 .AddIdentity<User, UserRole>(opts =>
                 {
                     opts.Password.RequiredLength = 6;
