@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.BLL.ViewModels.Article;
 using ASP.Blog.DAL.Entities;
+using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ASP.Blog.Controllers
@@ -59,9 +61,18 @@ namespace ASP.Blog.Controllers
         
         [Route("AllArticles")]
         [HttpGet]
-        public IActionResult AllArticles() 
+        public async Task<IActionResult> AllArticles() 
         {
-            return View(new AllArticlesViewModel());
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            var articles = repo.GetArticleByUserId(user.Id);
+            var articlesView = new List<ArticleViewModel>();
+            foreach (var article in articles) 
+            {
+                articlesView.Add(_mapper.Map<ArticleViewModel>(article));
+            }
+            
+            return View(articlesView);
         }
         [Route("Get")]
         [HttpGet]

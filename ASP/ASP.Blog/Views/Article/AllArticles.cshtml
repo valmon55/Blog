@@ -1,4 +1,4 @@
-﻿@model ASP.Blog.BLL.ViewModels.Article.ArticleViewModel
+﻿@model List<ASP.Blog.BLL.ViewModels.Article.ArticleViewModel>
 
 @using ASP.Blog.Data.Entities;
 @using Microsoft.AspNetCore.Identity;
@@ -7,7 +7,7 @@
 
 
 @{
-    ViewData["Title"] = "Добавление статьи";
+    ViewData["Title"] = "Cтатьи пользователя";
 }
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
@@ -15,19 +15,20 @@
 
 <h2>Все статьи</h2>
 <div>    
-    @*@if (Model.User is not null)*@
-@*    @if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User))
     {
-        <span>Автор: </span> 
-        <div>
-            <textarea name="article" placeholder="Текст статьи"></textarea>
-        <div>
-            <input type="submit" value="Добавить"/>
-        </div>
+        <form method="get" asp-controller="Article" asp-action="AllArticles">
+            @foreach(var article in Model)
+            {
+                <div>
+                    <hr>
+                    <textarea placeholder="Текст статьи">@article.Content</textarea>        
+                </div>
+            }
+        </form>
     }
     else
     {
-        <h4>Статью может написать авторизованный пользователь.</h4>
-        <h6>Войдите или зарегистрируйтесь.</h6>
-    }*@
+        <h4>Эти статьи может увидеть любой пользователь.</h4>
+    }
 </div>

@@ -22,7 +22,7 @@ namespace ASP.Blog.DAL.Repositories
         }
         public List<Article> GetArticleByUserId(string userId)
         {
-            return Set.Include(x => x.UserId == userId).ToList();
+            return Set.Where(x => x.UserId == userId).ToList();
         }
         public void AddArticle(Article article)
         {
