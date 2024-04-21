@@ -100,6 +100,16 @@ namespace ASP.Blog.Controllers
 
             return RedirectToAction("AllArticles","Article");
         }
+        [Authorize]
+        [Route("Update")]
+        [HttpPost]
+        public IActionResult Update(int Id)
+        {
+            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            repo.Update(repo.Get(Id));
+
+            return RedirectToAction("AllArticles", "Article");
+        }
 
         [Route("Get")]
         [HttpGet]
