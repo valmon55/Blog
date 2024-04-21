@@ -59,9 +59,9 @@ namespace ASP.Blog.Controllers
             return RedirectToAction("Index","Home");
         }
         
-        [Route("AllArticles")]
+        [Route("AllUserArticles")]
         [HttpGet]
-        public async Task<IActionResult> AllArticles() 
+        public async Task<IActionResult> AllUserArticles() 
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
@@ -74,6 +74,22 @@ namespace ASP.Blog.Controllers
             
             return View(articlesView);
         }
+
+        [Route("AllArticles")]
+        [HttpGet]
+        public async Task<IActionResult> AllArticles()
+        {
+            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            var articles = repo.GetAll();
+            var articlesView = new List<ArticleViewModel>();
+            foreach (var article in articles)
+            {
+                articlesView.Add(_mapper.Map<ArticleViewModel>(article));
+            }
+
+            return View(articlesView);
+        }
+
         [Route("Get")]
         [HttpGet]
         public async Task<IActionResult> Get(ArticleViewModel article) 

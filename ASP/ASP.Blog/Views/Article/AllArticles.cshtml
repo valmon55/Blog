@@ -7,16 +7,43 @@
 
 
 @{
-    ViewData["Title"] = "Cтатьи пользователя";
+    @if (SignInManager.IsSignedIn(User))
+    {
+        ViewData["Title"] = "Cтатьи пользователя";
+    }
+    else
+    {
+        ViewData["Title"] = "Все cтатьи";
+    }
 }
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-<h2>Все статьи</h2>
+@*<h2></h2>*@
+
 <div>    
     @if (SignInManager.IsSignedIn(User))
     {
+        <h4>Мои статьи</h4>
+        <form method="get" asp-controller="Article" asp-action="AllUserArticles">
+            @foreach(var article in Model)
+            {
+                <div>
+                    <hr>
+                    <textarea placeholder="Текст статьи">@article.Content</textarea>        
+                    <input type="submit" value="Обновить" />
+                    <input type="submit" value="Удалить" />
+                </div>
+            }
+        </form>
+        <form method="get" asp-controller="Article" asp-action="Add">
+            <input type="submit" value="Написать новую статью"/>
+        </form>
+    }
+    else
+    {
+        <h4>Эти статьи может увидеть любой пользователь.</h4>
         <form method="get" asp-controller="Article" asp-action="AllArticles">
             @foreach(var article in Model)
             {
@@ -26,9 +53,5 @@
                 </div>
             }
         </form>
-    }
-    else
-    {
-        <h4>Эти статьи может увидеть любой пользователь.</h4>
     }
 </div>
