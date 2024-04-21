@@ -40,6 +40,7 @@ namespace ASP.Blog.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(new ArticleViewModel(user));    
         }
+        [Authorize]
         [Route("Add")]
         [HttpPost]
         public async Task<IActionResult> Add(ArticleViewModel model)
@@ -58,7 +59,7 @@ namespace ASP.Blog.Controllers
             }
             return RedirectToAction("Index","Home");
         }
-        
+        [Authorize]
         [Route("AllUserArticles")]
         [HttpGet]
         public async Task<IActionResult> AllUserArticles() 
@@ -89,13 +90,23 @@ namespace ASP.Blog.Controllers
 
             return View(articlesView);
         }
+        [Authorize]
+        [Route("Delete")]
+        [HttpPost]
+        public IActionResult Delete(int Id) 
+        {
+            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            repo.DeleteArticle(repo.Get(Id));
+
+            return RedirectToAction("AllArticles","Article");
+        }
 
         [Route("Get")]
         [HttpGet]
         public async Task<IActionResult> Get(ArticleViewModel article) 
         {
-            var author = await _userManager.FindByIdAsync(article.User.Id);
-            Console.WriteLine($"Автор: {author.First_Name} {author.Email}");
+            //var author = await _userManager.FindByIdAsync(article.User.Id);
+            //Console.WriteLine($"Автор: {author.First_Name} {author.Email}");
             return View();
         }
     }
