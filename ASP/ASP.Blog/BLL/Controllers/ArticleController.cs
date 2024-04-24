@@ -103,26 +103,28 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model)
+        public async Task<IActionResult> Update(int Id, string Content)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                model.User = user;
-                var article = _mapper.Map<Article>(model);
+
+                //model.User = user;
+                //var article = _mapper.Map<Article>(model);
+                var article = _mapper.Map<Article>(new ArticleViewModel(user) { Id = Id, Content = Content });
                 var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
                 repo.Update(article);
             }
             return RedirectToAction("AllArticles", "Article");
         }
 
-        [Route("Get")]
-        [HttpGet]
-        public async Task<IActionResult> Get(ArticleViewModel article) 
-        {
-            //var author = await _userManager.FindByIdAsync(article.User.Id);
-            //Console.WriteLine($"Автор: {author.First_Name} {author.Email}");
-            return View();
-        }
+        //[Route("Get")]
+        //[HttpGet]
+        //public async Task<IActionResult> Get(ArticleViewModel article) 
+        //{
+        //    //var author = await _userManager.FindByIdAsync(article.User.Id);
+        //    //Console.WriteLine($"Автор: {author.First_Name} {author.Email}");
+        //    return View();
+        //}
     }
 }
