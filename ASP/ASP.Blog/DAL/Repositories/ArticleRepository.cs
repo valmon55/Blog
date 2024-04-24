@@ -26,7 +26,7 @@ namespace ASP.Blog.DAL.Repositories
         }
         public void AddArticle(Article article)
         {
-            Set.Add(article);
+            Create(article);
         }
         public void UpdateArticle(Article article)
         {

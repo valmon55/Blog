@@ -31,10 +31,11 @@
             <div>
                 <hr>
                 <textarea placeholder="Текст статьи" asp-for=@article.Content>@article.Content</textarea>        
-                <form method="get" asp-controller="Article" asp-action="Update" 
-                        asp-route-Id=@article.Id asp-route-Content=@article.Content >
-                    <input type="submit" value="Редактировать" />
+@*                <form method="post" asp-controller="Article" asp-action="Update" 
+                        asp-route-Id=@article.Id>
+                    <input type="submit" value="Редактировать" />                    
                 </form>
+*@                <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>
                 <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>
                     <input type="submit" value="Удалить" />
                 </form>

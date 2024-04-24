@@ -104,11 +104,14 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpGet]
-        public async Task<IActionResult> Update(int Id, string Content)
+        public async Task<IActionResult> Update(int Id)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            
-            return View("EditArticle", new ArticleViewModel(user) { Id = Id, Content = Content });
+            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            var article = repo.Get(Id);
+            article.User = user;
+            var articleView = _mapper.Map<ArticleViewModel>(article);
+            return View("EditArticle", articleView);
         }
 
         [Authorize]
