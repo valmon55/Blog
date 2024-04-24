@@ -1,0 +1,36 @@
+﻿@model ASP.Blog.BLL.ViewModels.Article.ArticleViewModel
+
+@using ASP.Blog.Data.Entities;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager;
+@inject UserManager<User> UserManager;
+
+
+@{
+    ViewData["Title"] = "Добавление статьи";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Добавление статьи</h2>
+<div>    
+    @*@if (Model.User is not null)*@
+    @*TODO: Как получить здесь авторизованного пользователя?*@
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <form method="post" asp-controller="Article" asp-action="AddArticle">
+            <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
+            <div>
+                <textarea placeholder="Текст статьи" asp-for="Content" ></textarea>
+            <div>
+                <input type="submit" value="Добавить"/>
+            </div>
+        </form>
+    }
+    else
+    {
+        <h4>Статью может написать авторизованный пользователь.</h4>
+        <h6>Войдите или зарегистрируйтесь.</h6>
+    }
+</div>

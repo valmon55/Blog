@@ -32,18 +32,18 @@ namespace ASP.Blog.Controllers
             _roleManager = roleManager;
         }
         [Authorize]
-        [Route("Add")]
+        [Route("AddArticle")]
         [HttpGet]
-        public async Task<IActionResult> Add() 
+        public async Task<IActionResult> AddArticle() 
         {
             ///TODO: Как передать сюда авторизованного пользователя?
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(new ArticleViewModel(user));    
         }
         [Authorize]
-        [Route("Add")]
+        [Route("AddArticle")]
         [HttpPost]
-        public async Task<IActionResult> Add(ArticleViewModel model)
+        public async Task<IActionResult> AddArticle(ArticleViewModel model)
         {
             if(ModelState.IsValid) 
             {
@@ -101,13 +101,18 @@ namespace ASP.Blog.Controllers
             return RedirectToAction("AllArticles","Article");
         }
         [Authorize]
-        [Route("Update")]
+        [Route("Article/Update")]
         [HttpPost]
-        public IActionResult Update(int Id)
+        public async Task<IActionResult> Update(ArticleViewModel model)
         {
-            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-            repo.Update(repo.Get(Id));
-
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                model.User = user;
+                var article = _mapper.Map<Article>(model);
+                var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+                repo.Update(article);
+            }
             return RedirectToAction("AllArticles", "Article");
         }
 
