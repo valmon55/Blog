@@ -31,9 +31,9 @@
             <div>
                 <hr>
                 <textarea placeholder="Текст статьи" asp-for=@article.Content>@article.Content</textarea>        
-                <form method="post" asp-controller="Article" asp-action="Update" 
+                <form method="get" asp-controller="Article" asp-action="Update" 
                         asp-route-Id=@article.Id asp-route-Content=@article.Content >
-                    <input type="submit" value="Обновить" />
+                    <input type="submit" value="Редактировать" />
                 </form>
                 <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>
                     <input type="submit" value="Удалить" />
