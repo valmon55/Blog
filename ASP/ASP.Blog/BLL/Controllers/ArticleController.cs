@@ -1,4 +1,5 @@
-﻿using ASP.Blog.BLL.ViewModels.Article;
+﻿using ASP.Blog.BLL.Extentions;
+using ASP.Blog.BLL.ViewModels.Article;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
@@ -73,7 +74,7 @@ namespace ASP.Blog.Controllers
                 articlesView.Add(_mapper.Map<ArticleViewModel>(article));
             }
             
-            return View(articlesView);
+            return View("AllArticles", articlesView);
         }
 
         [Route("AllArticles")]
@@ -124,12 +125,15 @@ namespace ASP.Blog.Controllers
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
                 model.User = user;
-                var article = _mapper.Map<Article>(model);
+                //var article = _mapper.Map<Article>(model);
                 //var article = _mapper.Map<Article>(new ArticleViewModel(user) { Id = Id, Content = Content });
                 var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+                var article = repo.GetArticleById(model.Id);
+                article.Convert(model);
+
                 repo.Update(article);
             }
-            return RedirectToAction("AllArticles", "Article");
+            return RedirectToAction("AllUserArticles", "Article");
         }
 
         //[Route("Get")]

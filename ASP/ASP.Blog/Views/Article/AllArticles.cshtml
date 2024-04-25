@@ -26,22 +26,32 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <h4>Мои статьи</h4>
-        @foreach(var article in @Model)
+        <form method="get" asp-controller="Article" asp-action="AllUserArticles">
+            @foreach(var article in Model)
+            {
+                <div>
+                    <hr>
+                    <textarea placeholder="Текст статьи">@article.Content</textarea>        
+                    <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>
+                    <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </div>
+            }
+        </form>
+
+@*        @foreach(var article in @Model)
         {
             <div>
                 <hr>
                 <textarea placeholder="Текст статьи" asp-for=@article.Content>@article.Content</textarea>        
-@*                <form method="post" asp-controller="Article" asp-action="Update" 
-                        asp-route-Id=@article.Id>
-                    <input type="submit" value="Редактировать" />                    
-                </form>
-*@                <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>
+                <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>
                 <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>
                     <input type="submit" value="Удалить" />
                 </form>
             </div>
         }
-        <div>
+*@        <div>
             <hr>
             <form method="get" asp-controller="Article" asp-action="AddArticle">
                 <input type="submit" value="Написать новую статью"/>
