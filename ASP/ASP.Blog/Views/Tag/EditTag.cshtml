@@ -1,0 +1,22 @@
+﻿@model ASP.Blog.BLL.ViewModels.Tag.TagViewModel
+
+@using ASP.Blog.Data.Entities;
+
+@{
+    ViewData["Title"] = "Редактирование тега";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Редактирование тега</h2>
+<div>    
+    <form method="post" asp-controller="Tag" asp-action="Update" >
+        <div>
+            <input class="form-control" asp-for="Id" hidden />
+            <textarea placeholder="Текст статьи" asp-for="Tag_Name">@Model.Tag_Name</textarea>
+        <div>
+            <input type="submit" value="Сохранить"/>
+        </div>
+    </form>
+</div>

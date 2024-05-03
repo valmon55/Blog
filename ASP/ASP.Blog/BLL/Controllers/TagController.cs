@@ -1,4 +1,5 @@
-﻿using ASP.Blog.BLL.ViewModels.Tag;
+﻿using ASP.Blog.BLL.Extentions;
+using ASP.Blog.BLL.ViewModels.Tag;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
@@ -84,13 +85,29 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            return View();
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            var tag = repo.GetTagById(id);
+            var tagView = _mapper.Map<TagViewModel>(tag);            
+
+            return View("EditTag",tagView);
         }
         [Route("Tag/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(TagViewModel model)
         {
-            return View();
+            if(ModelState.IsValid) 
+            {
+                var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+                var tag = repo.GetTagById(model.Id);
+                tag.Convert(model);
+
+                repo.UpdateTag(tag);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Ошибка в модели!");
+            }
+            return RedirectToAction("AllTags", "Tag");
         }
     }
 }
