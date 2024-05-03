@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.BLL.ViewModels;
 using ASP.Blog.BLL.ViewModels.Article;
+using ASP.Blog.BLL.ViewModels.Tag;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
 using System;
@@ -28,7 +29,12 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.User, opt => opt.MapFrom(c => c.User));
                 //.ForMember(x => x.User.Id, opt => opt.MapFrom(c => c.UserId));
-            //CreateMap<AllArticlesViewModel, List<ArticleViewModel>>();
+            CreateMap<Tag, TagViewModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
+                .ForMember(x => x.Tag_Name, opt => opt.MapFrom(c => c.Tag_Name));
+            CreateMap<TagViewModel, Tag>()
+                .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
+                .ForMember(x => x.Tag_Name, opt => opt.MapFrom(c => c.Tag_Name));
         }
     }
 }
