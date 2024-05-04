@@ -40,14 +40,14 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
                 .ForMember(x => x.Comment, opt => opt.MapFrom(c => c.Comment_Text))
                 .ForMember(x => x.CommentDate, opt => opt.MapFrom(c => c.CommentDate))
-                .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
-                .ForMember(x => x.Article, opt => opt.MapFrom(c => c.Article));
+                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.UserId))
+                .ForMember(x => x.ArticleId, opt => opt.MapFrom(c => c.ArticleId));
             CreateMap<CommentViewModel, Comment>()
                 .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.Comment_Text, opt => opt.MapFrom(c => c.Comment))
                 .ForMember(x => x.CommentDate, opt => opt.MapFrom(c => c.CommentDate))
-                .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
-                .ForMember(x => x.Article, opt => opt.MapFrom(c => c.Article));
+                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.UserId))
+                .ForMember(x => x.ArticleId, opt => opt.MapFrom(c => c.ArticleId));
         }
     }
 }

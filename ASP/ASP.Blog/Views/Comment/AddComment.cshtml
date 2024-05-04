@@ -13,10 +13,10 @@
 <div>
     @*<span>Автор @Model.User.First_Name @Model.User.Last_Name</span>*@
     <form method="post" asp-controller="Comment" asp-action="AddComment">
+        <input asp-for="UserId" hidden/>
+        <input asp-for="ArticleId" hidden />
         <a asp-for="Id">@Model.Id</a>
         <a asp-for="CommentDate">@Model.CommentDate</a>
-        <a asp-for="Article">@Model.Article</a>
-        <a asp-for="User">@Model.User</a>
         <textarea placeholder="Комментарий" asp-for="Comment"></textarea>
         <div>
             <input type="submit" value="Добавить" />

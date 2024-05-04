@@ -36,9 +36,9 @@ namespace ASP.Blog.Controllers
         {
             //var user = _userManager.FindByNameAsync
             //var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
-            var articleRepo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-
-            return View(new CommentViewModel() { Article = articleRepo.GetArticleById(articleId)} );
+            //var articleRepo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            //var article = articleRepo.GetArticleById(articleId);
+            return View(new CommentViewModel() { ArticleId = articleId} );
         }
         [Route("AddComment")]
         [HttpPost]
@@ -50,6 +50,7 @@ namespace ASP.Blog.Controllers
                 
                 comment.CommentDate = DateTime.Now;
                 comment.User = await _userManager.FindByNameAsync(User.Identity.Name);
+                comment.UserId = comment.User.Id;
                 var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
                 repo.Create(comment);
             }
@@ -69,7 +70,7 @@ namespace ASP.Blog.Controllers
             var commentsView = new List<CommentViewModel>();
             foreach (var comment in comments) 
             {
-                if (comment.Article.ID == articleId)
+                if (comment.ArticleId == articleId)
                 {
                     commentsView.Add(_mapper.Map<CommentViewModel>(comment));
                 }
