@@ -8,7 +8,7 @@ namespace ASP.Blog.BLL.ViewModels.Comment
         public int Id { get; set; }
         public string Comment { get; set; }
         public DateTime CommentDate { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int ArticleId { get; set; }
     }
 }
