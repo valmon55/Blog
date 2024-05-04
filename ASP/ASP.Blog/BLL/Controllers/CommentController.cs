@@ -6,7 +6,9 @@ using ASP.Blog.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ASP.Blog.Controllers
 {
@@ -30,14 +32,32 @@ namespace ASP.Blog.Controllers
         }
         [Route("AddComment")]
         [HttpGet]
-        public IActionResult AddComment(int articleId) 
-        { 
-            return View();
+        public async Task<IActionResult> AddComment(int articleId) 
+        {
+            //var user = _userManager.FindByNameAsync
+            //var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
+            var articleRepo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+
+            return View(new CommentViewModel() { Article = articleRepo.GetArticleById(articleId)} );
         }
         [Route("AddComment")]
         [HttpPost]
-        public IActionResult AddComment(Comment comment) 
+        public async Task<IActionResult> AddComment(CommentViewModel model) 
         {
+            if (ModelState.IsValid) 
+            { 
+                var comment = _mapper.Map<Comment>(model);
+                
+                comment.CommentDate = DateTime.Now;
+                comment.User = await _userManager.FindByNameAsync(User.Identity.Name);
+                var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
+                repo.Create(comment);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Ошибка в модели!");
+            }
+
             return RedirectToAction("AllUserArticles", "Article");
         }
         [Route("AllArticleComments")]

@@ -31,6 +31,7 @@
             <div>
                 <hr>
                 <textarea placeholder="Текст статьи">@article.Content</textarea>
+                <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@article.Id>Добавить комментарий</a>
                 <a method="get" asp-action="AllArticleComments" asp-controller="Comment" asp-route-articleId=@article.Id>Комментарии</a>
                 <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>
                 <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>

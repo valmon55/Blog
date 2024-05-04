@@ -1,0 +1,25 @@
+﻿@model ASP.Blog.BLL.ViewModels.Comment.CommentViewModel
+
+@using ASP.Blog.Data.Entities;
+
+@{
+    ViewData["Title"] = "Добавление комментария";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Добавление комментария</h2>
+<div>
+    @*<span>Автор @Model.User.First_Name @Model.User.Last_Name</span>*@
+    <form method="post" asp-controller="Comment" asp-action="AddComment">
+        <a asp-for="Id">@Model.Id</a>
+        <a asp-for="CommentDate">@Model.CommentDate</a>
+        <a asp-for="Article">@Model.Article</a>
+        <a asp-for="User">@Model.User</a>
+        <textarea placeholder="Комментарий" asp-for="Comment"></textarea>
+        <div>
+            <input type="submit" value="Добавить" />
+        </div>
+    </form>
+</div>
