@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.BLL.ViewModels;
 using ASP.Blog.BLL.ViewModels.Article;
+using ASP.Blog.BLL.ViewModels.Comment;
 using ASP.Blog.BLL.ViewModels.Tag;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
@@ -35,6 +36,18 @@ namespace ASP.Blog.BLL
             CreateMap<TagViewModel, Tag>()
                 .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.Tag_Name, opt => opt.MapFrom(c => c.Tag_Name));
+            CreateMap<Comment, CommentViewModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
+                .ForMember(x => x.Comment, opt => opt.MapFrom(c => c.Comment_Text))
+                .ForMember(x => x.CommentDate, opt => opt.MapFrom(c => c.CommentDate))
+                .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
+                .ForMember(x => x.Article, opt => opt.MapFrom(c => c.Article));
+            CreateMap<CommentViewModel, Comment>()
+                .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
+                .ForMember(x => x.Comment_Text, opt => opt.MapFrom(c => c.Comment))
+                .ForMember(x => x.CommentDate, opt => opt.MapFrom(c => c.CommentDate))
+                .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
+                .ForMember(x => x.Article, opt => opt.MapFrom(c => c.Article));
         }
     }
 }

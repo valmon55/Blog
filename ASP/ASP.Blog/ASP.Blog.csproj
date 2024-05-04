@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="BLL\ViewModels\Account\" />
-    <Folder Include="BLL\ViewModels\Comment\" />
     <Folder Include="BLL\ViewModels\Role\" />
     <Folder Include="BLL\ViewModels\User\" />
   </ItemGroup>

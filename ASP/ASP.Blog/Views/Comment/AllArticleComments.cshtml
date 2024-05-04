@@ -1,0 +1,26 @@
+﻿@model List<ASP.Blog.BLL.ViewModels.Comment.CommentViewModel>
+
+@using ASP.Blog.DAL.Entities
+
+@{
+    ViewData["Title"] = "Все комментарии";
+}
+<div>
+    @foreach(var comment in Model)
+    {
+        <div>
+            <hr>
+            <span>@comment.CommentDate.ToShortDateString() @comment.CommentDate.ToShortTimeString()</span>
+            <span>@comment.User.First_Name @comment.User.Last_Name</span>
+            <textarea placeholder="Комментарий">@comment.Comment</textarea>
+            <a method="get" asp-action="Update" asp-route-id=@comment.Id>Редактировать</a>
+            <a method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.Id>Удалить</a>
+        </div>
+    }
+    <div>
+        <hr>
+        <form method="get" asp-controller="Comment" asp-action="AddComment">
+            <input type="submit" value="Добавить" />
+        </form>
+    </div>
+</div>

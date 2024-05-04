@@ -99,7 +99,7 @@ namespace ASP.Blog.Controllers
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             repo.DeleteArticle(repo.Get(Id));
 
-            return RedirectToAction("AllArticles","Article");
+            return RedirectToAction("AllUserArticles","Article");
         }
 
         [Authorize]
