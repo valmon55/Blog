@@ -15,7 +15,8 @@ namespace ASP.Blog.DAL.Extentions
             where TEntity : class
             where IRepository : class, IRepository<TEntity>
         {
-            services.AddScoped<IRepository<TEntity>, IRepository>();
+            //services.AddScoped<IRepository<TEntity>, IRepository>();
+            services.AddTransient<IRepository<TEntity>, IRepository>();
             return services;
         }
     }
