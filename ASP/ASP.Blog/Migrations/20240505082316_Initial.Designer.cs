@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASP.Blog.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20240404161331_Initial")]
+    [Migration("20240505082316_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,24 +20,6 @@ namespace ASP.Blog.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
-
-            modelBuilder.Entity("ASP.Blog.DAL.Entities.UserRole", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("User_Roles");
-                });
 
             modelBuilder.Entity("ASP.Blog.Data.Entities.Article", b =>
                 {
@@ -188,8 +170,8 @@ namespace ASP.Blog.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserRoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("userRoleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -201,7 +183,7 @@ namespace ASP.Blog.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("UserRoleId");
+                    b.HasIndex("userRoleId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -213,6 +195,10 @@ namespace ASP.Blog.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -231,6 +217,8 @@ namespace ASP.Blog.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -337,10 +325,20 @@ namespace ASP.Blog.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ASP.Blog.DAL.Entities.UserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("UserRole");
+                });
+
             modelBuilder.Entity("ASP.Blog.Data.Entities.Article", b =>
                 {
                     b.HasOne("ASP.Blog.Data.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -384,9 +382,7 @@ namespace ASP.Blog.Migrations
                 {
                     b.HasOne("ASP.Blog.DAL.Entities.UserRole", "userRole")
                         .WithMany()
-                        .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("userRoleId");
 
                     b.Navigation("userRole");
                 });
@@ -440,6 +436,11 @@ namespace ASP.Blog.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ASP.Blog.Data.Entities.User", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

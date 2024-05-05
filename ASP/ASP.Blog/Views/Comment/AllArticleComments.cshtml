@@ -14,7 +14,9 @@
             @*<span>@comment.User.First_Name @comment.User.Last_Name</span>*@
             <textarea placeholder="Комментарий">@comment.Comment</textarea>
             <a method="get" asp-action="Update" asp-route-id=@comment.Id>Редактировать</a>
-            <a method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.Id>Удалить</a>
+            <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.Id>
+                <input type="submit" value="Удалить" />
+            </form>
         </div>
     }
     <div>

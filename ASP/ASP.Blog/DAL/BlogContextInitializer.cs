@@ -3,7 +3,7 @@ using ASP.Blog.Data;
 using ASP.Blog.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Data.Entity;
+//using System.Data.Entity;
 
 namespace ASP.Blog.DAL
 {

@@ -78,5 +78,26 @@ namespace ASP.Blog.Controllers
 
             return View(commentsView);
         }
+        [Route("Comment/Delete")]
+        [HttpPost]
+        public IActionResult Delete(int id) 
+        {
+            var repo =_unitOfWork.GetRepository<Comment>() as CommentRepository;
+            var comment = repo.GetCommentById(id);
+            var articleId = comment.ArticleId;
+            repo.Delete(comment);
+
+            return RedirectToAction("AllArticleComments", "Comment", articleId);
+        }
+        [Route("Comment/Update")]
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var repo = _unitOfWork.GetRepository<CommentRepository>() as CommentRepository;
+            var comment = repo.GetCommentById(id);
+            var commentView = _mapper.Map<CommentViewModel>(comment);
+
+            return View("EditComment",commentView);
+        }
     }
 }
