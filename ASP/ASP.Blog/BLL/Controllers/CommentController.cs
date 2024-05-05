@@ -1,4 +1,5 @@
-﻿using ASP.Blog.BLL.ViewModels.Comment;
+﻿using ASP.Blog.BLL.Extentions;
+using ASP.Blog.BLL.ViewModels.Comment;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
@@ -93,11 +94,33 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var repo = _unitOfWork.GetRepository<CommentRepository>() as CommentRepository;
+            var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
             var comment = repo.GetCommentById(id);
             var commentView = _mapper.Map<CommentViewModel>(comment);
 
             return View("EditComment",commentView);
+        }
+        [Route("Comment/Update")]
+        [HttpPost]
+        public IActionResult Update(CommentViewModel model)
+        {
+            int articleId;
+
+            if (ModelState.IsValid) 
+            { 
+                var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
+                var comment = repo.GetCommentById(model.Id);
+                comment.Convert(model);
+                articleId = comment.ArticleId;
+
+                repo.Update(comment);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Ошибка в модели!");
+                return RedirectToAction("AllUserArticles", "Article");
+            }
+            return RedirectToAction("AllArticleComments", "Comment", articleId);
         }
     }
 }
