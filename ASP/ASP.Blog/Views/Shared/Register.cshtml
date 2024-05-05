@@ -11,23 +11,23 @@
     <h2>Регистрация нового пользователя</h2>
     <form method="post" asp-action="Register" asp-controller="User">
         <div asp-validation-summary="ModelOnly"></div>
-        <div>
+        <div class="mrgn">
             <label asp-for="First_Name"></label><br />
             <input asp-for="First_Name" />
             <span asp-validation-for="First_Name"></span>
         </div>
-        <div>
+        <div class="mrgn">
             <label asp-for="Last_Name"></label><br />
             <input asp-for="Last_Name" />
             <span asp-validation-for="Last_Name"></span>
         </div>
-        <div>
+        <div class="mrgn">
             <label asp-for="Email"></label><br />
             <input asp-for="Email" />
             <span asp-validation-for="Email"></span>
         </div>
-        <div>
-            <label class="mrgn">День рождения</label>
+        <div class="mrgn">День рождения</div>
+        <div class="mrgn">
             <select asp-for="Day" class="form-control date_control" ID="ddlDay">
                 <option value="">@Model.Day</option>
             </select>
@@ -47,27 +47,25 @@
             </select>
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
-        <div>
+        <div class="mrgn">
             <label asp-for="PasswordReg"></label><br />
             <input asp-for="PasswordReg" />
             <span asp-validation-for="PasswordReg"></span>
         </div>
-        <div>
+        <div class="mrgn">
             <label asp-for="PasswordConfirm"></label><br />
             <input asp-for="PasswordConfirm" />
             <span asp-validation-for="PasswordConfirm"></span>
         </div>
-        <div>
+        <div class="mrgn">
             <label asp-for="Login" ></label><br />
             <input asp-for="Login" />
             <span asp-validation-for="Login" ></span>
         </div>
-        <div>
+        <div class="center">
             <input class="btn-submit" type="submit" value="Регистрация"/>
         </div>
-    </form>
-
-    @Model.Month
+    </form>    
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
 

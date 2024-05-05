@@ -23,13 +23,13 @@ namespace ASP.Blog.BLL.ViewModels
         public string Email { get; set; }
         [Required]
         [Display(Name = "Год")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
         [Required]
         [Display(Name = "Месяц")]
-        public int Month { get; set; }
+        public int? Month { get; set; }
         [Required]
         [Display(Name = "День")]
-        public int Day { get; set; }
+        public int? Day { get; set; }
 
         //public DateTime BirthDate { get; set; }
         [Required(ErrorMessage = "Обязательно для заполнения")]
