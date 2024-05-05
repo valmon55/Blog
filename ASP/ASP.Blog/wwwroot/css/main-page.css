@@ -6,16 +6,96 @@
     flex:75%;
     padding:20px;
 }
-.main{
-    flex:25%;
-    padding:20px;
+.main {
+    flex: 25%;
+    padding: 20px;    
+}
+.background-main {
+    background-color: cornsilk;
 }
 .footer{
     padding:20px;
-    text-align:center;
+    text-align:center;    
+}
+.background-footer {
+    background-color: burlywood;
 }
 .topnav{
     padding:20px;
     text-align:center;
-    width:100%;
+    width:100%;    
+}
+.background-topnav {
+    background-color: burlywood !important;
+}
+.btn-submit {
+    background-color:lawngreen;
+    color:white;
+    padding: 15px 20px;
+    margin: 8px 0px;
+    border: none;
+    width: 100%;
+}
+.frm-text {
+    width: 100%;
+}
+.frm {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.mrgn {
+    margin: 5px;
+}
+.text-color-gray {
+    color: slategray;
+}
+
+.center {
+    text-align: center;
+    align-content: center;
+    margin: 5px;
+}
+
+.enter_submit {
+    background-color: #5181b8;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.date_control {
+    width: 10%;
+    display: inline;
+    min-width: max-content;
+}
+
+.date_box {
+    width: 100%;
 }

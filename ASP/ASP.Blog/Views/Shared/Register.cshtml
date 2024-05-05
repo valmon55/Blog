@@ -27,6 +27,7 @@
             <span asp-validation-for="Email"></span>
         </div>
         <div>
+            <label class="mrgn">День рождения</label>
             <select asp-for="Day" class="form-control date_control" ID="ddlDay">
                 <option value="">@Model.Day</option>
             </select>
@@ -62,7 +63,7 @@
             <span asp-validation-for="Login" ></span>
         </div>
         <div>
-            <input type="submit" value="Регистрация"/>
+            <input class="btn-submit" type="submit" value="Регистрация"/>
         </div>
     </form>
 
