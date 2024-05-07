@@ -99,3 +99,9 @@ input[type="checkbox"].input-validation-error {
 .date_box {
     width: 100%;
 }
+.navbar-right {
+    float: right !important;
+}
+    .navbar-right li {
+        display: inline-block;
+    }
