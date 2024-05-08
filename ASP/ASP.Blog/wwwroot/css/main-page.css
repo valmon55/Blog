@@ -36,6 +36,9 @@
     border: none;
     width: 100%;
 }
+.btn-list li {
+    display: inline;
+}
 .frm-text {
     width: 100%;
 }
@@ -57,7 +60,7 @@
     margin: 5px;
 }
 
-.enter_submit {
+.enter-submit {
     background-color: #5181b8;
     color: white;
     padding: 14px 20px;
@@ -90,18 +93,42 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-.date_control {
+.date-control {
     width: 10%;
     display: inline;
     min-width: max-content;
 }
 
-.date_box {
+.date-box {
     width: 100%;
 }
 .navbar-right {
     float: right !important;
 }
-    .navbar-right li {
-        display: inline-block;
-    }
+.navbar-right li {
+    display: inline-block;
+}
+.article-block {
+    align-content: flex-start;
+    width: 80%;
+    height: auto;
+    margin: 10px;
+}
+.tag-block {
+    align-content: flex-start;
+    width: 30%;
+    height: auto;
+    margin: 10px;
+}
+.txt-size {
+    width: 80%;
+    height: auto;
+    margin: 10px;
+}
+.textarea {
+    display: block;
+    max-width: 100%;
+    min-width: 100%;
+    padding: calc(0.75em - 1px);
+    resize: none;
+}

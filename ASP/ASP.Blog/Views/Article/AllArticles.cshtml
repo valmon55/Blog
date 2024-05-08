@@ -28,14 +28,14 @@
         <h4>Мои статьи</h4>
         @foreach(var article in Model)
         {
-            <div>
+            <div class="article-block">
                 <hr>
-                <textarea placeholder="Текст статьи">@article.Content</textarea>
+                <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>
                 <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@article.Id>Добавить комментарий</a>
                 <a method="get" asp-action="AllArticleComments" asp-controller="Comment" asp-route-articleId=@article.Id>Комментарии</a>
                 <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>
                 <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>
-                    <input type="submit" value="Удалить" />
+                    <input class="enter_submit" type="submit" value="Удалить" />
                 </form>
             </div>
         }
@@ -52,9 +52,9 @@
         <h4>Эти статьи может увидеть любой пользователь.</h4>
         @foreach(var article in Model)
         {
-            <div>
+            <div class="article-block">
                 <hr>
-                <textarea placeholder="Текст статьи">@article.Content</textarea>        
+                <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>        
             </div>
         }
     }

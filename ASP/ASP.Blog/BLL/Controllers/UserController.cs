@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.BLL.ViewModels;
 using ASP.Blog.DAL.Entities;
+using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
@@ -184,13 +185,12 @@ namespace ASP.Blog.BLL.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Remove")]
         [HttpPost]
-        public async Task<IActionResult> Remove(UserEditViewModel model)
+        public async Task<IActionResult> Remove(string userId)
         {
-            if (ModelState.IsValid)
-            {
+            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+            //repo.
 
-            }
-            return View("Update", model);
+            return RedirectToAction("Index", "Home");
         }
 
     }

@@ -7,9 +7,8 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-
-<div class="block-reg background-main">
-    <h3 class="center">Добро пожаловать!</h3>
+<h3 class="center">Добро пожаловать!</h3>
+<div class="block-reg background-main tag-block">
     <form class="frm" method="post" asp-action="Login" asp-controller="User">
         <div asp-validation-summary="ModelOnly"></div>
         <div>
@@ -27,7 +26,7 @@
             </div>
         </div>
         <div>
-            <input class="enter_submit" type="submit" value="Войти" />
+            <input class="enter-submit" type="submit" value="Войти" />
         </div>
     </form>
 </div>

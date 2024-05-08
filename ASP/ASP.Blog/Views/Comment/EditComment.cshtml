@@ -9,17 +9,18 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-<h2>Редактирование тега</h2>
-<div>    
+<h2>Редактирование комментария</h2>
+<div class="article-block">
     <form method="post" asp-controller="Comment" asp-action="Update" >
         <div>
             <input class="form-control" asp-for="Id" hidden />
-            <input asp-for="CommentDate" />
-            <input asp-for="ArticleId" />
-            <input asp-for="UserId" />
-            <textarea placeholder="Текст комментария" asp-for="Comment">@Model.Comment</textarea>
+            <input asp-for="CommentDate" hidden />
+            <input asp-for="ArticleId" hidden />
+            <input asp-for="UserId" hidden />
+            <textarea class="textarea" placeholder="Текст комментария" asp-for="Comment">@Model.Comment</textarea>
+        </div>
         <div>
-            <input type="submit" value="Сохранить"/>
+            <input class="enter_submit" type="submit" value="Сохранить"/>
         </div>
     </form>
 </div>

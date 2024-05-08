@@ -8,9 +8,9 @@
 <div>
     @foreach(var tag in Model)
     {
-        <div>
+        <div class="tag-block">
             <hr>
-            <textarea placeholder="Тег">@tag.Tag_Name</textarea>
+            <textarea class="textarea" placeholder="Тег">@tag.Tag_Name</textarea>
             <a method="get" asp-action="Update" asp-route-id=@tag.Id >Редактировать</a>
             <a method="post" asp-controller="Tag" asp-action="Delete" asp-route-id=@tag.Id >Удалить</a>
         </div>
@@ -18,7 +18,7 @@
     <div>
         <hr>
         <form method="get" asp-controller="Tag" asp-action="AddTag">
-            <input type="submit" value="Добавить" />
+            <input class="enter_submit" type="submit" value="Добавить" />
         </form>
     </div>
 </div>

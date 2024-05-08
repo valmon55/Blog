@@ -70,7 +70,13 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> TagById(int id)
         {
-            return View();
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            var tag = repo.GetTagById(id);
+            var tagView = _mapper.Map<TagViewModel>(tag);
+
+            //return View();
+            //пока неизвестно где буду использовать
+            return RedirectToAction("AllTags", "Tag");
         }
         [Route("DeleteTag")]
         [HttpPost]

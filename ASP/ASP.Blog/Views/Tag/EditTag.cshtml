@@ -10,13 +10,14 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
 <h2>Редактирование тега</h2>
-<div>    
+<div class="tag-block">    
     <form method="post" asp-controller="Tag" asp-action="Update" >
         <div>
             <input class="form-control" asp-for="Id" hidden />
-            <textarea placeholder="Текст статьи" asp-for="Tag_Name">@Model.Tag_Name</textarea>
+            <textarea class="textarea" placeholder="Текст статьи" asp-for="Tag_Name">@Model.Tag_Name</textarea>
+        </div>
         <div>
-            <input type="submit" value="Сохранить"/>
+            <input class="enter_submit" type="submit" value="Сохранить"/>
         </div>
     </form>
 </div>
