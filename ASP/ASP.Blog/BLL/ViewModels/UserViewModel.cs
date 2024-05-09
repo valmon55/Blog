@@ -14,9 +14,10 @@ namespace ASP.Blog.BLL.ViewModels
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }
         public string Email { get; set; }
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        //public int Year { get; set; }
+        //public int Month { get; set; }
+        //public int Day { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Login { get; set; }
         public User User { get; set; }
         public UserViewModel(User user) => User = user;

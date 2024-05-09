@@ -1,4 +1,4 @@
-﻿@model ASP.Blog.BLL.ViewModels.UserViewModel
+﻿@model ASP.Blog.BLL.ViewModels.UserEditViewModel
 
 @{
     ViewData["Title"] = "EditUser";
@@ -11,26 +11,32 @@
 <div class="tag-block">
     <form method="post" asp-action="Update" asp-controller="User">
         <div class="frm_text mrgn">
-            <input class="frm_text" asp-for="Id" type="text" value="@Model.Id" />            
+            <input class="frm_text" asp-for=" UserId" type="text" value="@Model.UserId" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
         </div>
         <div class="mrgn">
             <label asp-for="Last_Name"></label><br />
             <input asp-for="Last_Name" />
+            <span asp-validation-for="Last_Name"></span>
         </div>
         <div class="mrgn">
             <label asp-for="First_Name"></label><br />
             <input asp-for="First_Name" />
+            <span asp-validation-for="First_Name"></span>
         </div>
         <div class="frm mrgn">
             <input class="frm_text" asp-for="Middle_Name" type="text" value="@Model.Middle_Name" />
+            <span asp-validation-for="Middle_Name" class="text-danger"></span>
         </div>
         <div class="mrgn">
             <label asp-for="Email"></label><br />
             <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
         </div>
         <div class="mrgn">День рождения</div>
         <div class="mrgn">
             <input asp-for="BirthDate" type="date" value="@Model.BirthDate" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
         </div>
         <div class="center">
             <input class="enter-submit" type="submit" value="Обновить"/>

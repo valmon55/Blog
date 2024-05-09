@@ -1,4 +1,5 @@
-﻿using ASP.Blog.BLL.ViewModels;
+﻿using ASP.Blog.BLL.Extentions;
+using ASP.Blog.BLL.ViewModels;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
@@ -195,6 +196,12 @@ namespace ASP.Blog.BLL.Controllers
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             var userView = _mapper.Map<UserViewModel>(user);
+            //userView.Year = user.BirthDate.Year;
+            //userView.Month = user.BirthDate.Month;
+            //userView.Day = user.BirthDate.Day;
+
+            //var user = _userManager.GetUserAsync(User);
+            //var editView = _mapper.Map<UserEditViewModel>(user);
 
             return View("EditUser", userView);
         }
@@ -205,16 +212,29 @@ namespace ASP.Blog.BLL.Controllers
         public async Task<IActionResult> Update(UserViewModel model)
         { 
             if (ModelState.IsValid) 
-            { 
+            {
                 var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+                
                 var user = repo.GetUserById(model.Id);
+                user.Convert(model);
                 repo.UpdateUser(user);
+
+                //var result = await _userManager.UpdateAsync(user);
+                //if (result.Succeeded)
+                //{
+                //    return RedirectToAction("AllUsers");
+                //}
+                //else
+                //{
+                //    return RedirectToAction("UserEdit");
+                //}
+                return RedirectToAction("AllUsers");
             }
             else
             {
-                ModelState.AddModelError("", $"Ошибка в модели.");
+                ModelState.AddModelError("", "Некорректные данные");
+                return View("UserEdit", model);
             }
-            return RedirectToAction("Index", "Home");
         }
         [Authorize(Roles = "Admin")]
         [Route("User/Delete")]

@@ -22,18 +22,21 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
             CreateMap<LoginViewModel, User>();
             CreateMap<UserViewModel, User>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
                 .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))
                 .ForMember(x => x.Middle_Name, opt => opt.MapFrom(c => c.Middle_Name))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
-                .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime(c.Year, c.Month, c.Day)));
+                .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => c.BirthDate));
             CreateMap<User, UserViewModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
                 .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))
                 .ForMember(x => x.Middle_Name, opt => opt.MapFrom(c => c.Middle_Name))
+                .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => c.BirthDate))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email));
-                //.ForAllMembers(x, => x.BirthDate, opt => opt.MapFrom(c => c.BirthDate));
+            CreateMap<User, UserEditViewModel>()
+                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id));
             CreateMap<ArticleViewModel,Article>()
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
