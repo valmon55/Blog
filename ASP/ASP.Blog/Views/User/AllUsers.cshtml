@@ -24,15 +24,10 @@
         {
             <div class="article-block">
                 <hr>
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.First_Name />
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.Last_Name />
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.Middle_Name />
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.Day />
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.Month />
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.Year />
-                <input type="text" class="textarea" placeholder="Текст статьи">@user.Email />
-                <a method="get" asp-action="Update" asp-route-id="@user.Id">Редактировать пользователя</a>
-                <form method="post" asp-controller="User" asp-action="Delete" asp-route-Id=@user.Id>
+                <span>ФИО: @user.First_Name @user.Middle_Name @user.Last_Name</span>
+                <span>Email: @user.Email</span>
+                <a method="get" asp-action="Update" asp-route-userId="@user.Id">Редактировать пользователя</a>
+                <form method="post" asp-controller="User" asp-action="Delete" asp-route-userId=@user.Id>
                     <input class="enter_submit" type="submit" value="Удалить пользователя" />
                 </form>
             </div>

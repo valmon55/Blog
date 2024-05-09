@@ -188,7 +188,7 @@ namespace ASP.Blog.BLL.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("Update")]
+        [Route("User/Update")]
         [HttpGet]
         public async Task<IActionResult> Update(string userId)
         {
@@ -200,7 +200,7 @@ namespace ASP.Blog.BLL.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("Update")]
+        [Route("User/Update")]
         [HttpPost]
         public async Task<IActionResult> Update(UserViewModel model)
         { 
@@ -217,15 +217,15 @@ namespace ASP.Blog.BLL.Controllers
             return RedirectToAction("Index", "Home");
         }
         [Authorize(Roles = "Admin")]
-        [Route("Remove")]
+        [Route("User/Delete")]
         [HttpPost]
-        public async Task<IActionResult> Remove(string userId)
+        public async Task<IActionResult> Delete(string userId)
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             repo.DeleteUser(user);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllUsers");
         }
 
     }
