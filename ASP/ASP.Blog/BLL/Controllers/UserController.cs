@@ -196,6 +196,7 @@ namespace ASP.Blog.BLL.Controllers
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             var userView = _mapper.Map<UserViewModel>(user);
+            userView.BirthDate = user.BirthDate;
             //userView.Year = user.BirthDate.Year;
             //userView.Month = user.BirthDate.Month;
             //userView.Day = user.BirthDate.Day;
