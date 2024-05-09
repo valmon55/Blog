@@ -11,8 +11,8 @@ namespace ASP.Blog.DAL.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        BlogContext _db;
-        public UserRepository(BlogContext db) : base(db) { _db = db; }
+        BlogContext db;
+        public UserRepository(BlogContext db) : base(db) { this.db = db; }
 
         public List<User> GetUsers() 
         {
@@ -29,10 +29,10 @@ namespace ASP.Blog.DAL.Repositories
 
                 var _user = user;
 
-                if (_db.Roles.Where(x => x.Name == "User").FirstOrDefault() == null)
+                if (db.Roles.Where(x => x.Name == "User").FirstOrDefault() == null)
                 {
-                    _db.Roles.Add(new UserRole() { Name = "User", Description = "Ordinary User" });
-                    _db.SaveChanges();
+                    db.Roles.Add(new UserRole() { Name = "User", Description = "Ordinary User" });
+                    db.SaveChanges();
                 }
                 //_user.userRole = _db.UserRoles.Where(x => x.;
             }

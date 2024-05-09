@@ -55,6 +55,7 @@ namespace ASP.Blog
                 .AddCustomRepository<Comment, CommentRepository>()
                 .AddCustomRepository<Tag, TagRepository>()
                 .AddCustomRepository<Article_Tags, Article_TagsRepository>()
+                .AddCustomRepository<User, UserRepository>()
                 .AddIdentity<User, UserRole>(opts =>
                 {
                     opts.Password.RequiredLength = 6;

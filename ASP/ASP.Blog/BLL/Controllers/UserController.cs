@@ -171,16 +171,50 @@ namespace ASP.Blog.BLL.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [Route("AllUsers")]
+        [HttpGet]
+        public async Task<IActionResult> AllUsers()
+        {
+            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+            var users = repo.GetUsers();
+            var usersView = new List<UserViewModel>();
+            foreach(var user in users)
+            {
+                usersView.Add(_mapper.Map<UserViewModel>(user));
+            }
+
+            return View(usersView);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("Update")]
+        [HttpGet]
+        public async Task<IActionResult> Update(string userId)
+        {
+            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+            var user = repo.GetUserById(userId);
+            var userView = _mapper.Map<UserViewModel>(user);
+
+            return View("EditUser", userView);
+        }
+
         [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(UserEditViewModel model)
+        public async Task<IActionResult> Update(UserViewModel model)
         { 
             if (ModelState.IsValid) 
             { 
-            
-            } 
-            return View("Update", model);
+                var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+                var user = repo.GetUserById(model.Id);
+                repo.UpdateUser(user);
+            }
+            else
+            {
+                ModelState.AddModelError("", $"Ошибка в модели.");
+            }
+            return RedirectToAction("Index", "Home");
         }
         [Authorize(Roles = "Admin")]
         [Route("Remove")]
@@ -188,7 +222,8 @@ namespace ASP.Blog.BLL.Controllers
         public async Task<IActionResult> Remove(string userId)
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            //repo.
+            var user = repo.GetUserById(userId);
+            repo.DeleteUser(user);
 
             return RedirectToAction("Index", "Home");
         }

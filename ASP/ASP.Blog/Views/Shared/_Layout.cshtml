@@ -34,6 +34,10 @@
                             @if(SignInManager.IsSignedIn(User))
                             {
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="AllUserArticles">Мои Статьи</a>
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Пользователи</a>
+                                }
                             }
                             else
                             {

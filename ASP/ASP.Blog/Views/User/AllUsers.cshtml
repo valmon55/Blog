@@ -1,0 +1,48 @@
+﻿@model List<ASP.Blog.BLL.ViewModels.UserViewModel>
+
+@using ASP.Blog.Data.Entities;
+@using Microsoft.AspNetCore.Identity;
+@using ASP.Blog.BLL.ViewModels;
+@inject SignInManager<User> SignInManager;
+@inject UserManager<User> UserManager;
+
+
+@{
+    ViewData["Title"] = "Пользователи";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+@*<h2></h2>*@
+
+<div>    
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h4>Пользователи</h4>
+        @foreach(var user in Model)
+        {
+            <div class="article-block">
+                <hr>
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.First_Name />
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.Last_Name />
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.Middle_Name />
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.Day />
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.Month />
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.Year />
+                <input type="text" class="textarea" placeholder="Текст статьи">@user.Email />
+                <a method="get" asp-action="Update" asp-route-id="@user.Id">Редактировать пользователя</a>
+                <form method="post" asp-controller="User" asp-action="Delete" asp-route-Id=@user.Id>
+                    <input class="enter_submit" type="submit" value="Удалить пользователя" />
+                </form>
+            </div>
+        }
+        <div>
+            <hr>
+            <form method="get" asp-controller="User" asp-action="AddUser">
+                <input type="submit" value="Добавить пользователя" />
+            </form>
+            <hr>
+        </div>
+    }
+</div>
