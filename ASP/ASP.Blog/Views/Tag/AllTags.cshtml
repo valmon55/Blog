@@ -12,7 +12,9 @@
             <hr>
             <textarea class="textarea" placeholder="Тег">@tag.Tag_Name</textarea>
             <a method="get" asp-action="Update" asp-route-id=@tag.Id >Редактировать</a>
-            <a method="post" asp-controller="Tag" asp-action="Delete" asp-route-id=@tag.Id >Удалить</a>
+            <form method="post" asp-controller="Tag" asp-action="Delete" asp-route-id=@tag.Id>
+                <input class="enter_submit" type="submit" value="Удалить" />
+            </form>
         </div>
     }
     <div>
