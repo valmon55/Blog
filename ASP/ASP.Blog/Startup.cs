@@ -43,11 +43,6 @@ namespace ASP.Blog
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             
-            //services.AddMvc();
-            //services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddUoW();
-            //services.AddUnitOfWork();
-            
             services
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
                 .AddUnitOfWork()
@@ -87,7 +82,6 @@ namespace ASP.Blog
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseDatabaseErrorPage():
             }
             else
             {

@@ -31,7 +31,6 @@ namespace ASP.Blog.BLL.ViewModels
         [Display(Name = "День")]
         public int? Day { get; set; }
 
-        //public DateTime BirthDate { get; set; }
         [Required(ErrorMessage = "Обязательно для заполнения")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль", Prompt = "Введите пароль")]

@@ -37,7 +37,6 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> AddArticle() 
         {
-            ///TODO: Как передать сюда авторизованного пользователя?
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(new ArticleViewModel(user));    
         }
@@ -79,7 +78,7 @@ namespace ASP.Blog.Controllers
 
         [Route("AllArticles")]
         [HttpGet]
-        public async Task<IActionResult> AllArticles()
+        public IActionResult AllArticles()
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var articles = repo.GetAll();
@@ -125,8 +124,6 @@ namespace ASP.Blog.Controllers
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
                 model.User = user;
-                //var article = _mapper.Map<Article>(model);
-                //var article = _mapper.Map<Article>(new ArticleViewModel(user) { Id = Id, Content = Content });
                 var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
                 var article = repo.GetArticleById(model.Id);
                 article.Convert(model);
@@ -135,14 +132,5 @@ namespace ASP.Blog.Controllers
             }
             return RedirectToAction("AllUserArticles", "Article");
         }
-
-        //[Route("Get")]
-        //[HttpGet]
-        //public async Task<IActionResult> Get(ArticleViewModel article) 
-        //{
-        //    //var author = await _userManager.FindByIdAsync(article.User.Id);
-        //    //Console.WriteLine($"Автор: {author.First_Name} {author.Email}");
-        //    return View();
-        //}
     }
 }

@@ -45,13 +45,11 @@ namespace ASP.Blog.BLL.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            //return View("Register");
             return View(new RegisterViewModel());
         }
 
         [Route("Register")]
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid) 
@@ -63,6 +61,7 @@ namespace ASP.Blog.BLL.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     
+                    ///Создание пользователей с 3 разными ролями
                     //var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
                     //var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
                     var userRole = new UserRole() { Name = "Moderator", Description = "Модератор" };
@@ -91,21 +90,11 @@ namespace ASP.Blog.BLL.Controllers
                 }
             }
             return View(model);
-            //return RedirectToAction("Index");
-        }
-
-        [Authorize(Roles = "Admin")]
-        [Route("Test")]
-        [HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            return View();
-            //return RedirectToAction("Test");
         }
 
         [Route("Login")]
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
         }
@@ -116,47 +105,20 @@ namespace ASP.Blog.BLL.Controllers
             if (ModelState.IsValid) 
             {
                 var user = _mapper.Map<User>(model);
-                //User signedUser = _userManager.FindByEmailAsync(user.Email).Result;
                 User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
                 var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 if (signedUser is null)
                     ModelState.AddModelError("", "Неверный логин!");
-                //В модели не хранится пароль -> Нужно сравнивать в хешированным model.Password
-                //if(signedUser.PasswordHash != 
-                //    _userManager.PasswordHasher.HashPassword(signedUser, model.Password))
-                //    ModelState.AddModelError("", "Неверный пароль!");
 
                 if (signedUser != null)
                 {
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                        //new Claim("UserId", user.Id),
                         new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
                     };
-                    //ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                    //    claims,
-                    //    "AppCookie",
-                    //    ClaimsIdentity.DefaultNameClaimType,
-                    //    ClaimsIdentity.DefaultRoleClaimType
-                    //    );
 
                     await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent:false, claims);
-
-                    //await _signInManager.Context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    //    new ClaimsPrincipal(claimsIdentity)
-                    //    );
-                    //var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, model.Password, false, false);
-                    //if (result.Succeeded)
-                    //{
-                    //    return RedirectToAction("Index", "Home");
-                    //}
-                    //else
-                    //{
-                    //    ModelState.AddModelError("", "Неверный логин или пароль");
-                    //}
                 }
                 else
                 {
@@ -175,7 +137,7 @@ namespace ASP.Blog.BLL.Controllers
 
         [Route("AllUsers")]
         [HttpGet]
-        public async Task<IActionResult> AllUsers()
+        public IActionResult AllUsers()
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var users = repo.GetUsers();
@@ -191,18 +153,12 @@ namespace ASP.Blog.BLL.Controllers
         [Authorize(Roles = "Admin")]
         [Route("User/Update")]
         [HttpGet]
-        public async Task<IActionResult> Update(string userId)
+        public IActionResult Update(string userId)
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             var userView = _mapper.Map<UserViewModel>(user);
             userView.BirthDate = user.BirthDate;
-            //userView.Year = user.BirthDate.Year;
-            //userView.Month = user.BirthDate.Month;
-            //userView.Day = user.BirthDate.Day;
-
-            //var user = _userManager.GetUserAsync(User);
-            //var editView = _mapper.Map<UserEditViewModel>(user);
 
             return View("EditUser", userView);
         }
@@ -210,7 +166,7 @@ namespace ASP.Blog.BLL.Controllers
         [Authorize(Roles = "Admin")]
         [Route("User/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(UserViewModel model)
+        public IActionResult Update(UserViewModel model)
         { 
             if (ModelState.IsValid) 
             {
@@ -220,15 +176,6 @@ namespace ASP.Blog.BLL.Controllers
                 user.Convert(model);
                 repo.UpdateUser(user);
 
-                //var result = await _userManager.UpdateAsync(user);
-                //if (result.Succeeded)
-                //{
-                //    return RedirectToAction("AllUsers");
-                //}
-                //else
-                //{
-                //    return RedirectToAction("UserEdit");
-                //}
                 return RedirectToAction("AllUsers");
             }
             else
@@ -240,7 +187,7 @@ namespace ASP.Blog.BLL.Controllers
         [Authorize(Roles = "Admin")]
         [Route("User/Delete")]
         [HttpPost]
-        public async Task<IActionResult> Delete(string userId)
+        public IActionResult Delete(string userId)
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);

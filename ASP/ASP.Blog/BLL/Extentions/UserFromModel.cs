@@ -12,7 +12,6 @@ namespace ASP.Blog.BLL.Extentions
             user.First_Name = usereditvm.First_Name;
             user.Email = usereditvm.Email;
             user.BirthDate = usereditvm.BirthDate;
-            //user.UserName = usereditvm.Login;
 
             return user;
         }

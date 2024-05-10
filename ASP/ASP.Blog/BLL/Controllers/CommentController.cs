@@ -33,12 +33,8 @@ namespace ASP.Blog.Controllers
         }
         [Route("AddComment")]
         [HttpGet]
-        public async Task<IActionResult> AddComment(int articleId) 
+        public IActionResult AddComment(int articleId) 
         {
-            //var user = _userManager.FindByNameAsync
-            //var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
-            //var articleRepo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-            //var article = articleRepo.GetArticleById(articleId);
             return View(new CommentViewModel() { ArticleId = articleId} );
         }
         [Route("AddComment")]

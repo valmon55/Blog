@@ -32,13 +32,13 @@ namespace ASP.Blog.Controllers
         }
         [Route("AddTag")]
         [HttpGet]
-        public async Task<IActionResult> AddTag()
+        public IActionResult AddTag()
         {
             return View(new TagViewModel());
         }
         [Route("AddTag")]
         [HttpPost]
-        public async Task<IActionResult> AddTag(TagViewModel model)
+        public IActionResult AddTag(TagViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace ASP.Blog.Controllers
         }
         [Route("AllTags")]
         [HttpGet]
-        public async Task<IActionResult> AllTags()
+        public IActionResult AllTags()
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             var tags = repo.GetAll();
@@ -68,19 +68,18 @@ namespace ASP.Blog.Controllers
         }
         [Route("Tag")]
         [HttpGet]
-        public async Task<IActionResult> TagById(int id)
+        public IActionResult TagById(int id)
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             var tag = repo.GetTagById(id);
             var tagView = _mapper.Map<TagViewModel>(tag);
 
-            //return View();
             //пока неизвестно где буду использовать
             return RedirectToAction("AllTags", "Tag");
         }
         [Route("DeleteTag")]
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             repo.DeleteTag(repo.GetTagById(id));
@@ -89,7 +88,7 @@ namespace ASP.Blog.Controllers
         }
         [Route("Tag/Update")]
         [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public IActionResult Update(int id)
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             var tag = repo.GetTagById(id);
@@ -99,7 +98,7 @@ namespace ASP.Blog.Controllers
         }
         [Route("Tag/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(TagViewModel model)
+        public IActionResult Update(TagViewModel model)
         {
             if(ModelState.IsValid) 
             {

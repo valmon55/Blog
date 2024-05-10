@@ -26,7 +26,6 @@ namespace ASP.Blog.DAL.Repositories
         {
             if (userRole != null)
             {
-
                 var _user = user;
 
                 if (db.Roles.Where(x => x.Name == "User").FirstOrDefault() == null)
@@ -34,7 +33,6 @@ namespace ASP.Blog.DAL.Repositories
                     db.Roles.Add(new UserRole() { Name = "User", Description = "Ordinary User" });
                     db.SaveChanges();
                 }
-                //_user.userRole = _db.UserRoles.Where(x => x.;
             }
             Set.Add(user); 
         }

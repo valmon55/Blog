@@ -40,11 +40,9 @@ namespace ASP.Blog.DAL.UoW
             if (!_repositories.ContainsKey(type))
             {
                 _repositories[type] = new Repository<TEntity>(_blogContext);
-                //_repositories[type] = (IRepository<TEntity>)_blogContext.Set<TEntity>();
             }
             return (IRepository<TEntity>)_repositories[type];
         }
-
         public int SaveChanges(bool ensureAutoHistory = false)
         {
             throw new NotImplementedException();
