@@ -20,7 +20,7 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.Blog.BLL.Controllers
+namespace ASP.Blog.Controllers
 {
     public class UserController : Controller
     {
@@ -31,7 +31,7 @@ namespace ASP.Blog.BLL.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
         public UserController(UserManager<User> userManager,
-                SignInManager<User> signInManager, 
+                SignInManager<User> signInManager,
                 IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
@@ -52,7 +52,7 @@ namespace ASP.Blog.BLL.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var user = _mapper.Map<User>(model);
 
@@ -60,7 +60,7 @@ namespace ASP.Blog.BLL.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    
+
                     ///Создание пользователей с 3 разными ролями
                     //var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
                     //var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
@@ -78,15 +78,15 @@ namespace ASP.Blog.BLL.Controllers
 
                     await _signInManager.RefreshSignInAsync(currentUser);
 
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
-                    
+
                 }
             }
             return View(model);
@@ -102,7 +102,7 @@ namespace ASP.Blog.BLL.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var user = _mapper.Map<User>(model);
                 User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
@@ -118,7 +118,7 @@ namespace ASP.Blog.BLL.Controllers
                         new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
                     };
 
-                    await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent:false, claims);
+                    await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace ASP.Blog.BLL.Controllers
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var users = repo.GetUsers();
             var usersView = new List<UserViewModel>();
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 usersView.Add(_mapper.Map<UserViewModel>(user));
             }
@@ -167,11 +167,11 @@ namespace ASP.Blog.BLL.Controllers
         [Route("User/Update")]
         [HttpPost]
         public IActionResult Update(UserViewModel model)
-        { 
-            if (ModelState.IsValid) 
+        {
+            if (ModelState.IsValid)
             {
                 var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-                
+
                 var user = repo.GetUserById(model.Id);
                 user.Convert(model);
                 repo.UpdateUser(user);
