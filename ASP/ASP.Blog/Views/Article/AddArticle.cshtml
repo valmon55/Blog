@@ -17,6 +17,10 @@
 <div class="article-block">    
     @if (SignInManager.IsSignedIn(User))
     {
+        @foreach(var tag in Model.Tags)
+        {
+            <span><input type="checkbox" value=@tag.ID/> @tag.Tag_Name</span>
+        }
         <form method="post" asp-controller="Article" asp-action="AddArticle">
             <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
             <div class="txt-size">

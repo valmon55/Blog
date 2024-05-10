@@ -38,7 +38,9 @@ namespace ASP.Blog.Controllers
         public async Task<IActionResult> AddArticle() 
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(new ArticleViewModel(user));    
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            var allTags = repo.GetTags();
+            return View(new ArticleViewModel(user) { Tags = allTags });    
         }
         [Authorize]
         [Route("AddArticle")]
