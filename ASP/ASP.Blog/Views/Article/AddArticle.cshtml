@@ -17,11 +17,12 @@
 <div class="article-block">    
     @if (SignInManager.IsSignedIn(User))
     {
-        @foreach(var tag in Model.Tags)
-        {
-            <span><input type="checkbox" value=@tag.ID/> @tag.Tag_Name</span>
-        }
         <form method="post" asp-controller="Article" asp-action="AddArticle">
+            @foreach (var tag in Model.Tags)
+            {
+                <input type="checkbox" name="SelectedTags" value=@tag.ID />
+                <label> @tag.Tag_Name</label>
+            }
             <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
             <div class="txt-size">
                 <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" ></textarea>

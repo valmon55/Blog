@@ -45,12 +45,22 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("AddArticle")]
         [HttpPost]
-        public async Task<IActionResult> AddArticle(ArticleViewModel model)
+        public async Task<IActionResult> AddArticle(ArticleViewModel model, List<int> SelectedTags)
         {
             if(ModelState.IsValid) 
             {
+                var tagsId = new List<int>();
+                var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+                SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID) );
+                var tags = new List<Tag>();
+                foreach(var tag in tagsId)
+                {
+                    tags.Add(tagRepo.GetTagById((int)tag));
+                }
+
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 model.User = user;
+                model.Tags = tags;
                 var article = _mapper.Map<Article>(model);
                 var repo = _unitOfWork.GetRepository<Article>();
                 repo.Create(article);
@@ -59,7 +69,7 @@ namespace ASP.Blog.Controllers
             {
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("AllUserArticles");
         }
         [Authorize]
         [Route("AllUserArticles")]
