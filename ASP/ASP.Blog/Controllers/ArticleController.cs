@@ -78,7 +78,7 @@ namespace ASP.Blog.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-            var articles = repo.GetArticleByUserId(user.Id);
+            var articles = repo.GetArticlesByUserId(user.Id);
             var articlesView = new List<ArticleViewModel>();
             foreach (var article in articles) 
             {

@@ -30,6 +30,10 @@
         {
             <div class="article-block">
                 <hr>
+                @foreach (var tag in article.Tags)
+                {
+                    <label> ✔ @tag.Tag_Name</label>
+                }
                 <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>
                 <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@article.Id>Добавить комментарий</a>
                 <a method="get" asp-action="AllArticleComments" asp-controller="Comment" asp-route-articleId=@article.Id>Комментарии</a>

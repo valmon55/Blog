@@ -20,9 +20,9 @@ namespace ASP.Blog.DAL.Repositories
         {
             return Set.Where(x => x.ID == id).FirstOrDefault();
         }
-        public List<Article> GetArticleByUserId(string userId)
+        public List<Article> GetArticlesByUserId(string userId)
         {
-            return Set.Where(x => x.UserId == userId).ToList();
+            return Set.Include(c => c.Tags).Where(x => x.UserId == userId).ToList();
         }
         public void AddArticle(Article article)
         {
