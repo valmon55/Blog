@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASP.Blog.Controllers
@@ -123,7 +124,35 @@ namespace ASP.Blog.Controllers
             var article = repo.GetArticleById(Id);
             article.User = user;
             var articleView = _mapper.Map<ArticleViewModel>(article);
-            return View("EditArticle", articleView);
+
+            var tagRepo =_unitOfWork.GetRepository<Tag>() as TagRepository;
+            var allTags = tagRepo.GetTags();
+
+            var checkedTags = article.Tags;
+
+            var checkedTagsDic = new Dictionary<Tag, bool>();
+
+            foreach (var tag in allTags) 
+            {
+                checkedTagsDic.Add(tag, false);
+                foreach (var checkedTag in checkedTags)
+                {
+                    if (tag.Tag_Name == checkedTag.Tag_Name) 
+                    {
+                        checkedTagsDic[tag] = true;
+                    }
+                }
+            }
+
+            return View("EditArticle", new ArticleViewModel(user) 
+                    { Tags = allTags, 
+                      CheckedTagsDic = checkedTagsDic,
+                      ArticleDate = articleView.ArticleDate,
+                      Title = articleView.Title,
+                      Content = articleView.Content
+            });
+
+            //return View("EditArticle", articleView);
         }
 
         [Authorize]

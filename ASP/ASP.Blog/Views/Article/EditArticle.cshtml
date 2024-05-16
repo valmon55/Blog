@@ -18,10 +18,17 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <form method="post" asp-controller="Article" asp-action="Update" >
-            @foreach (var tag in Model.Tags)
+            @foreach (var tag in Model.CheckedTagsDic)
             {
-                <input type="checkbox" name="SelectedTags" value=@tag.ID />
-                <label> @tag.Tag_Name</label>
+                if(tag.Value == true)
+                {
+                    <input type="checkbox" name="SelectedTags" checked="checked" value=@tag.Key.ID />
+                }
+                else
+                {
+                    <input type="checkbox" name="SelectedTags" value=@tag.Key.ID />
+                }
+                <label> @tag.Key.Tag_Name</label>
             }
             <span >Автор: @Model.User.First_Name @Model.User.Last_Name</span>
             <div class="article-block">
