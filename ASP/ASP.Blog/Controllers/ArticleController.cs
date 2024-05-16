@@ -120,7 +120,7 @@ namespace ASP.Blog.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-            var article = repo.Get(Id);
+            var article = repo.GetArticleById(Id);
             article.User = user;
             var articleView = _mapper.Map<ArticleViewModel>(article);
             return View("EditArticle", articleView);
@@ -129,13 +129,24 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model)
+        public async Task<IActionResult> Update(ArticleViewModel model, List<int> SelectedTags)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
+                var tagsId = new List<int>();
+                var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+                SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID));
+                var tags = new List<Tag>();
+                foreach (var tag in tagsId)
+                {
+                    tags.Add(tagRepo.GetTagById((int)tag));
+                }
+
                 model.User = user;
+                model.Tags= tags;
+
                 var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
                 var article = repo.GetArticleById(model.Id);
                 article.Convert(model);
