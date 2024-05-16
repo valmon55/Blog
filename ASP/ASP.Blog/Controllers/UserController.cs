@@ -54,22 +54,23 @@ namespace ASP.Blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                ///Создание пользователей с 3 разными ролями
+                //var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
+                var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
+                //var userRole = new UserRole() { Name = "Moderator", Description = "Модератор" };
+
+                //var roles = _roleManager.Roles.ToList();
+                if (!_roleManager.RoleExistsAsync(userRole.Name).Result)
+                {
+                    await _roleManager.CreateAsync(userRole);
+                }
+
                 var user = _mapper.Map<User>(model);
 
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-
-                    ///Создание пользователей с 3 разными ролями
-                    //var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
-                    //var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
-                    var userRole = new UserRole() { Name = "Moderator", Description = "Модератор" };
-
-                    if (_roleManager.GetRoleNameAsync(userRole).Result != userRole.Name)
-                    {
-                        await _roleManager.CreateAsync(userRole);
-                    }
 
                     var currentUser = await _userManager.FindByIdAsync(Convert.ToString(user.Id));
 

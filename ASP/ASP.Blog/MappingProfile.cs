@@ -45,7 +45,9 @@ namespace ASP.Blog.BLL
             CreateMap<ArticleViewModel,Article>()
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
-                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.User.Id));
+                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.User.Id))
+                //.ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags))
+                ;
 
             CreateMap<Article, ArticleViewModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))

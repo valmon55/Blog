@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ASP.Blog.Data.Entities
 {
@@ -6,5 +7,6 @@ namespace ASP.Blog.Data.Entities
     {
         public int ID { get; set; }
         public string Tag_Name { get; set; }
+        public List<Article> Articles { get; set; }
     }
 }
