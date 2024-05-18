@@ -41,12 +41,18 @@
                     <div>Заголовок</div>
                     <input placeholder="Заголовок" asp-for="Title" />
                 </div>
-
-                <textarea class="textarea" placeholder="Текст статьи" asp-for="Content">@Model.Content</textarea>
+                <div class="mrgn">
+                    <div>Текст статьи</div>
+                    <textarea class="textarea" placeholder="Текст статьи" asp-for="Content">@Model.Content</textarea>
+                </div>
             <div>
-                <input class="enter-submit" type="submit" value="Сохранить"/>
+                <input class="enter-submit tag-block" type="submit" value="Сохранить"/>
             </div>
         </form>
+        <div>
+            <a method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+        </div>
+
     }
     else
     {

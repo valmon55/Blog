@@ -32,14 +32,14 @@
                 <hr>
                 @foreach (var tag in article.Tags)
                 {
-                    <label> ✔ @tag.Tag_Name</label>
+                    <label class="badge badge-primary"> ✔ @tag.Tag_Name</label>
                 }
                 <div class="mrgn">
                     <div>Заголовок</div>
                     <input placeholder="Заголовок" asp-for=@article.Title />
                 </div>
                 <div class="txt-size">
-                    <div>Описание</div>
+                    <div>Текст статьи</div>
                     <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>
                 </div>
                 <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@article.Id>Добавить комментарий</a>

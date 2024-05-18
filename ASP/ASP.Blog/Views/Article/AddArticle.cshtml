@@ -29,13 +29,16 @@
                 <input placeholder="Заголовок" asp-for="Title" />
             </div>
             <div class="txt-size">
-                <div>Описание</div>
+                <div>Текст статьи</div>
                 <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" ></textarea>
             </div>
             <div>
                 <input type="submit" value="Добавить"/>
             </div>
         </form>
+        <div>
+            <a method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+        </div>
     }
     else
     {
