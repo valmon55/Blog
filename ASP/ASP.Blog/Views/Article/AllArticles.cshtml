@@ -34,7 +34,14 @@
                 {
                     <label> ✔ @tag.Tag_Name</label>
                 }
-                <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>
+                <div class="mrgn">
+                    <div>Заголовок</div>
+                    <input placeholder="Заголовок" asp-for=@article.Title />
+                </div>
+                <div class="txt-size">
+                    <div>Описание</div>
+                    <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>
+                </div>
                 <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@article.Id>Добавить комментарий</a>
                 <a method="get" asp-action="AllArticleComments" asp-controller="Comment" asp-route-articleId=@article.Id>Комментарии</a>
                 <a method="get" asp-action="Update" asp-route-id="@article.Id">Редактировать</a>

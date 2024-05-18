@@ -37,9 +37,14 @@
 @*                <label asp-for="Id">@Model.Id</label>
                 <label asp-for="User">@Model.User</label>
 *@                
+                <div class="mrgn">
+                    <div>Заголовок</div>
+                    <input placeholder="Заголовок" asp-for="Title" />
+                </div>
+
                 <textarea class="textarea" placeholder="Текст статьи" asp-for="Content">@Model.Content</textarea>
             <div>
-                <input type="submit" value="Сохранить"/>
+                <input class="enter-submit" type="submit" value="Сохранить"/>
             </div>
         </form>
     }

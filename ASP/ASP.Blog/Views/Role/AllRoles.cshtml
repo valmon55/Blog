@@ -1,0 +1,29 @@
+﻿@model List<ASP.Blog.BLL.ViewModels.Tag.TagViewModel>
+
+@using ASP.Blog.DAL.Entities
+
+@{
+    ViewData["Title"] = "Все роли";
+}
+<div>
+    @foreach(var tag in Model)
+    {
+        <div class="tag-block">
+            <hr>
+            <div class="mrgn">Название</div>
+            <input placeholder="Название" />
+            <div class="mrgn">Описание</div>
+            <textarea class="textarea" placeholder="Описание">@tag.Tag_Name</textarea>
+            <a method="get" asp-action="Update" asp-route-id=@tag.Id >Редактировать</a>
+            <form method="post" asp-controller="User" asp-action="DeleteRole" asp-route-id=@tag.Id>
+                <input class="enter_submit" type="submit" value="Удалить" />
+            </form>
+        </div>
+    }
+    <div>
+        <hr>
+        <form method="get" asp-controller="User" asp-action="AddRole">
+            <input class="enter_submit" type="submit" value="Добавить" />
+        </form>
+    </div>
+</div>

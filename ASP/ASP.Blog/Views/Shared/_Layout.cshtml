@@ -41,13 +41,19 @@
                             }
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tag" asp-action="AllTags">Теги</a>
+                        </li>
+                        <li class="nav-item">
                             @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                             {                                
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Пользователи</a>
                             }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tag" asp-action="AllTags">Теги</a>
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {                                
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllRoles">Роли</a>
+                            }
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-right">
