@@ -1,0 +1,43 @@
+﻿@model ASP.Blog.BLL.ViewModels.Article.ArticleViewModel
+
+@using ASP.Blog.Data.Entities;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager;
+@inject UserManager<User> UserManager;
+
+
+@{
+    ViewData["Title"] = "Статья";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="article-block">    
+    <div class="mrgn">
+        <h5>@Model.Title</h5>
+    </div>
+    @foreach (var tag in Model.Tags)
+    {
+        <input type="checkbox" name="SelectedTags" value=@tag.ID />
+        <label> @tag.Tag_Name</label>
+    }
+    <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
+    <div class="txt-size">
+        <div>Текст статьи</div>
+        <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" ></textarea>
+    </div>
+    <h6>Комментарии к статье</h6>
+    @foreach (var comment in Model.Comments)
+    {
+        <div>
+            <span>@comment.Comment_Text</span>
+        </div>
+    }
+    <div>
+        <a method="get" asp-action=>Оставить комментарий</a>
+    </div>
+    <div>
+        <a method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+    </div>
+</div>

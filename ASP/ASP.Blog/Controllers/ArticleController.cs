@@ -105,8 +105,12 @@ namespace ASP.Blog.Controllers
         }
         [Route("ViewArticle")]
         [HttpGet]
-        public IActionResult ViewArticle()
-        { return View(new ArticleViewModel()); }
+        public IActionResult ViewArticle(int Id)
+        { 
+            var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
+            var article = repo.GetArticleById(Id);
+            return View(new ArticleViewModel()); 
+        }
 
         [Authorize]
         [Route("Delete")]

@@ -12,6 +12,7 @@ namespace ASP.Blog.BLL.ViewModels.Article
         public string Content { get; set; }
         public Entity.User User { get; set; }
         public List<Entity.Tag> Tags { get; set; }
+        public List<Entity.Comment> Comments { get; set; }
         public Dictionary<Entity.Tag, bool> CheckedTagsDic { get; set; }
         public ArticleViewModel(Entity.User user) => User = user;
         public ArticleViewModel() { }
