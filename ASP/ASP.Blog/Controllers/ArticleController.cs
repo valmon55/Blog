@@ -103,6 +103,11 @@ namespace ASP.Blog.Controllers
 
             return View(articlesView);
         }
+        [Route("ViewArticle")]
+        [HttpGet]
+        public IActionResult ViewArticle()
+        { return View(new ArticleViewModel()); }
+
         [Authorize]
         [Route("Delete")]
         [HttpPost]
