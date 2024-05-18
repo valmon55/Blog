@@ -19,6 +19,10 @@ namespace ASP.Blog.DAL.Repositories
         {
             return Set.AsEnumerable().Where(x => x.ID == id).FirstOrDefault();
         }
+        public List<Comment> GetCommentsByArticleId(int articleId) 
+        { 
+            return Set.AsEnumerable().Where(c => c.ArticleId == articleId).ToList();
+        }
         public void AddComment(Comment comment)
         {
             Set.Add(comment);

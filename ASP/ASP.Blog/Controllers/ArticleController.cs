@@ -109,7 +109,13 @@ namespace ASP.Blog.Controllers
         { 
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var article = repo.GetArticleById(Id);
-            return View(new ArticleViewModel()); 
+            var commentRepo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
+            var comments = commentRepo.GetCommentsByArticleId(Id);
+
+            var articleView = _mapper.Map<ArticleViewModel>(article);
+            articleView.Comments = comments;
+
+            return View("Article", articleView); 
         }
 
         [Authorize]
