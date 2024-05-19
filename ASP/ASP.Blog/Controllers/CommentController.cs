@@ -56,7 +56,7 @@ namespace ASP.Blog.Controllers
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
 
-            return RedirectToAction("ViewArticle", "Article", model.ArticleId);
+            return RedirectToAction("ViewArticle", "Article", new { Id = model.ArticleId });
         }
         [Route("AllArticleComments")]
         [HttpGet]
@@ -84,7 +84,7 @@ namespace ASP.Blog.Controllers
             var articleId = comment.ArticleId;
             repo.Delete(comment);
 
-            return RedirectToAction("ViewArticle", "Article", articleId);
+            return RedirectToAction("ViewArticle", "Article", new { Id = articleId });
         }
         [Route("Comment/Update")]
         [HttpGet]
@@ -116,7 +116,7 @@ namespace ASP.Blog.Controllers
                 ModelState.AddModelError("", "Ошибка в модели!");
                 return RedirectToAction("AllUserArticles", "Article");
             }
-            return RedirectToAction("AllArticleComments", "Comment", articleId);
+            return RedirectToAction("ViewArticle", "Article", new { Id = articleId });
         }
     }
 }
