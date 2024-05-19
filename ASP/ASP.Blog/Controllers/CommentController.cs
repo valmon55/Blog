@@ -56,7 +56,7 @@ namespace ASP.Blog.Controllers
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
 
-            return RedirectToAction("AllUserArticles", "Article");
+            return RedirectToAction("ViewArticle", "Article", model.ArticleId);
         }
         [Route("AllArticleComments")]
         [HttpGet]
@@ -84,7 +84,7 @@ namespace ASP.Blog.Controllers
             var articleId = comment.ArticleId;
             repo.Delete(comment);
 
-            return RedirectToAction("AllArticleComments", "Comment", articleId);
+            return RedirectToAction("ViewArticle", "Article", articleId);
         }
         [Route("Comment/Update")]
         [HttpGet]

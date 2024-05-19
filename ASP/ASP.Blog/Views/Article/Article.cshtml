@@ -19,23 +19,32 @@
     </div>
     @foreach (var tag in Model.Tags)
     {
-        <input type="checkbox" name="SelectedTags" value=@tag.ID />
-        <label> @tag.Tag_Name</label>
+        <label class="badge badge-primary"> ✔ @tag.Tag_Name</label>
     }
     <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
     <div class="txt-size">
-        <div>Текст статьи</div>
-        <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" ></textarea>
+        <h4>@Model.Title</h4>
+        <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" >@Model.Content</textarea>
     </div>
     <h6>Комментарии к статье</h6>
     @foreach (var comment in Model.Comments)
     {
         <div>
+            <div>
+                <span>@comment.User.Email </span>
+                <span>@comment.User.UserName</span>
+            </div>
             <span>@comment.Comment_Text</span>
+        </div>
+        <div>
+            <a method="get" asp-controller="Comment" asp-action="Update" asp-route-id=@comment.ID>Редактировать</a>
+            <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.ID>
+                <input class="enter_submit" type="submit" value="Удалить" />
+            </form>
         </div>
     }
     <div>
-        <a method="get" asp-action=>Оставить комментарий</a>
+        <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@Model.Id >Оставить комментарий</a>
     </div>
     <div>
         <a method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>

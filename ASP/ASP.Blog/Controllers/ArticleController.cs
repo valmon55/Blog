@@ -94,14 +94,14 @@ namespace ASP.Blog.Controllers
         public IActionResult AllArticles()
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-            var articles = repo.GetAll();
+            var articles = repo.GetArticles();
             var articlesView = new List<ArticleViewModel>();
             foreach (var article in articles)
             {
                 articlesView.Add(_mapper.Map<ArticleViewModel>(article));
             }
 
-            return View(articlesView);
+            return View("AllArticles", articlesView);
         }
         [Route("ViewArticle")]
         [HttpGet]

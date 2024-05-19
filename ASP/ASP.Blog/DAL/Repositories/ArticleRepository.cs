@@ -14,7 +14,7 @@ namespace ASP.Blog.DAL.Repositories
         public ArticleRepository(BlogContext db) : base(db) { }
         public List<Article> GetArticles()
         {
-            return Set.ToList();
+            return Set.Include(t => t.Tags).ToList();
         }
         public Article GetArticleById(int id)
         {
