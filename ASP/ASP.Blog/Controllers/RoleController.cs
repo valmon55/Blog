@@ -86,10 +86,10 @@ namespace ASP.Blog.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Role/Update")]
         [HttpGet]
-        public IActionResult Update(string userId)
+        public IActionResult Update(string roleId)
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            var user = repo.GetUserById(userId);
+            var user = repo.GetUserById(roleId);
             var userView = _mapper.Map<UserViewModel>(user);
             userView.BirthDate = user.BirthDate;
 
@@ -120,11 +120,13 @@ namespace ASP.Blog.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Role/Delete")]
         [HttpPost]
-        public IActionResult Delete(string userId)
+        public async Task<IActionResult> Delete(string roleId)
         {
-            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            var user = repo.GetUserById(userId);
-            repo.DeleteUser(user);
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role != null)
+            {
+                await _roleManager.DeleteAsync(role);
+            }
 
             return RedirectToAction("AllRoles");
         }
