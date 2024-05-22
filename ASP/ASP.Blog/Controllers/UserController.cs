@@ -55,8 +55,8 @@ namespace ASP.Blog.Controllers
             if (ModelState.IsValid)
             {
                 ///Создание пользователей с 3 разными ролями
-                //var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
-                var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
+                var userRole = new UserRole() { Name = "User", Description = "Пользователь" };
+                //var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
                 //var userRole = new UserRole() { Name = "Moderator", Description = "Модератор" };
 
                 //var roles = _roleManager.Roles.ToList();

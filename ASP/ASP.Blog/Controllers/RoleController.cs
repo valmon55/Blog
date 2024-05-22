@@ -55,8 +55,13 @@ namespace ASP.Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = _mapper.Map<UserRole>(model);
-                role.Id = new Guid().ToString();
+                //Инициализируем так, чтобы заполнить ID
+                var role = new UserRole();
+
+                var roleData = _mapper.Map<UserRole>(model);
+                role.Name = roleData.Name;
+                role.Description = roleData.Description;
+                
                 await _roleManager.CreateAsync(role);
             }
             else
@@ -86,28 +91,25 @@ namespace ASP.Blog.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Role/Update")]
         [HttpGet]
-        public IActionResult Update(string roleId)
+        public async Task<IActionResult> UpdateAsync(string roleId)
         {
-            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            var user = repo.GetUserById(roleId);
-            var userView = _mapper.Map<UserViewModel>(user);
-            userView.BirthDate = user.BirthDate;
+            var role = await _roleManager.FindByIdAsync(roleId);
+            var roleView = _mapper.Map<RoleViewModel>(role);
 
-            return View("EditRole", userView);
+            return View("EditRole", roleView);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("Role/Update")]
         [HttpPost]
-        public IActionResult Update(UserViewModel model)
+        public async Task<IActionResult> UpdateAsync(RoleViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-
-                var user = repo.GetUserById(model.Id);
-                user.Convert(model);
-                repo.UpdateUser(user);
+                var role = await _roleManager.FindByIdAsync(model.ID);
+                role.Convert(model);
+                
+                await _roleManager.UpdateAsync(role);
 
                 return RedirectToAction("AllRoles");
             }
