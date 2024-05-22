@@ -1,4 +1,4 @@
-﻿@model ASP.Blog.BLL.ViewModels.Tag.TagViewModel
+﻿@model ASP.Blog.BLL.ViewModels.Role.RoleViewModel
 
 @using ASP.Blog.Data.Entities;
 
@@ -13,22 +13,22 @@
 <hr>
 <div>Название</div>
 <div class="tag-block">
-    <form class="frm" method="post" asp-controller="User" asp-action="AddRole">
+    <form class="frm" method="post" asp-controller="Role" asp-action="AddRole">
         <div>
             <div class="mrgn">
-                <label >Название</label><br />
-                <span class="text-danger" ></span>
+                <div>Название роли</div><br />
+                <input placeholder="Название роли" asp-for="Name" />
             </div>
         </div>
         <div>
             <div class="mrgn">
-                <label >Описание</label><br />
-                <textarea class="mrgn textarea" placeholder="Описание" ></textarea>
+                <label>Описание</label><br />
+                <textarea class="mrgn textarea" placeholder="Описание" asp-for="Description" ></textarea>
             </div>
         </div>
         <div>
             <input class="enter_submit" type="submit" value="Добавить" />
         </div>
     </form>
-    <a method="get" asp-action="AllRoles" asp-controller="User">Перейти к списку всех ролей</a>
+    <a method="get" asp-action="AllRoles" asp-controller="Role">Перейти к списку всех ролей</a>
 </div>

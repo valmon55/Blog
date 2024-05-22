@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.BLL.Extentions;
 using ASP.Blog.BLL.ViewModels;
+using ASP.Blog.BLL.ViewModels.Comment;
 using ASP.Blog.BLL.ViewModels.Role;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
@@ -42,6 +43,30 @@ namespace ASP.Blog.Controllers
             _roleManager = roleManager;
         }
 
+        [Route("Role/AddRole")]
+        [HttpGet]
+        public IActionResult AddRole()
+        {
+            return View(new RoleViewModel());
+        }
+        [Route("Role/AddRole")]
+        [HttpPost]
+        public async Task<IActionResult> AddRole(RoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var role = _mapper.Map<UserRole>(model);
+                role.Id = new Guid().ToString();
+                await _roleManager.CreateAsync(role);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Ошибка в модели!");
+            }
+
+            return RedirectToAction("AllRoles", "Role");
+        }
+
 
         [Route("AllRoles")]
         [HttpGet]
@@ -68,11 +93,11 @@ namespace ASP.Blog.Controllers
             var userView = _mapper.Map<UserViewModel>(user);
             userView.BirthDate = user.BirthDate;
 
-            return View("EditUser", userView);
+            return View("EditRole", userView);
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("User/Update")]
+        [Route("Role/Update")]
         [HttpPost]
         public IActionResult Update(UserViewModel model)
         {
@@ -84,16 +109,16 @@ namespace ASP.Blog.Controllers
                 user.Convert(model);
                 repo.UpdateUser(user);
 
-                return RedirectToAction("AllUsers");
+                return RedirectToAction("AllRoles");
             }
             else
             {
                 ModelState.AddModelError("", "Некорректные данные");
-                return View("UserEdit", model);
+                return View("RoleEdit", model);
             }
         }
         [Authorize(Roles = "Admin")]
-        [Route("User/Delete")]
+        [Route("Role/Delete")]
         [HttpPost]
         public IActionResult Delete(string userId)
         {
@@ -101,7 +126,7 @@ namespace ASP.Blog.Controllers
             var user = repo.GetUserById(userId);
             repo.DeleteUser(user);
 
-            return RedirectToAction("AllUsers");
+            return RedirectToAction("AllRoles");
         }
 
     }
