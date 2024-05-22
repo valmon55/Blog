@@ -1,29 +1,39 @@
-﻿@model List<ASP.Blog.BLL.ViewModels.Tag.TagViewModel>
+﻿@model List<ASP.Blog.BLL.ViewModels.Role.RoleViewModel>
 
 @using ASP.Blog.DAL.Entities
+@using ASP.Blog.Data.Entities; @*????????*@
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager;
+@inject UserManager<User> UserManager;
 
 @{
     ViewData["Title"] = "Все роли";
 }
 <div>
-    @foreach(var tag in Model)
-    {
-        <div class="tag-block">
-            <hr>
-            <div class="mrgn">Название</div>
-            <input placeholder="Название" />
-            <div class="mrgn">Описание</div>
-            <textarea class="textarea" placeholder="Описание">@tag.Tag_Name</textarea>
-            <a method="get" asp-action="Update" asp-route-id=@tag.Id >Редактировать</a>
-            <form method="post" asp-controller="User" asp-action="DeleteRole" asp-route-id=@tag.Id>
-                <input class="enter_submit" type="submit" value="Удалить" />
-            </form>
-        </div>
-    }
     <div>
         <hr>
         <form method="get" asp-controller="User" asp-action="AddRole">
             <input class="enter_submit" type="submit" value="Добавить" />
         </form>
     </div>
+    @if (SignInManager.IsSignedIn(User) &&  User.IsInRole("Admin") )
+    {
+        @foreach (var role in Model)
+        {
+            <div class="tag-block">
+                <hr>
+                <div class="mrgn">Название</div>
+                <div>
+                    <a method="get" asp-action="ViewArticle" asp-route-id=@role.ID><h5>@role.Name</h5></a>
+                </div>
+                <div class="mrgn">Описание</div>
+                <textarea class="textarea" placeholder="Описание">@role.Description</textarea>
+                <a method="get" asp-action="Update" asp-route-id=@role.ID>Редактировать</a>
+                <form method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@role.ID>
+                    <input class="enter_submit" type="submit" value="Удалить" />
+                </form>
+
+            </div>
+        }
+    }
 </div>

@@ -1,7 +1,9 @@
 ﻿using ASP.Blog.BLL.ViewModels;
 using ASP.Blog.BLL.ViewModels.Article;
 using ASP.Blog.BLL.ViewModels.Comment;
+using ASP.Blog.BLL.ViewModels.Role;
 using ASP.Blog.BLL.ViewModels.Tag;
+using ASP.Blog.DAL.Entities;
 using ASP.Blog.Data.Entities;
 using AutoMapper;
 using System;
@@ -41,6 +43,16 @@ namespace ASP.Blog.BLL
 
             CreateMap<User, UserEditViewModel>()
                 .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id));
+
+            CreateMap<UserRole, RoleViewModel>()
+                .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
+                .ForMember(x => x.Name, opt => opt.MapFrom(c => c.Name))
+                .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description));
+
+            CreateMap<RoleViewModel, UserRole>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
+                .ForMember(x => x.Name, opt => opt.MapFrom(c => c.Name))
+                .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description));
 
             CreateMap<ArticleViewModel,Article>()
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
