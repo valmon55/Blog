@@ -190,15 +190,14 @@ namespace ASP.Blog.Controllers
                 var user = await _userManager.FindByIdAsync(model.Id);
 
                 user.Convert(model);
-
-                await _userManager.UpdateAsync(user);
                 
-                //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-                //repo.Update(user);
+                var roles = await _roleManager.Roles.ToListAsync();
 
-                foreach(var role in _roleManager.Roles.ToList())
+                foreach(var role in roles)
                 {
-                    var IsInRole = _userManager.IsInRoleAsync(user, role.Name).Result;
+                    //определяем есть ли роль у пользователя
+                    var IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
+
                     //добавляем роль
                     if (selectedRoles.Contains(role.Id) && !IsInRole)
                     {
@@ -211,6 +210,7 @@ namespace ASP.Blog.Controllers
                     }
 
                 }
+                await _userManager.UpdateAsync(user);
 
                 return RedirectToAction("AllUsers");
             }
