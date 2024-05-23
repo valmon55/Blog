@@ -1,18 +1,19 @@
 ﻿using ASP.Blog.BLL.ViewModels;
-using ASP.Blog.BLL.ViewModels.Role;
-using ASP.Blog.DAL.Entities;
 using ASP.Blog.Data.Entities;
 
 namespace ASP.Blog.BLL.Extentions
 {
-    public static class RoleFromModel
+    public static class UserFromModel
     {
-        public static UserRole Convert(this UserRole role, RoleViewModel roleeditvm)
+        public static User Convert(this User user, UserViewModel usereditvm)
         {
-            role.Name = roleeditvm.Name;
-            role.Description = roleeditvm.Description;
+            user.Last_Name = usereditvm.Last_Name;
+            user.Middle_Name = usereditvm.Middle_Name;
+            user.First_Name = usereditvm.First_Name;
+            user.Email = usereditvm.Email;
+            user.BirthDate = usereditvm.BirthDate;
 
-            return role;
+            return user;
         }
     }
 }

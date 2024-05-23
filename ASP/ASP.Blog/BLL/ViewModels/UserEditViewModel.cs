@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using System;
+using System.Collections.Generic;
+using ASP.Blog.DAL.Entities;
 
 namespace ASP.Blog.BLL.ViewModels
 {
@@ -31,6 +33,8 @@ namespace ASP.Blog.BLL.ViewModels
         [DataType(DataType.Text)]
         [Display(Name = "Логин", Description = "Введите логин")]
         public string Login { get; set; }
+
+        public List<UserRole> UserRoles { get; set; }
 
     }
 }

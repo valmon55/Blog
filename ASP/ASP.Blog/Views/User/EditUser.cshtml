@@ -10,8 +10,20 @@
 <h2>Обновление пользовательских данных</h2>
 <div class="tag-block">
     <form method="post" asp-action="Update" asp-controller="User">
+        @foreach(var role in Model.CheckedRolesDic)
+        {
+            if (role.Value == true)
+            {
+                <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id />
+            }
+            else
+            {
+                <input type="checkbox" name="SelectedRoles" value=@role.Key.Id />
+            }
+            <label>@role.Key.Name</label>
+        }
         <div class="frm_text mrgn">
-            <input class="frm_text" asp-for="Id" type="text" value="@Model.Id" />            
+            <input class="frm_text" asp-for="Id" type="text" value="@Model.Id" hidden />            
         </div>
         <div class="mrgn">
             <label asp-for="Last_Name"></label><br />
@@ -22,6 +34,7 @@
             <input asp-for="First_Name" />
         </div>
         <div class="frm mrgn">
+            <label asp-for="Middle_Name"></label><br />
             <input class="frm_text" asp-for="Middle_Name" type="text" value="@Model.Middle_Name" />
         </div>
         <div class="mrgn">

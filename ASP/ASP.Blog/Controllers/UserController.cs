@@ -161,21 +161,55 @@ namespace ASP.Blog.Controllers
             var userView = _mapper.Map<UserViewModel>(user);
             userView.BirthDate = user.BirthDate;
 
+            var allRoles = _roleManager.Roles.ToList();
+            var checkedRolesDic = new Dictionary<UserRole, bool>();
+            foreach(var role in allRoles)
+            {
+                if(_userManager.IsInRoleAsync(user, role.Name).Result) 
+                {
+                    checkedRolesDic.Add(role, true);
+                }
+                else
+                {
+                    checkedRolesDic.Add(role, false);
+                }
+            }
+
+            userView.CheckedRolesDic = checkedRolesDic;
+
             return View("EditUser", userView);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("User/Update")]
         [HttpPost]
-        public IActionResult Update(UserViewModel model)
+        public async Task<IActionResult> UpdateAsync(UserViewModel model, List<string> selectedRoles)
         {
             if (ModelState.IsValid)
             {
-                var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+                var user = await _userManager.FindByIdAsync(model.Id);
 
-                var user = repo.GetUserById(model.Id);
                 user.Convert(model);
-                repo.UpdateUser(user);
+
+                //await _userManager.UpdateAsync(user);
+                var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+                repo.Update(user);
+
+                foreach(var role in _roleManager.Roles.AsEnumerable())
+                {
+                    var IsInRole = _userManager.IsInRoleAsync(user, role.Name).Result;
+                    //добавляем роль
+                    if (selectedRoles.Contains(role.Id) && !IsInRole)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+                    //убираем роль
+                    if (!selectedRoles.Contains(role.Id) && IsInRole)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+
+                }
 
                 return RedirectToAction("AllUsers");
             }
