@@ -138,14 +138,31 @@ namespace ASP.Blog.Controllers
 
         [Route("AllUsers")]
         [HttpGet]
-        public IActionResult AllUsers()
+        public async Task<IActionResult> AllUsersAsync()
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var users = repo.GetUsers();
+
             var usersView = new List<UserViewModel>();
+            
             foreach (var user in users)
             {
-                usersView.Add(_mapper.Map<UserViewModel>(user));
+                var userView = _mapper.Map<UserViewModel>(user);
+                
+                var userRoleNames = await _userManager.GetRolesAsync(user);
+                var allRoles = await _roleManager.Roles.ToListAsync();
+                var userRoles = new List<UserRole>();
+
+                foreach(var role in allRoles)
+                {
+                    if(userRoleNames.Contains(role.Name))
+                    {
+                        userRoles.Add(role);
+                    }
+                }
+                userView.UserRoles = userRoles;
+
+                usersView.Add(userView);
             }
 
             return View(usersView);

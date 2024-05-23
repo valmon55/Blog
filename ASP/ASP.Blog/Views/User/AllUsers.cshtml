@@ -24,6 +24,10 @@
         {
             <div class="article-block">
                 <hr>
+                @foreach (var role in user.UserRoles)
+                {
+                    <label class="badge badge-primary"> ✔ @role.Name</label>
+                }
                 <span>ФИО: @user.First_Name @user.Middle_Name @user.Last_Name</span>
                 <span>Email: @user.Email</span>
                 <a method="get" asp-action="Update" asp-route-userId="@user.Id">Редактировать пользователя</a>
