@@ -191,9 +191,9 @@ namespace ASP.Blog.Controllers
 
                 user.Convert(model);
 
-                //await _userManager.UpdateAsync(user);
-                var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-                repo.Update(user);
+                await _userManager.UpdateAsync(user);
+                //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+                //repo.Update(user);
 
                 foreach(var role in _roleManager.Roles.AsEnumerable())
                 {
