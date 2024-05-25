@@ -42,14 +42,60 @@
             <input asp-for="Email" />
         </div>
         <div class="mrgn">День рождения</div>
-        <div class="mrgn">
+@*        <div class="mrgn">
             <input asp-for="BirthDate" type="date" value="@Model.BirthDate" />
         </div>
+*@        
+        <div class="mrgn" id="birthday">
+            <select asp-for="Day" class="form-control date-control" ID="ddlDay" >
+                <option value="">@Model.Day</option>
+            </select>
+            <span asp-validation-for="Day" class="text-danger"></span>
+
+            <select asp-for="Month" class="form-control date-control" asp-items="Html.GetEnumSelectList<ASP.Blog.BLL.ViewModels.Months>()"
+                    onchange="PopulateDays()" ID="ddlMonth">
+                <option value="">@Model.Month</option>
+            </select>
+
+            <span asp-validation-for="Month" class="text-danger"></span>
+
+            <select asp-for="Year" class="form-control date-control" ID="ddlYear"
+                    asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-14).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))"
+                    onchange="PopulateDays()">
+                <option value="">@Model.Year</option>
+            </select>
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+
         <div class="center">
             <input class="enter-submit" type="submit" value="Обновить"/>
         </div>
     </form>    
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        function PopulateDays() {
+            var ddlMonth = document.getElementById("ddlMonth");
+            var ddlYear = document.getElementById("ddlYear");
+            var ddlDay = document.getElementById("ddlDay");
 
+            var y = ddlYear.options[ddlYear.selectedIndex].value;
+            var m = ddlMonth.options[ddlMonth.selectedIndex].value != 0;
+            if (ddlMonth.options[ddlMonth.selectedIndex].value != 0 && ddlYear.options[ddlYear.selectedIndex].value != 0) {
+                var dayCount = 32 - new Date(ddlYear.options[ddlYear.selectedIndex].value, ddlMonth.options[ddlMonth.selectedIndex].value - 1, 32).getDate();
+                ddlDay.options.length = 0;
+                for (var i = 1; i <= dayCount; i++) {
+                    AddOption(ddlDay, i, i);
+                }
+            }
+        }
+
+        function AddOption(ddl, text, value) {
+            var opt = document.createElement("OPTION");
+            opt.text = text;
+            opt.value = value;
+            ddl.options.add(opt);
+        }
+    </script>
 </div>

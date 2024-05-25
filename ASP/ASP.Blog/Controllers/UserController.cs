@@ -176,7 +176,8 @@ namespace ASP.Blog.Controllers
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             var userView = _mapper.Map<UserViewModel>(user);
-            userView.BirthDate = user.BirthDate;
+            //userView.BirthDate = user.BirthDate;
+
 
             var allRoles = _roleManager.Roles.ToList();
             var checkedRolesDic = new Dictionary<UserRole, bool>();
@@ -234,7 +235,7 @@ namespace ASP.Blog.Controllers
             else
             {
                 ModelState.AddModelError("", "Некорректные данные");
-                return View("UserEdit", model);
+                return View("EditUser", model);
             }
         }
         [Authorize(Roles = "Admin")]
