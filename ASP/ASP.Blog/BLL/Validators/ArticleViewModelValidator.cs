@@ -1,0 +1,16 @@
+﻿using ASP.Blog.BLL.ViewModels.Article;
+using FluentValidation;
+
+namespace ASP.Blog.BLL.Validators
+{
+    public class ArticleViewModelValidator : AbstractValidator<ArticleViewModel>
+    {
+        public ArticleViewModelValidator() 
+        { 
+            RuleFor(x => x.Title).NotEmpty().WithMessage("Заголовок статьи не должен быть пуст!");
+            RuleFor(x => x.Title.Length).GreaterThan(5).WithMessage("Заголовок статьи должен быть длиннее 5 символов!");
+            RuleFor(x => x.Content).NotEmpty();
+            //RuleFor(x => x.ArticleDate).NotEmpty();
+        }
+    }
+}

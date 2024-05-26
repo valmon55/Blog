@@ -41,7 +41,7 @@ namespace ASP.Blog.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             var allTags = repo.GetTags();
-            return View(new ArticleViewModel(user) { Tags = allTags });    
+            return View(new ArticleViewModel(user) { Tags = allTags, ArticleDate = DateTime.Now });    
         }
         [Authorize]
         [Route("AddArticle")]

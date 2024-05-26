@@ -19,6 +19,8 @@ using ASP.Blog.DAL.UoW;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.Extentions;
+using FluentValidation.AspNetCore;
+using ASP.Blog.BLL.Validators;
 
 namespace ASP.Blog
 {
@@ -44,6 +46,7 @@ namespace ASP.Blog
             services.AddSingleton(mapper);
             
             services
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ArticleViewModelValidator>())
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
                 .AddUnitOfWork()
                 .AddCustomRepository<Article, ArticleRepository>()
