@@ -46,24 +46,25 @@
             <input asp-for="BirthDate" type="date" value="@Model.BirthDate" />
         </div>
 *@        
-        <div class="mrgn" id="birthday" onload="FillData(@Model.Year, @Model.Month, @Model.Day)">
+        <div class="mrgn" id="birthday" onload="">
             <select asp-for="Day" class="form-control date-control" ID="day">
                 <option value="">@Model.Day</option>
             </select>
             <span asp-validation-for="Day" class="text-danger"></span>
 
-            <select asp-for="Month" class="form-control date-control" asp-items="Html.GetEnumSelectList<ASP.Blog.BLL.ViewModels.Months>()"
+            <select asp-for="Month" class="form-control date-control" 
                     onchange="CorrectDay()" ID="month">
                 <option value="">@Model.Month</option>
             </select>
-
+            @*asp-items="Html.GetEnumSelectList<ASP.Blog.BLL.ViewModels.Months>()"*@
             <span asp-validation-for="Month" class="text-danger"></span>
 
             <select asp-for="Year" class="form-control date-control" ID="year"
-                    asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-14).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))"
+                    
                     onchange="CorrectDay()">
                 <option value="">@Model.Year</option>
             </select>
+            @*asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-14).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))"*@
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
 
@@ -75,6 +76,9 @@
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", 
+            function () { FillData(@Model.Year, @Model.Month, @Model.Day) });
+
         function FillData(y, m, d) {
             FillDays();
             FillMonths();
@@ -83,12 +87,14 @@
         }
         function FillDays() {
             var day = document.getElementById("day");
+            day.options.length = 0;
             for (var i = 1; i <= 31; i++) {
                 AddOption(day, i, i);
             }
         }
         function FillMonths() {
             var month = document.getElementById("month");
+            month.options.length = 0;
             AddOption(month, 1, "Январь");
             AddOption(month, 2, "Февраль");
             AddOption(month, 3, "Март");
@@ -104,9 +110,10 @@
         }
         function FillYears() {
             var year = document.getElementById("year");
+            year.options.length = 0;
             var currentDate = new Date();
             for (var i = 0; i < 100; i++) {
-                AddOption(year, i, currentDate.getFullYear() - i)
+                AddOption(year, currentDate.getFullYear() - i, currentDate.getFullYear() - i)
             }
         }
         function SetCurrentDay(y, m, d) {
@@ -115,35 +122,31 @@
             var year = document.getElementById("year");
             var day = document.getElementById("day");
 
-            year.selectedIndex = currentDate.getFullYear() - y;
-            month.selectedIndex = m - 1;
+            year.value = y;
+            month.value = m;
             CorrectDay();
-            day.selectedIndex = d;
+            day.value = d;
         }
         function CorrectDay() {
             var month = document.getElementById("month");
             var year = document.getElementById("year");
             var day = document.getElementById("day");
-            var t = document.getElementById("test_val");
-            var y = year.options[year.selectedIndex].value;
-            var m = month.options[month.selectedIndex].value;
-            var d = day.options[day.selectedIndex].value;
-
-            t.textContent = year.selectedIndex;
-
-            if (month.options[month.selectedIndex].value != 0 && year.options[year.selectedIndex].value != 0) {
-                var dayCount = 32 - new Date(year.options[year.selectedIndex].value, month.options[month.selectedIndex].value - 1, 32).getDate();
+            
+            var selectedDay = day.value;
+            
+            if (month.value != 0 && year.value != 0) {
+                var dayCount = 32 - new Date(year.value, month.value - 1, 32).getDate();
                 day.options.length = 0;
                 for (var i = 1; i <= dayCount; i++) {
                     AddOption(day, i, i);
                 }
             }
         }
-        function AddOption(ddl, text, value) {
-            var opt = document.createElement("OPTION");
+        function AddOption(ddl, value, text) {
+            var opt = document.createElement("option");
             opt.text = text;
             opt.value = value;
-            ddl.options.add(opt);
+            ddl.add(opt);
         }
 
     </script>
