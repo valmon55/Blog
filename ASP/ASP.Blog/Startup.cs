@@ -44,7 +44,8 @@ namespace ASP.Blog
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-            
+            services.AddSingleton<ILogger, Logger>();
+
             services
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ArticleViewModelValidator>())
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))

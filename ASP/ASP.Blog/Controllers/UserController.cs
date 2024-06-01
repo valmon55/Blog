@@ -25,6 +25,7 @@ namespace ASP.Blog.Controllers
     public class UserController : Controller
     {
         private IMapper _mapper;
+        private ILogger _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
@@ -32,9 +33,13 @@ namespace ASP.Blog.Controllers
 
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)
+                IUnitOfWork unitOfWork, 
+                IMapper mapper, 
+                ILogger logger,
+                RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
+            _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
@@ -45,6 +50,7 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            _logger.WriteEvent("Регистрация нового пользователя.");
             return View(new RegisterViewModel());
         }
 
@@ -79,12 +85,16 @@ namespace ASP.Blog.Controllers
 
                     await _signInManager.RefreshSignInAsync(currentUser);
 
+                    _logger.WriteEvent($"Пользователь {user.Last_Name} {user.First_Name} зарегистрирован.");
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
+                    _logger.WriteError("Возникли ошибки при регистрации:");
                     foreach (var error in result.Errors)
                     {
+                        _logger.WriteError($"Код ошибки: {error.Code}{Environment.NewLine}Описание: {error.Description}");
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
 
@@ -109,7 +119,10 @@ namespace ASP.Blog.Controllers
                 User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
                 var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 if (signedUser is null)
+                {
+                    _logger.WriteError($"Логин {user.Email} не найден");
                     ModelState.AddModelError("", "Неверный логин!");
+                }
 
                 if (signedUser != null)
                 {
@@ -123,6 +136,7 @@ namespace ASP.Blog.Controllers
                 }
                 else
                 {
+                    _logger.WriteError($"Логин {user.Email} не найден");
                     ModelState.AddModelError("", $"Логин {user.Email} не найден");
                 }
             }
