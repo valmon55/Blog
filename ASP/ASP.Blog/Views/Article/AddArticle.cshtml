@@ -15,7 +15,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-<h2>Добавление статьи</h2>
+<h2 class="vert-spacing">Добавление статьи</h2>
 <div class="article-block">    
     @if (SignInManager.IsSignedIn(User))
     {
@@ -23,7 +23,7 @@
             @foreach (var tag in Model.Tags)
             {
                 <input type="checkbox" name="SelectedTags" value=@tag.ID />
-                <label> @tag.Tag_Name</label>
+                <label class="badge badge-primary"> @tag.Tag_Name</label>
             }
             <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
             <div class="mrgn">

@@ -22,38 +22,36 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-@*<h2></h2>*@
-
 <div>    
     @if (SignInManager.IsSignedIn(User))
     {
-        <h4>Все статьи</h4>
-        <a class="btn-submit" method="get" asp-controller="Article" asp-action="AddArticle">Написать новую статью</a>
+        <h4 class="vert_spacing">Все статьи</h4>
+        <div class="vert_spacing">
+            <a class="btn-submit" method="get" asp-controller="Article" asp-action="AddArticle">Написать новую статью</a>
+        </div>
         @foreach(var article in Model)
         {
             <div class="article-block">
-                <hr>
                 @foreach (var tag in article.Tags)
                 {
                     <label class="badge badge-primary"> ✔ @tag.Tag_Name</label>
                 }
                 <div>
-                    <a class="enter-submit" method="get" asp-action="ViewArticle" asp-route-id=@article.Id><h5>@article.Title</h5></a>
+                    <a method="get" asp-action="ViewArticle" asp-route-id=@article.Id><h5>@article.Title</h5></a>
                 </div>
                 <a class="btn-submit" method="get" asp-action="Update" asp-route-id=@article.Id>Редактировать</a>
                 <form class="inline" method="post" asp-controller="Article" asp-action="Delete" asp-route-Id=@article.Id>
-                    <input class="btn-submit background-main btn-delete" type="submit" value="Удалить" />
+                    <input class="background-main btn-delete" type="submit" value="Удалить" />
                 </form>
             </div>
         }
     }
     else
     {
-        <h4>Эти статьи может увидеть любой пользователь.</h4>
+        <h4 class="vert_spacing">Эти статьи может увидеть любой пользователь.</h4>
         @foreach(var article in Model)
         {
             <div class="article-block">
-                <hr>
                 <textarea class="textarea" placeholder="Текст статьи">@article.Content</textarea>        
             </div>
         }
