@@ -40,15 +40,15 @@
         </div>
         <div>
             <a class="btn-submit" method="get" asp-controller="Comment" asp-action="Update" asp-route-id=@comment.ID>Редактировать</a>
-            <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.ID>
-                <input class="btn-submit background-main btn-delete" type="submit" value="Удалить" />
+            <form class="inline" method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.ID>
+                <input class="background-main btn-delete" type="submit" value="Удалить" />
             </form>
         </div>
     }
-    <div>
-        <a class="btn-submit" method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@Model.Id >Оставить комментарий</a>
+    <div class="vert-spacing">
+        <a class="enter-submit" method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@Model.Id>Оставить комментарий</a>
     </div>
-    <div>
-        <a class="btn-submit" method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+    <div class="vert-spacing">
+        <a class="enter-submit" method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
     </div>
 </div>

@@ -15,7 +15,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
-<h2>Редактирование статьи</h2>
+<h2 class="vert-spacing">Редактирование статьи</h2>
 <div>    
     @if (SignInManager.IsSignedIn(User))
     {
@@ -30,15 +30,12 @@
                 {
                     <input type="checkbox" name="SelectedTags" value=@tag.Key.ID />
                 }
-                <label> @tag.Key.Tag_Name</label>
+                <label class="badge badge-primary"> @tag.Key.Tag_Name</label>
             }
-            <span >Автор: @Model.User.First_Name @Model.User.Last_Name</span>
+            <h5 class="vert-spacing">Автор: @Model.User.First_Name @Model.User.Last_Name</h5>
             <div class="article-block">
                 <input class="form-control" asp-for="Id" hidden />
                 <input class="form-control" asp-for="User" hidden />
-@*                <label asp-for="Id">@Model.Id</label>
-                <label asp-for="User">@Model.User</label>
-*@                
                 <div class="mrgn">
                     <div>Заголовок</div>
                     <input placeholder="Заголовок" asp-for="Title" />
@@ -48,11 +45,11 @@
                     <textarea class="textarea" placeholder="Текст статьи" asp-for="Content">@Model.Content</textarea>
                 </div>
             <div>
-                <input class="enter-submit tag-block" type="submit" value="Сохранить"/>
+                <input class="btn-submit tag-block" type="submit" value="Сохранить"/>
             </div>
         </form>
         <div>
-            <a class="btn-submit" method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+            <a class="enter-submit" method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
         </div>
 
     }

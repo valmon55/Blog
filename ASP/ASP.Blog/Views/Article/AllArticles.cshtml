@@ -25,9 +25,9 @@
 <div>    
     @if (SignInManager.IsSignedIn(User))
     {
-        <h4 class="vert_spacing">Все статьи</h4>
-        <div class="vert_spacing">
-            <a class="btn-submit" method="get" asp-controller="Article" asp-action="AddArticle">Написать новую статью</a>
+        <h4 class="vert-spacing">Все статьи</h4>
+        <div class="vert-spacing">
+            <a class="enter-submit" method="get" asp-controller="Article" asp-action="AddArticle">Написать новую статью</a>
         </div>
         @foreach(var article in Model)
         {
@@ -48,7 +48,7 @@
     }
     else
     {
-        <h4 class="vert_spacing">Эти статьи может увидеть любой пользователь.</h4>
+        <h4 class="vert-spacing">Эти статьи может увидеть любой пользователь.</h4>
         @foreach(var article in Model)
         {
             <div class="article-block">

@@ -28,8 +28,8 @@
 .background-topnav {
     background-color: burlywood !important;
 }
-.vert_spacing {
-    margin:20px;
+.vert-spacing {
+    margin: 20px 0px;
 }
 .padding-20 {
     padding: 0px 20px;
