@@ -9,6 +9,8 @@
 @{
     ViewData["Title"] = "Статья";
 }
+<link rel="stylesheet" href="~/css/user-page.css" />
+<link rel="stylesheet" href="~/css/main-page.css" />
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
@@ -37,16 +39,16 @@
             <span>@comment.Comment_Text</span>
         </div>
         <div>
-            <a method="get" asp-controller="Comment" asp-action="Update" asp-route-id=@comment.ID>Редактировать</a>
+            <a class="btn-submit" method="get" asp-controller="Comment" asp-action="Update" asp-route-id=@comment.ID>Редактировать</a>
             <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.ID>
-                <input class="enter_submit" type="submit" value="Удалить" />
+                <input class="btn-submit background-main btn-delete" type="submit" value="Удалить" />
             </form>
         </div>
     }
     <div>
-        <a method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@Model.Id >Оставить комментарий</a>
+        <a class="btn-submit" method="get" asp-action="AddComment" asp-controller="Comment" asp-route-articleId=@Model.Id >Оставить комментарий</a>
     </div>
     <div>
-        <a method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+        <a class="btn-submit" method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
     </div>
 </div>

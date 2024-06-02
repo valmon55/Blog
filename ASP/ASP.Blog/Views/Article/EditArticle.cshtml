@@ -9,6 +9,8 @@
 @{
     ViewData["Title"] = "Добавление статьи";
 }
+<link rel="stylesheet" href="~/css/user-page.css" />
+<link rel="stylesheet" href="~/css/main-page.css" />
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
@@ -50,7 +52,7 @@
             </div>
         </form>
         <div>
-            <a method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
+            <a class="btn-submit" method="get" asp-action="AllArticles" asp-controller="Article">Вернуться к списку всех статей</a>
         </div>
 
     }

@@ -34,7 +34,14 @@
     padding: 15px 20px;
     margin: 8px 0px;
     border: none;
+    cursor: pointer;
     width: 100%;
+}
+.btn-delete {
+    color: crimson;
+}
+.inline {
+    display:inline;
 }
 .btn-list li {
     display: inline;
