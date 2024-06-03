@@ -10,8 +10,6 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
 <h2>Добавление роли</h2>
-<hr>
-<div>Название</div>
 <div class="tag-block">
     <form class="frm" method="post" asp-controller="Role" asp-action="AddRole">
         <div>
@@ -27,8 +25,8 @@
             </div>
         </div>
         <div>
-            <input class="enter_submit" type="submit" value="Добавить" />
+            <input class="btn-submit" type="submit" value="Добавить" />
         </div>
     </form>
-    <a method="get" asp-action="AllRoles" asp-controller="Role">Перейти к списку всех ролей</a>
+    <a class="enter-submit" method="get" asp-action="AllRoles" asp-controller="Role">Перейти к списку всех ролей</a>
 </div>

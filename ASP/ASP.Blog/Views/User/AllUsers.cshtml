@@ -25,25 +25,24 @@
         @foreach(var user in Model)
         {
             <div class="article-block">
-                <hr>
                 @foreach (var role in user.UserRoles)
                 {
-                    <label class="badge badge-primary"> ✔ @role.Name</label>
+                    <label class="badge bg-info"> ✔ @role.Name</label>
                 }
-                <span>ФИО: @user.First_Name @user.Middle_Name @user.Last_Name</span>
-                <span>Email: @user.Email</span>
-                <a class="btn-submit" method="get" asp-action="Update" asp-route-userId="@user.Id">Редактировать пользователя</a>
-                <form class="btn-submit btn-delete" method="post" asp-controller="User" asp-action="Delete" asp-route-userId=@user.Id>
-                    <input class="enter_submit" type="submit" value="Удалить пользователя" />
+                <div>
+                    <span>ФИО: @user.First_Name @user.Middle_Name @user.Last_Name</span>
+                    <span> Email: @user.Email</span>
+                </div>
+                <a class="btn-submit" method="get" asp-action="Update" asp-route-userId="@user.Id">Редактировать</a>
+                <form class="inline" method="post" asp-controller="User" asp-action="Delete" asp-route-userId=@user.Id>
+                    <input class="background-main btn-delete" type="submit" value="Удалить" />
                 </form>
             </div>
         }
         <div>
-            <hr>
-            <form class="enter-submit" method="get" asp-controller="User" asp-action="AddUser">
-                <input type="submit" value="Добавить пользователя" />
+            <form method="get" asp-controller="User" asp-action="AddUser">
+                <input class="enter-submit" type="submit" value="Добавить" disabled />
             </form>
-            <hr>
         </div>
     }
 </div>

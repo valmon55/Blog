@@ -5,19 +5,20 @@
 @{
     ViewData["Title"] = "Добавление тега";
 }
+<link rel="stylesheet" href="~/css/user-page.css" />
+<link rel="stylesheet" href="~/css/main-page.css" />
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 
 <h2>Добавление тега</h2>
-<hr>
 <div>Название</div>
 <div class="tag-block">
     <form class="frm" method="post" asp-controller="Tag" asp-action="AddTag">
         <textarea class="mrgn textarea" placeholder="Тег" asp-for="Tag_Name"></textarea>
         <div>
-            <input class="enter_submit" type="submit" value="Добавить" />
+            <input class="btn-submit" type="submit" value="Добавить" />
         </div>
     </form>
-    <a method="get" asp-action="AllTags" asp-controller="Tag">Перейти к списку всех тегов</a>
+    <a class="enter-submit" method="get" asp-action="AllTags" asp-controller="Tag">Перейти к списку всех тегов</a>
 </div>

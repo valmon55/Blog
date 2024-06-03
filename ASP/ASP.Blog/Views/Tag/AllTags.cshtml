@@ -5,22 +5,22 @@
 @{
     ViewData["Title"] = "Все теги";
 }
+<link rel="stylesheet" href="~/css/user-page.css" />
+<link rel="stylesheet" href="~/css/main-page.css" />
+
+<h2>Все теги</h2>
 <div>
-    @foreach(var tag in Model)
+    <div>
+        <a class="enter-submit" method="get" asp-controller="Tag" asp-action="AddTag">Добавить</a>
+    </div>
+    @foreach (var tag in Model)
     {
         <div class="tag-block">
-            <hr>
             <textarea class="textarea" placeholder="Тег">@tag.Tag_Name</textarea>
-            <a method="get" asp-action="Update" asp-route-id=@tag.Id >Редактировать</a>
-            <form method="post" asp-controller="Tag" asp-action="Delete" asp-route-id=@tag.Id>
-                <input class="enter_submit" type="submit" value="Удалить" />
+            <a class="btn-submit" method="get" asp-action="Update" asp-route-id=@tag.Id >Редактировать</a>
+            <form class="inline" method="post" asp-controller="Tag" asp-action="Delete" asp-route-id=@tag.Id>
+                <input class="background-main btn-delete" type="submit" value="Удалить" />
             </form>
         </div>
     }
-    <div>
-        <hr>
-        <form method="get" asp-controller="Tag" asp-action="AddTag">
-            <input class="enter_submit" type="submit" value="Добавить" />
-        </form>
-    </div>
 </div>

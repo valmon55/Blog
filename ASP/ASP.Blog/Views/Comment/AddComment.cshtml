@@ -17,11 +17,12 @@
     <form method="post" asp-controller="Comment" asp-action="AddComment">
         <input asp-for="UserId" hidden/>
         <input asp-for="ArticleId" hidden />
-        <a asp-for="Id">@Model.Id</a>
-        <a asp-for="CommentDate">@Model.CommentDate</a>
+        <input asp-for="Id" hidden />
+        <input asp-for="CommentDate" hidden>
         <textarea class="textarea" placeholder="Комментарий" asp-for="Comment"></textarea>
         <div>
-            <input class="enter_submit" type="submit" value="Добавить" />
+            <input class="btn-submit" type="submit" value="Добавить" />
         </div>
     </form>
+    <a class="enter-submit" method="get" asp-controller="Article" asp-action="ViewArticle" asp-route-Id=@Model.ArticleId>Вернуться с статье</a>
 </div>

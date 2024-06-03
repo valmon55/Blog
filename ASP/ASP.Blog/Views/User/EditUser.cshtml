@@ -22,7 +22,7 @@
             {
                 <input type="checkbox" name="SelectedRoles" value=@role.Key.Id />
             }
-            <label>@role.Key.Name</label>
+            <label class="badge bg-info">@role.Key.Name</label>
         }
         <div class="frm_text mrgn">
             <input class="frm_text" asp-for="Id" type="text" value="@Model.Id" hidden />            

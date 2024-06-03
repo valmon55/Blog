@@ -22,7 +22,8 @@
             <textarea class="textarea" placeholder="Текст комментария" asp-for="Comment">@Model.Comment</textarea>
         </div>
         <div>
-            <input class="enter_submit" type="submit" value="Сохранить"/>
+            <input class="btn-submit" type="submit" value="Сохранить"/>
         </div>
     </form>
+    <a class="enter-submit" method="get" asp-controller="Article" asp-action="ViewArticle" asp-route-Id=@Model.ArticleId>Вернуться с статье</a>
 </div>
