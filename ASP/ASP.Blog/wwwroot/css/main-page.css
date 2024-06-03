@@ -149,3 +149,10 @@ input[type="checkbox"].input-validation-error {
     padding: calc(0.75em - 1px);
     resize: none;
 }
+textarea-view {
+    display: block;
+    max-width: 100%;
+    min-width: 100%;
+    padding: calc(0.75em - 1px);
+    resize: none;
+}

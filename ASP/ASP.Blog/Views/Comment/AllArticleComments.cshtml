@@ -16,7 +16,7 @@
             <hr>
             <span>@comment.CommentDate.ToShortDateString() @comment.CommentDate.ToShortTimeString()</span>
             @*<span>@comment.User.First_Name @comment.User.Last_Name</span>*@
-            <textarea class="textarea" placeholder="Комментарий">@comment.Comment</textarea>
+            <textarea class="textarea" placeholder="Комментарий" disabled>@comment.Comment</textarea>
             <a class="btn-submit" method="get" asp-action="Update" asp-route-id=@comment.Id>Редактировать</a>
             <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id=@comment.Id>
                 <input class="btn-submit btn-delete" type="submit" value="Удалить" />

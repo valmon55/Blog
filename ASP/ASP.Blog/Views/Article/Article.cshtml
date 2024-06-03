@@ -26,7 +26,7 @@
     <span>Автор: @Model.User.First_Name @Model.User.Last_Name</span> 
     <div class="txt-size">
         <h4>@Model.Title</h4>
-        <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" >@Model.Content</textarea>
+        <textarea class="textarea" placeholder="Текст статьи" asp-for="Content" disabled>@Model.Content</textarea>
     </div>
     <h6>Комментарии к статье</h6>
     @foreach (var comment in Model.Comments)
