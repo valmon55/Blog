@@ -29,7 +29,8 @@ namespace ASP.Blog.Controllers
         [Route("[controller]/[action]")]
         public IActionResult Index()
         {
-            return View();
+            //return View();
+            return RedirectToAction("AllArticles", "Article");
         }
 
         public IActionResult Privacy()
