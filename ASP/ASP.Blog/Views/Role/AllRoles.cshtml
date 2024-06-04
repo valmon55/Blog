@@ -29,7 +29,14 @@
                 <textarea class="textarea" placeholder="Описание" disabled>@role.Description</textarea>
                 <a class="btn-submit" method="get" asp-controller="Role" asp-action="Update" asp-route-roleId=@role.ID>Редактировать</a>
                 <form class="inline" method="post" asp-controller="Role" asp-action="Delete" asp-route-roleId=@role.ID>
-                    <input class="background-main btn-delete" type="submit" value="Удалить" />
+                    @if(role.Name == "Admin")
+                    {
+                        <input class="background-main btn-delete" type="submit" value="Удалить" disabled />
+                    }
+                    else
+                    {
+                        <input class="background-main btn-delete" type="submit" value="Удалить" />
+                    }
                 </form>
             </div>
         }

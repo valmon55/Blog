@@ -18,7 +18,7 @@ namespace ASP.Blog.DAL.Repositories
         }
         public Article GetArticleById(int id)
         {
-            return Set.Include(c => c.Tags).Include(u => u.User).Where(x => x.ID == id).FirstOrDefault();
+            return Set.Include(c => c.Tags).Include(c => c.Comments).ThenInclude(cu => cu.User).Include(u => u.User).Where(x => x.ID == id).FirstOrDefault();
         }
         public List<Article> GetArticlesByUserId(string userId)
         {

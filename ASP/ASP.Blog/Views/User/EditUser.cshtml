@@ -1,5 +1,9 @@
 ﻿@model ASP.Blog.BLL.ViewModels.UserViewModel
 
+@using ASP.Blog.Data.Entities;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> UserManager;
+
 @{
     ViewData["Title"] = "EditUser";
 }
@@ -16,7 +20,14 @@
         {
             if (role.Value == true)
             {
-                <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id />
+                if (User.Identity.Name != "Admin")
+                {
+                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id />
+                }
+                else
+                {
+                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id disabled />
+                }
             }
             else
             {
@@ -44,10 +55,6 @@
             <input asp-for="Email" />
         </div>
         <div class="mrgn">День рождения</div>
-@*        <div class="mrgn">
-            <input asp-for="BirthDate" type="date" value="@Model.BirthDate" />
-        </div>
-*@        
         <div class="mrgn" id="birthday" onload="">
             <select asp-for="Day" class="form-control date-control" ID="day">
                 <option value="">@Model.Day</option>
@@ -58,7 +65,6 @@
                     onchange="CorrectDay()" ID="month">
                 <option value="">@Model.Month</option>
             </select>
-            @*asp-items="Html.GetEnumSelectList<ASP.Blog.BLL.ViewModels.Months>()"*@
             <span asp-validation-for="Month" class="text-danger"></span>
 
             <select asp-for="Year" class="form-control date-control" ID="year"
@@ -66,7 +72,6 @@
                     onchange="CorrectDay()">
                 <option value="">@Model.Year</option>
             </select>
-            @*asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-14).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))"*@
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
 
