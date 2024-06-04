@@ -215,13 +215,11 @@ namespace ASP.Blog.Controllers
         [Authorize(Roles = "Admin")]
         [Route("User/Update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAsync(UserViewModel model, List<string> selectedRoles)
+        public async Task<IActionResult> UpdateAsync(UserViewModel model, List<string> SelectedRoles)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByIdAsync(model.Id);
-
-                user.Convert(model);
+                var user = await _userManager.FindByIdAsync(model.Id);                
                 
                 var roles = await _roleManager.Roles.ToListAsync();
 
@@ -231,17 +229,19 @@ namespace ASP.Blog.Controllers
                     var IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
 
                     //добавляем роль
-                    if (selectedRoles.Contains(role.Id) && !IsInRole)
+                    if (SelectedRoles.Contains(role.Id) && !IsInRole)
                     {
                         await _userManager.AddToRoleAsync(user, role.Name);
                     }
                     //убираем роль
-                    if (!selectedRoles.Contains(role.Id) && IsInRole)
+                    if (!SelectedRoles.Contains(role.Id) && IsInRole)
                     {
                         await _userManager.RemoveFromRoleAsync(user, role.Name);
                     }
 
                 }
+
+                user.Convert(model);
                 await _userManager.UpdateAsync(user);
 
                 return RedirectToAction("AllUsers");

@@ -20,13 +20,13 @@
         {
             if (role.Value == true)
             {
-                if (User.Identity.Name != "Admin")
+                if (User.Identity.Name == "Admin" && role.Key.Name == "Admin")
                 {
-                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id />
+                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id disabled />
                 }
                 else
                 {
-                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id disabled />
+                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id />
                 }
             }
             else

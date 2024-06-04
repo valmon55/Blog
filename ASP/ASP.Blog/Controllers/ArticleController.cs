@@ -137,6 +137,7 @@ namespace ASP.Blog.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var article = repo.GetArticleById(Id);
+            // TODO: менять автора статьи? возможно не потребуется
             article.User = user;
             var articleView = _mapper.Map<ArticleViewModel>(article);
 
