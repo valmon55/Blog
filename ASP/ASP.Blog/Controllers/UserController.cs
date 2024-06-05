@@ -123,6 +123,23 @@ namespace ASP.Blog.Controllers
                     _logger.WriteError($"Логин {user.Email} не найден");
                     ModelState.AddModelError("", "Неверный логин!");
                 }
+                /// Если ролей почему-то нет, то устанавливаем:
+                /// для пользователя Admin - роль Admin
+                /// для остальных - User
+                if(userRole is null) 
+                {
+                    _logger.WriteError($"У пользователя {signedUser.UserName} нет роли!");
+                    if(signedUser.UserName == "Admin")
+                    {
+                        await _userManager.AddToRoleAsync(signedUser, "Admin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(signedUser, "User");
+                    }
+                    userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
+                    _logger.WriteEvent($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
+                }
 
                 if (signedUser != null)
                 {

@@ -20,8 +20,9 @@
         {
             if (role.Value == true)
             {
-                if (User.Identity.Name == "Admin" && role.Key.Name == "Admin")
+                if (Model.Login == "Admin" && role.Key.Name == "Admin")
                 {
+                    <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id hidden />
                     <input type="checkbox" name="SelectedRoles" checked="checked" value=@role.Key.Id disabled />
                 }
                 else
