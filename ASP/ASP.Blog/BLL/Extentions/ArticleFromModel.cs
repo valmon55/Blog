@@ -10,6 +10,7 @@ namespace ASP.Blog.BLL.Extentions
             article.ID = articleViewModel.Id;
             article.Title = articleViewModel.Title;
             article.Content = articleViewModel.Content;
+            article.ArticleDate = articleViewModel.ArticleDate;
             article.UserId = articleViewModel.User.Id;                  
             article.User = articleViewModel.User;
             article.Tags = articleViewModel.Tags;

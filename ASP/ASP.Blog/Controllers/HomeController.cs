@@ -30,17 +30,20 @@ namespace ASP.Blog.Controllers
         public IActionResult Index()
         {
             //return View();
+            _logger.LogInformation("Выполняется переход на стартовую страницу.");
             return RedirectToAction("AllArticles", "Article");
         }
 
         public IActionResult Privacy()
         {
+            _logger.LogInformation("Выполняется переход на страницу Privacy.");
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            _logger.LogInformation("Выполняется переход на страницу с ошибками.");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

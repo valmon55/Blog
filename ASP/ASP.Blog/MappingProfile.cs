@@ -62,6 +62,7 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
                 .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.User.Id))
+                .ForMember(x => x.ArticleDate, opt => opt.MapFrom(c => c.ArticleDate))
                 .ForMember(x => x.Title, opt => opt.MapFrom(c => c.Title))
                 .ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags));
 
@@ -69,6 +70,7 @@ namespace ASP.Blog.BLL
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.User, opt => opt.MapFrom(c => c.User))
+                .ForMember(x => x.ArticleDate, opt => opt.MapFrom(c => c.ArticleDate))
                 .ForMember(x => x.Title, opt => opt.MapFrom(c => c.Title))
                 .ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags));
             

@@ -9,8 +9,8 @@ namespace ASP.Blog
             Console.BackgroundColor = ConsoleColor.DarkGreen; 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(errorMessage);
-            //Console.BackgroundColor = ConsoleColor.Black;
-            //Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void WriteError(string eventMessage)
@@ -18,8 +18,8 @@ namespace ASP.Blog
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(eventMessage);
-            //Console.BackgroundColor = ConsoleColor.Black;
-            //Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
