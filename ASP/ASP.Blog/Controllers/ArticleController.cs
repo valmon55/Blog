@@ -77,14 +77,15 @@ namespace ASP.Blog.Controllers
                 _logger.LogInformation("Выполняется добавление новой статьи статьи.");
                 repo.Create(article);
                 _logger.LogInformation($"Выполняется переход на страницу просмотра статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
+                return RedirectToAction("AllUserArticles");
             }
             else
             {
                 _logger.LogError("Модель ArticleViewModel не прошла проверку!");
 
                 ModelState.AddModelError("", "Ошибка в модели!");
-            }            
-            return RedirectToAction("AllUserArticles");
+            }
+            return View(model);
         }
         [Authorize]
         [Route("AllUserArticles")]
@@ -205,8 +206,9 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model, List<int> SelectedTags)
+        public async Task<IActionResult> Update(ArticleViewModel model, /*Dictionary<Tag, bool> checkedTagsDic, */List<int> SelectedTags)
         {
+            //model.CheckedTagsDic = checkedTagsDic;
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -232,8 +234,9 @@ namespace ASP.Blog.Controllers
                         $"заголовок {article.Title} \n" + $"текст {article.Content}");
 
                 repo.Update(article);
+                return RedirectToAction("AllUserArticles", "Article");
             }
-            return RedirectToAction("AllUserArticles", "Article");
+            return View("EditArticle", model);
         }
     }
 }

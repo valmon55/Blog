@@ -9,7 +9,7 @@ namespace ASP.Blog.BLL.Validators
         { 
             RuleFor(x => x.Title).NotEmpty().WithMessage("Заголовок статьи не должен быть пуст!");
             RuleFor(x => x.Title.Length).GreaterThan(5).WithMessage("Заголовок статьи должен быть длиннее 5 символов!");
-            RuleFor(x => x.Content).NotEmpty();
+            RuleFor(x => x.Content).NotEmpty().WithMessage("Статья не должна быть пустая!");
             //RuleFor(x => x.ArticleDate).NotEmpty();
         }
     }

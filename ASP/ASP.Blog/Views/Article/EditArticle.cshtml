@@ -20,6 +20,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <form method="post" asp-controller="Article" asp-action="Update" >
+            <div asp-validation-summary="ModelOnly"></div>
             @foreach (var tag in Model.CheckedTagsDic)
             {
                 if(tag.Value == true)
@@ -30,19 +31,25 @@
                 {
                     <input type="checkbox" name="SelectedTags" value=@tag.Key.ID />
                 }
-                <label class="badge badge-primary"> @tag.Key.Tag_Name</label>
+                <label class="badge badge-primary"> @tag.Key.Tag_Name</label>                
+                @* <input type="hidden" name="checkedTagsDic[@tag.Key]" value="@tag.Value" /> *@
             }
+            @* <input name="checkedTagsDic" value=@Model.CheckedTagsDic hidden /> *@
             <h5 class="vert-spacing">Автор: @Model.User.First_Name @Model.User.Last_Name</h5>
+            @* <input asp-for="User" name="User" value=@Model.User hidden/> *@
+
             <div class="article-block">
                 <input class="form-control" asp-for="Id" hidden />
                 <input class="form-control" asp-for="User" hidden />
                 <div class="mrgn">
                     <div>Заголовок</div>
                     <input placeholder="Заголовок" asp-for="Title" />
+                    <span asp-validation-for="Title"></span>
                 </div>
                 <div class="mrgn">
                     <div>Текст статьи</div>
                     <textarea class="textarea" placeholder="Текст статьи" asp-for="Content">@Model.Content</textarea>
+                    <span asp-validation-for="Content"></span>
                 </div>
             <div>
                 <input class="btn-submit tag-block" type="submit" value="Сохранить"/>
