@@ -36,7 +36,7 @@
             }
             <input name="checkedTagsDic" value=@Model.CheckedTagsDic hidden />
             <h5 class="vert-spacing">Автор: @Model.User.First_Name @Model.User.Last_Name</h5>
-            <input asp-for="User" name="User" value=@Model.User hidden/>
+            <input name="User" value=@Model.User hidden/>
 
             <div class="article-block">
                 <input class="form-control" asp-for="Id" hidden />
@@ -66,3 +66,6 @@
         <h6>Войдите или зарегистрируйтесь.</h6>
     }
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

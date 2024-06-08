@@ -206,22 +206,25 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model, Dictionary<Tag, bool> checkedTagsDic, List<int> SelectedTags)
+        public async Task<IActionResult> Update(ArticleViewModel model, List<int> SelectedTags)
         {
             //model.CheckedTagsDic = checkedTagsDic;
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                var tagsId = new List<int>();
                 var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+
+                var tagsId = new List<int>();
                 SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID));
                 var tags = new List<Tag>();
                 foreach (var tag in tagsId)
                 {
                     tags.Add(tagRepo.GetTagById((int)tag));
                 }
-
+                model.CheckedTagsDic = SelectedTags
+                    .Select(tagId => tagRepo.Get(tagId))
+                    .ToDictionary(tag => tag, tag => true);
                 model.User = user;
                 model.Tags= tags;
                 model.ArticleDate = DateTime.Now;
