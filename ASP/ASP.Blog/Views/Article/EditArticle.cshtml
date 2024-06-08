@@ -34,9 +34,9 @@
                 <label class="badge badge-primary"> @tag.Key.Tag_Name</label>                
                 @* <input type="hidden" name="checkedTagsDic[@tag.Key]" value="@tag.Value" /> *@
             }
-            @* <input name="checkedTagsDic" value=@Model.CheckedTagsDic hidden /> *@
+            <input name="checkedTagsDic" value=@Model.CheckedTagsDic hidden />
             <h5 class="vert-spacing">Автор: @Model.User.First_Name @Model.User.Last_Name</h5>
-            @* <input asp-for="User" name="User" value=@Model.User hidden/> *@
+            <input asp-for="User" name="User" value=@Model.User hidden/>
 
             <div class="article-block">
                 <input class="form-control" asp-for="Id" hidden />

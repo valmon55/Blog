@@ -206,7 +206,7 @@ namespace ASP.Blog.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model, /*Dictionary<Tag, bool> checkedTagsDic, */List<int> SelectedTags)
+        public async Task<IActionResult> Update(ArticleViewModel model, Dictionary<Tag, bool> checkedTagsDic, List<int> SelectedTags)
         {
             //model.CheckedTagsDic = checkedTagsDic;
             if (ModelState.IsValid)
