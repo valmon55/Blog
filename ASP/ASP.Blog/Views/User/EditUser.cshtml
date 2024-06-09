@@ -16,6 +16,7 @@
 <h2>Обновление пользовательских данных</h2>
 <div class="tag-block">
     <form method="post" asp-action="Update" asp-controller="User">
+        <div asp-validation-summary="ModelOnly"></div>
         @foreach(var role in Model.CheckedRolesDic)
         {
             if (role.Value == true)
@@ -42,18 +43,22 @@
         <div class="mrgn">
             <label asp-for="Last_Name"></label><br />
             <input asp-for="Last_Name" />
+            <span asp-validation-for="Last_Name"></span>
         </div>
         <div class="mrgn">
             <label asp-for="First_Name"></label><br />
             <input asp-for="First_Name" />
+            <span asp-validation-for="First_Name"></span>
         </div>
         <div class="frm mrgn">
             <label asp-for="Middle_Name"></label><br />
             <input class="frm_text" asp-for="Middle_Name" type="text" value="@Model.Middle_Name" />
+            <span asp-validation-for="Middle_Name"></span>
         </div>
         <div class="mrgn">
             <label asp-for="Email"></label><br />
             <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
         </div>
         <div class="mrgn">День рождения</div>
         <div class="mrgn" id="birthday" onload="">

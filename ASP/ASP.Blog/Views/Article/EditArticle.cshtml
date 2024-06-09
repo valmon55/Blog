@@ -36,7 +36,7 @@
             }
             <input name="checkedTagsDic" value=@Model.CheckedTagsDic hidden />
             <h5 class="vert-spacing">Автор: @Model.User.First_Name @Model.User.Last_Name</h5>
-            <input name="User" value=@Model.User hidden/>
+            <input asp-for="User" name="User" value=@Model.User hidden/>
 
             <div class="article-block">
                 <input class="form-control" asp-for="Id" hidden />

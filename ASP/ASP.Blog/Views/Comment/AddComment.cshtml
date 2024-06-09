@@ -15,14 +15,19 @@
 <div class="article-block">
     @*<span>Автор @Model.User.First_Name @Model.User.Last_Name</span>*@
     <form method="post" asp-controller="Comment" asp-action="AddComment">
+        <div asp-validation-summary="ModelOnly"></div>
         <input asp-for="UserId" hidden/>
         <input asp-for="ArticleId" hidden />
         <input asp-for="Id" hidden />
         <input asp-for="CommentDate" hidden>
         <textarea class="textarea" placeholder="Комментарий" asp-for="Comment"></textarea>
+        <span asp-validation-for="Comment"></span>
         <div>
             <input class="btn-submit" type="submit" value="Добавить" />
         </div>
     </form>
     <a class="enter-submit" method="get" asp-controller="Article" asp-action="ViewArticle" asp-route-Id=@Model.ArticleId>Вернуться с статье</a>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

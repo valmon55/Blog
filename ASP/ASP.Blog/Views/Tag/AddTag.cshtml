@@ -15,10 +15,15 @@
 <div>Название</div>
 <div class="tag-block">
     <form class="frm" method="post" asp-controller="Tag" asp-action="AddTag">
+        <div asp-validation-summary="ModelOnly"></div>
         <textarea class="mrgn textarea" placeholder="Тег" asp-for="Tag_Name"></textarea>
+        <span asp-validation-for="Tag_Name"></span>
         <div>
             <input class="btn-submit" type="submit" value="Добавить" />
         </div>
     </form>
     <a class="enter-submit" method="get" asp-action="AllTags" asp-controller="Tag">Перейти к списку всех тегов</a>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
