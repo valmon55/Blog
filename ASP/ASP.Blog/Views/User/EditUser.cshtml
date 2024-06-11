@@ -73,14 +73,12 @@
             </select>
             <span asp-validation-for="Month" class="text-danger"></span>
 
-            <select asp-for="Year" class="form-control date-control" ID="year"
-                    
+            <select asp-for="Year" class="form-control date-control" ID="year"                    
                     onchange="CorrectDay()">
                 <option value="">@Model.Year</option>
             </select>
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
-
 
         <div class="center">
             <input class="enter-submit" type="submit" value="Обновить"/>
@@ -164,3 +162,6 @@
 
     </script>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

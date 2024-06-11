@@ -91,10 +91,12 @@ namespace ASP.Blog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             var cachePeriod = "0";
             app.UseStaticFiles(new StaticFileOptions

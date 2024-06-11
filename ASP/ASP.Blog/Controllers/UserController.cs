@@ -166,7 +166,7 @@ namespace ASP.Blog.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
+        [Authorize(Roles="Admin")]
         [Route("AllUsers")]
         [HttpGet]
         public async Task<IActionResult> AllUsersAsync()
