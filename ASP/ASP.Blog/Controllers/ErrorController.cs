@@ -5,7 +5,7 @@ namespace ASP.Blog.Controllers
 {
     public class ErrorController : Controller
     {
-        [Route("/error")]
+        [Route("error")]
         [HttpGet]
         public IActionResult Error(int code)
         {

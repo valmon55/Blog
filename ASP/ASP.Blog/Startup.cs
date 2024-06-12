@@ -91,11 +91,18 @@ namespace ASP.Blog
             }
             else
             {
-                //app.UseExceptionHandler("/Home/Error");
-                app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
+                //app.UseExceptionHandler("/error");
+                //app.UseStatusCodePages("text/plain", "Error. Status code : {0}");
+                app.UseStatusCodePagesWithReExecute("Home/Error", "?statusCode={0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //app.UseExceptionHandler("/error");
+
+            //app.Map("/error", ap => ap.Run(async context =>
+            //{
+            //    await context.Response.WriteAsync("Exception occured!");
+            //}));
 
             app.UseHttpsRedirection();
             var cachePeriod = "0";

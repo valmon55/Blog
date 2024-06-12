@@ -41,10 +41,29 @@ namespace ASP.Blog.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("Home/Error")]
+        public IActionResult Error(int? statusCode = null)
         {
-            _logger.LogInformation("Выполняется переход на страницу с ошибками.");
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if(statusCode.HasValue) 
+            {
+                _logger.LogInformation($"Произошла ошибка: {statusCode}");
+                if (statusCode == 404)
+                {
+                    return View("ResourceNotFound");
+                }
+                else if (statusCode == 403)
+                {
+                    return View("AccessRestricted");
+                }
+                else
+                {
+                    return View("SomethingGoesWrong");
+                }
+            }
+            //_logger.LogInformation("Выполняется переход на страницу с ошибками.");
+            _logger.LogInformation($"Произошла ошибка: {statusCode}");
+            //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("SomethingGoesWrong");
         }
     }
 }
