@@ -44,9 +44,10 @@ namespace ASP.Blog.Controllers
         [Route("Home/Error")]
         public IActionResult Error(int? statusCode = null)
         {
-            if(statusCode.HasValue) 
+            _logger.LogInformation($"Произошла ошибка: {statusCode}");
+
+            if (statusCode.HasValue) 
             {
-                _logger.LogInformation($"Произошла ошибка: {statusCode}");
                 if (statusCode == 404)
                 {
                     return View("ResourceNotFound");
@@ -60,10 +61,13 @@ namespace ASP.Blog.Controllers
                     return View("SomethingGoesWrong");
                 }
             }
-            //_logger.LogInformation("Выполняется переход на страницу с ошибками.");
-            _logger.LogInformation($"Произошла ошибка: {statusCode}");
+            else
+            {
+                _logger.LogInformation($"Произошла ошибка, код ошибки неизвестен...");
+                return View("SomethingGoesWrong");
+            }
             //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            return View("SomethingGoesWrong");
+            //return View("SomethingGoesWrong");
         }
     }
 }
