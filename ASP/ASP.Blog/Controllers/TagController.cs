@@ -7,6 +7,7 @@ using ASP.Blog.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace ASP.Blog.Controllers
     public class TagController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly ILogger<TagController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
@@ -22,9 +24,13 @@ namespace ASP.Blog.Controllers
 
         public TagController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)
+                IUnitOfWork unitOfWork, 
+                IMapper mapper,
+                ILogger<TagController> logger,
+                RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
+            _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
@@ -45,9 +51,11 @@ namespace ASP.Blog.Controllers
                 var tag = _mapper.Map<Tag>(model);
                 var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
                 repo.Create(tag);
+                _logger.LogInformation($"Создан тег {tag.Tag_Name}");
             }
             else
             {
+                _logger.LogError($"Ошибка в модели TagViewModel");
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
             return RedirectToAction("AllTags","Tag");
@@ -56,6 +64,7 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult AllTags()
         {
+            _logger.LogInformation($"Вывод списка всех тегов.");
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             var tags = repo.GetAll();
             var tagsView = new List<TagViewModel>();

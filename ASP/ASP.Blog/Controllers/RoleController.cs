@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace ASP.Blog.Controllers
     public class RoleController : Controller
     {
         private IMapper _mapper;
+        private ILogger<UserController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
@@ -34,9 +36,13 @@ namespace ASP.Blog.Controllers
 
         public RoleController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)
+                IUnitOfWork unitOfWork, 
+                IMapper mapper,
+                ILogger<UserController> logger,
+                RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
+            _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;

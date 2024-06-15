@@ -19,13 +19,13 @@ namespace ASP.Blog.Controllers
     public class ArticleController : Controller
     {
         private IMapper _mapper;
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ArticleController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ArticleController(ILogger<HomeController> logger, 
+        public ArticleController(ILogger<ArticleController> logger, 
                 UserManager<User> userManager,
                 SignInManager<User> signInManager,
                 IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)

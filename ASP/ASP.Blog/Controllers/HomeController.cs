@@ -29,7 +29,6 @@ namespace ASP.Blog.Controllers
         [Route("[controller]/[action]")]
         public IActionResult Index()
         {
-            //return View();
             _logger.LogInformation("Выполняется переход на стартовую страницу.");
             return RedirectToAction("AllArticles", "Article");
         }

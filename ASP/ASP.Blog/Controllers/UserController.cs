@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace ASP.Blog.Controllers
     public class UserController : Controller
     {
         private IMapper _mapper;
-        private ILogger _logger;
+        private ILogger<UserController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
@@ -34,8 +35,8 @@ namespace ASP.Blog.Controllers
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
                 IUnitOfWork unitOfWork, 
-                IMapper mapper, 
-                ILogger logger,
+                IMapper mapper,
+                ILogger<UserController> logger,
                 RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
@@ -50,7 +51,7 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            _logger.WriteEvent("Регистрация нового пользователя.");
+            _logger.LogInformation("Регистрация нового пользователя.");
             return View(new RegisterViewModel());
         }
 
@@ -85,16 +86,16 @@ namespace ASP.Blog.Controllers
 
                     await _signInManager.RefreshSignInAsync(currentUser);
 
-                    _logger.WriteEvent($"Пользователь {user.Last_Name} {user.First_Name} зарегистрирован.");
+                    _logger.LogInformation($"Пользователь {user.Last_Name} {user.First_Name} зарегистрирован.");
 
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    _logger.WriteError("Возникли ошибки при регистрации:");
+                    _logger.LogError("Возникли ошибки при регистрации:");
                     foreach (var error in result.Errors)
                     {
-                        _logger.WriteError($"Код ошибки: {error.Code}{Environment.NewLine}Описание: {error.Description}");
+                        _logger.LogError($"Код ошибки: {error.Code}{Environment.NewLine}Описание: {error.Description}");
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
 
@@ -120,7 +121,7 @@ namespace ASP.Blog.Controllers
                 var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 if (signedUser is null)
                 {
-                    _logger.WriteError($"Логин {user.Email} не найден");
+                    _logger.LogError($"Логин {user.Email} не найден");
                     ModelState.AddModelError("", "Неверный логин!");
                 }
                 /// Если ролей почему-то нет, то устанавливаем:
@@ -128,7 +129,7 @@ namespace ASP.Blog.Controllers
                 /// для остальных - User
                 if(userRole is null) 
                 {
-                    _logger.WriteError($"У пользователя {signedUser.UserName} нет роли!");
+                    _logger.LogError($"У пользователя {signedUser.UserName} нет роли!");
                     if(signedUser.UserName == "Admin")
                     {
                         await _userManager.AddToRoleAsync(signedUser, "Admin");
@@ -138,7 +139,7 @@ namespace ASP.Blog.Controllers
                         await _userManager.AddToRoleAsync(signedUser, "User");
                     }
                     userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
-                    _logger.WriteEvent($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
+                    _logger.LogInformation($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
                 }
 
                 if (signedUser != null)
@@ -153,7 +154,7 @@ namespace ASP.Blog.Controllers
                 }
                 else
                 {
-                    _logger.WriteError($"Логин {user.Email} не найден");
+                    _logger.LogError($"Логин {user.Email} не найден");
                     ModelState.AddModelError("", $"Логин {user.Email} не найден");
                 }
             }

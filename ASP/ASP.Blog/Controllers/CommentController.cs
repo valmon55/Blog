@@ -7,6 +7,7 @@ using ASP.Blog.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace ASP.Blog.Controllers
     public class CommentController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly ILogger<CommentController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
@@ -23,9 +25,13 @@ namespace ASP.Blog.Controllers
 
         public CommentController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, IMapper mapper, RoleManager<UserRole> roleManager)
+                IUnitOfWork unitOfWork, 
+                IMapper mapper,
+                ILogger<CommentController> logger,
+                RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
+            _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
