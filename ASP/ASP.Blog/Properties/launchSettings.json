@@ -33,4 +33,13 @@
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
+    //,
+    //"Logging": {
+    //  "LogLevel": {
+    //    "Default": "Trace",
+    //    "Microsoft": "Warning",
+    //    "Microsoft.Hosting.Lifetime": "Information"
+    //  }
+    //},
+    //"AllowedHosts": "*"
   }

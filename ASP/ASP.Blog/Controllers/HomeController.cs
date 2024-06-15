@@ -44,7 +44,8 @@ namespace ASP.Blog.Controllers
         [Route("Home/Error")]
         public IActionResult Error(int? statusCode = null)
         {
-            _logger.LogInformation($"Произошла ошибка: {statusCode}");
+            //_logger.LogInformation($"Произошла ошибка: {statusCode}");
+            _logger.LogError($"Произошла ошибка: {statusCode}");
 
             if (statusCode.HasValue) 
             {
