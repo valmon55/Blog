@@ -43,11 +43,10 @@ namespace ASP.Blog.Controllers
         [Route("Home/Error")]
         public IActionResult Error(int? statusCode = null)
         {
-            //_logger.LogInformation($"Произошла ошибка: {statusCode}");
-            _logger.LogError($"Произошла ошибка: {statusCode}");
-
             if (statusCode.HasValue) 
             {
+                _logger.LogError($"Произошла ошибка с кодом: {statusCode}");
+
                 if (statusCode == 404)
                 {
                     return View("ResourceNotFound");

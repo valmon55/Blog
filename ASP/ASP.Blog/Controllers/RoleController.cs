@@ -53,6 +53,7 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult AddRole()
         {
+            _logger.LogInformation("Выполняется переход на страницу добавления роли.");
             return View(new RoleViewModel());
         }
         [Route("Role/AddRole")]
@@ -69,12 +70,14 @@ namespace ASP.Blog.Controllers
                 role.Description = roleData.Description;
                 
                 await _roleManager.CreateAsync(role);
+                _logger.LogInformation($"Создана роль {role.Name}");
             }
             else
             {
+                _logger.LogError("Модель RoleViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
-
+            _logger.LogInformation($"Выполняется переход на страницу просмотра всех ролей");
             return RedirectToAction("AllRoles", "Role");
         }
 
@@ -90,7 +93,7 @@ namespace ASP.Blog.Controllers
             {
                 rolesView.Add(_mapper.Map<RoleViewModel>(role));
             }
-
+            _logger.LogInformation($"Просмотр всех ролей");
             return View(rolesView);
         }
 
@@ -101,6 +104,7 @@ namespace ASP.Blog.Controllers
         {
             var role = await _roleManager.FindByIdAsync(roleId);
             var roleView = _mapper.Map<RoleViewModel>(role);
+            _logger.LogInformation($"Роль для обновления: {roleView.Name}");
 
             return View("EditRole", roleView);
         }
@@ -116,11 +120,14 @@ namespace ASP.Blog.Controllers
                 role.Convert(model);
                 
                 await _roleManager.UpdateAsync(role);
+                _logger.LogInformation($"Роль {role.Name} обновлена");
 
+                _logger.LogInformation($"Перенаправление на страницу просмотра всех ролей");
                 return RedirectToAction("AllRoles");
             }
             else
             {
+                _logger.LogError("Модель RoleViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Некорректные данные");
                 return View("RoleEdit", model);
             }
@@ -134,6 +141,7 @@ namespace ASP.Blog.Controllers
             if (role != null)
             {
                 await _roleManager.DeleteAsync(role);
+                _logger.LogInformation($"Роль с ID = {roleId} удалена.");
             }
 
             return RedirectToAction("AllRoles");

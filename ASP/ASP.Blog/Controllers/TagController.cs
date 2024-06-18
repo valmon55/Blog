@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace ASP.Blog.Controllers
@@ -92,6 +93,7 @@ namespace ASP.Blog.Controllers
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             repo.DeleteTag(repo.GetTagById(id));
+            _logger.LogInformation($"Удален тег с ID = {id}");
 
             return RedirectToAction("AllTags","Tag");
         }
@@ -102,6 +104,7 @@ namespace ASP.Blog.Controllers
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             var tag = repo.GetTagById(id);
             var tagView = _mapper.Map<TagViewModel>(tag);            
+            _logger.LogInformation($"Тег для обновления: {tagView.Tag_Name}");
 
             return View("EditTag",tagView);
         }
@@ -116,11 +119,15 @@ namespace ASP.Blog.Controllers
                 tag.Convert(model);
 
                 repo.UpdateTag(tag);
+                _logger.LogInformation($"Тег {tag.Tag_Name} обновлен.");
             }
             else
             {
+                _logger.LogError("Модель TagViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
+
+            _logger.LogInformation($"Перенаправление на страницу просмотра всех тегов.");
             return RedirectToAction("AllTags", "Tag");
         }
     }

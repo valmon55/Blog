@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult AddComment(int articleId) 
         {
+            _logger.LogInformation($"Выполняется переход на страницу добавления комментария для статьи с ID = {articleId}");
             return View(new CommentViewModel() { ArticleId = articleId} );
         }
         [Route("AddComment")]
@@ -56,18 +58,21 @@ namespace ASP.Blog.Controllers
                 comment.UserId = comment.User.Id;
                 var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
                 repo.Create(comment);
+                _logger.LogInformation($"Комментарий создал пользователь {comment.User.UserName} : {comment.User.First_Name} {comment.User.Last_Name}");
             }
             else
             {
+                _logger.LogError("Модель CommentViewModel при добавлении комментария невалидна!");
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
-
+            _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {model.ArticleId}");
             return RedirectToAction("ViewArticle", "Article", new { Id = model.ArticleId });
         }
         [Route("AllArticleComments")]
         [HttpGet]
         public IActionResult AllArticleComments(int articleId)
         {
+            _logger.LogInformation($"Выполняется переход на страницу просмотра всех статей комментариев статьи с ID = {articleId}.");
             var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
             var comments = repo.GetComments();
             var commentsView = new List<CommentViewModel>();
@@ -88,6 +93,8 @@ namespace ASP.Blog.Controllers
             var repo =_unitOfWork.GetRepository<Comment>() as CommentRepository;
             var comment = repo.GetCommentById(id);
             var articleId = comment.ArticleId;
+            _logger.LogInformation($"Удаление комментария с ID = {id}");
+
             repo.Delete(comment);
 
             return RedirectToAction("ViewArticle", "Article", new { Id = articleId });
@@ -99,6 +106,7 @@ namespace ASP.Blog.Controllers
             var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
             var comment = repo.GetCommentById(id);
             var commentView = _mapper.Map<CommentViewModel>(comment);
+            _logger.LogInformation($"Выполняется переход на страницу обновления комментария с ID = {id}. ID статьи = {comment.ArticleId}.");
 
             return View("EditComment",commentView);
         }
@@ -119,9 +127,12 @@ namespace ASP.Blog.Controllers
             }
             else
             {
+                _logger.LogError("Модель CommentViewModel при обновлении комментария невалидна!");
                 ModelState.AddModelError("", "Ошибка в модели!");
+                _logger.LogWarning($"Выполняется переход на страницу просмотра всех статей.");
                 return RedirectToAction("AllUserArticles", "Article");
             }
+            _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {model.ArticleId}");
             return RedirectToAction("ViewArticle", "Article", new { Id = articleId });
         }
     }

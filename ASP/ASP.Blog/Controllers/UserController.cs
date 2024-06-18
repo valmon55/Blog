@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Authentication;
 using System.Security.Claims;
@@ -139,7 +140,7 @@ namespace ASP.Blog.Controllers
                         await _userManager.AddToRoleAsync(signedUser, "User");
                     }
                     userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
-                    _logger.LogInformation($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
+                    _logger.LogWarning($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
                 }
 
                 if (signedUser != null)
@@ -158,6 +159,7 @@ namespace ASP.Blog.Controllers
                     ModelState.AddModelError("", $"Логин {user.Email} не найден");
                 }
             }
+            _logger.LogInformation($"Перенаправление на главную страницу.");
             return RedirectToAction("Index", "Home");
         }
         [Route("Logout")]
@@ -165,6 +167,8 @@ namespace ASP.Blog.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            _logger.LogInformation($"Выполнен Logout.");
+
             return RedirectToAction("Index", "Home");
         }
         [Authorize(Roles="Admin")]
@@ -172,6 +176,7 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> AllUsersAsync()
         {
+            _logger.LogInformation($"Вывод списка всех пользователей.");
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var users = repo.GetUsers();
 
@@ -208,8 +213,7 @@ namespace ASP.Blog.Controllers
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             var userView = _mapper.Map<UserViewModel>(user);
-            //userView.BirthDate = user.BirthDate;
-
+            _logger.LogInformation($"Пользователь для обновления: {user.UserName}");
 
             var allRoles = _roleManager.Roles.ToList();
             var checkedRolesDic = new Dictionary<UserRole, bool>();
@@ -261,11 +265,15 @@ namespace ASP.Blog.Controllers
 
                 user.Convert(model);
                 await _userManager.UpdateAsync(user);
+                _logger.LogInformation($"Пользователь {user.UserName} обновлен.");
+
+                _logger.LogInformation($"Перенаправление на страницу просмотра всех пользователей");
 
                 return RedirectToAction("AllUsers");
             }
             else
             {
+                _logger.LogError("Модель UserViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Некорректные данные");
                 return View("EditUser", model);
             }
@@ -278,6 +286,7 @@ namespace ASP.Blog.Controllers
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
             repo.DeleteUser(user);
+            _logger.LogInformation($"Пользователь с ID = {userId} удален.");
 
             return RedirectToAction("AllUsers");
         }

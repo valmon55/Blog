@@ -92,9 +92,9 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> AllUserArticles() 
         {
-            _logger.LogInformation($"Выполняется переход на страницу просмотра всех статей.");
-
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            _logger.LogInformation($"Выполняется переход на страницу просмотра всех статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
+
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var articles = repo.GetArticlesByUserId(user.Id);
             var articlesView = new List<ArticleViewModel>();
