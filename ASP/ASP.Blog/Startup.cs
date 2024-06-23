@@ -21,6 +21,8 @@ using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.Extentions;
 using FluentValidation.AspNetCore;
 using ASP.Blog.BLL.Validators;
+using ASP.Blog.Services.IServices;
+using ASP.Blog.Services;
 
 namespace ASP.Blog
 {
@@ -54,6 +56,7 @@ namespace ASP.Blog
                 .AddCustomRepository<Article, ArticleRepository>()
                 .AddCustomRepository<Comment, CommentRepository>()
                 .AddCustomRepository<Tag, TagRepository>()
+                .AddTransient<ITagService, TagService>()
                 .AddCustomRepository<Article_Tags, Article_TagsRepository>()
                 .AddCustomRepository<User, UserRepository>()
                 .AddCustomRepository<UserRole, UserRoleRepository>()

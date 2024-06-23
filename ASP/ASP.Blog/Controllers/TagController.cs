@@ -4,6 +4,8 @@ using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
+using ASP.Blog.Services;
+using ASP.Blog.Services.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +24,14 @@ namespace ASP.Blog.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
-
+        private readonly ITagService _tagService;
         public TagController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
                 IUnitOfWork unitOfWork, 
                 IMapper mapper,
                 ILogger<TagController> logger,
-                RoleManager<UserRole> roleManager)
+                RoleManager<UserRole> roleManager,
+                ITagService tagService)
         {
             _mapper = mapper;
             _logger = logger;
@@ -36,12 +39,14 @@ namespace ASP.Blog.Controllers
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
+            _tagService = tagService;
         }
         [Route("AddTag")]
         [HttpGet]
         public IActionResult AddTag()
         {
-            return View(new TagViewModel());
+            //return View(new TagViewModel());
+            return View(_tagService.AddTag());
         }
         [Route("AddTag")]
         [HttpPost]
@@ -49,10 +54,11 @@ namespace ASP.Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tag = _mapper.Map<Tag>(model);
-                var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-                repo.Create(tag);
-                _logger.LogInformation($"Создан тег {tag.Tag_Name}");
+                //var tag = _mapper.Map<Tag>(model);
+                //var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+                //repo.Create(tag);
+                _tagService.AddTag(model);
+                //_logger.LogInformation($"Создан тег {tag.Tag_Name}");
             }
             else
             {
