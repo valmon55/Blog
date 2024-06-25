@@ -71,16 +71,17 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult AllTags()
         {
-            _logger.LogInformation($"Вывод списка всех тегов.");
-            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            var tags = repo.GetAll();
-            var tagsView = new List<TagViewModel>();
-            foreach(var tag in tags)
-            {
-                tagsView.Add(_mapper.Map<TagViewModel>(tag));
-            }
+            //_logger.LogInformation($"Вывод списка всех тегов.");
+            //var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            //var tags = repo.GetAll();
+            //var tagsView = new List<TagViewModel>();
+            //foreach(var tag in tags)
+            //{
+            //    tagsView.Add(_mapper.Map<TagViewModel>(tag));
+            //}
 
-            return View(tagsView);
+            //return View(tagsView);
+            return View(_tagService.AllTags());
         }
         [Route("Tag")]
         [HttpGet]
@@ -97,9 +98,10 @@ namespace ASP.Blog.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            repo.DeleteTag(repo.GetTagById(id));
-            _logger.LogInformation($"Удален тег с ID = {id}");
+            //var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            //repo.DeleteTag(repo.GetTagById(id));
+            //_logger.LogInformation($"Удален тег с ID = {id}");
+            _tagService.DeleteTag(id);
 
             return RedirectToAction("AllTags","Tag");
         }
@@ -107,12 +109,13 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            var tag = repo.GetTagById(id);
-            var tagView = _mapper.Map<TagViewModel>(tag);            
-            _logger.LogInformation($"Тег для обновления: {tagView.Tag_Name}");
+            //var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            //var tag = repo.GetTagById(id);
+            //var tagView = _mapper.Map<TagViewModel>(tag);            
+            //_logger.LogInformation($"Тег для обновления: {tagView.Tag_Name}");
 
-            return View("EditTag",tagView);
+            //return View("EditTag",tagView);
+            return View("EditTag", _tagService.UpdateTag(id));
         }
         [Route("Tag/Update")]
         [HttpPost]
@@ -120,12 +123,13 @@ namespace ASP.Blog.Controllers
         {
             if(ModelState.IsValid) 
             {
-                var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-                var tag = repo.GetTagById(model.Id);
-                tag.Convert(model);
+                //var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+                //var tag = repo.GetTagById(model.Id);
+                //tag.Convert(model);
 
-                repo.UpdateTag(tag);
-                _logger.LogInformation($"Тег {tag.Tag_Name} обновлен.");
+                //repo.UpdateTag(tag);
+                //_logger.LogInformation($"Тег {tag.Tag_Name} обновлен.");
+                _tagService.UpdateTag(model);
             }
             else
             {

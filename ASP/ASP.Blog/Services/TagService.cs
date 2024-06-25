@@ -1,4 +1,5 @@
-﻿using ASP.Blog.BLL.ViewModels.Tag;
+﻿using ASP.Blog.BLL.Extentions;
+using ASP.Blog.BLL.ViewModels.Tag;
 using ASP.Blog.Controllers;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
@@ -7,6 +8,7 @@ using ASP.Blog.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace ASP.Blog.Services.IServices
 {
@@ -44,6 +46,46 @@ namespace ASP.Blog.Services.IServices
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             repo.Create(tag);
             _logger.LogInformation($"Создан тег {tag.Tag_Name}");
+        }
+
+        public List<TagViewModel> AllTags()
+        {
+            _logger.LogInformation($"Вывод списка всех тегов.");
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            var tags = repo.GetAll();
+            var tagsView = new List<TagViewModel>();
+            foreach (var tag in tags)
+            {
+                tagsView.Add(_mapper.Map<TagViewModel>(tag));
+            }
+            return tagsView;
+        }
+
+        public void DeleteTag(int id)
+        {
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            repo.DeleteTag(repo.GetTagById(id));
+            _logger.LogInformation($"Удален тег с ID = {id}");
+        }
+
+        public TagViewModel UpdateTag(int id)
+        {
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            var tag = repo.GetTagById(id);
+            var tagView = _mapper.Map<TagViewModel>(tag);
+            _logger.LogInformation($"Тег для обновления: {tagView.Tag_Name}");
+            
+            return tagView;
+        }
+
+        public void UpdateTag(TagViewModel model)
+        {
+            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            var tag = repo.GetTagById(model.Id);
+            tag.Convert(model);
+
+            repo.UpdateTag(tag);
+            _logger.LogInformation($"Тег {tag.Tag_Name} обновлен.");
         }
     }
 }
