@@ -6,6 +6,8 @@ using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
+using ASP.Blog.Services;
+using ASP.Blog.Services.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -33,13 +35,15 @@ namespace ASP.Blog.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRoleService _roleService;
 
         public RoleController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
                 IUnitOfWork unitOfWork, 
                 IMapper mapper,
                 ILogger<UserController> logger,
-                RoleManager<UserRole> roleManager)
+                RoleManager<UserRole> roleManager,
+                IRoleService roleService)
         {
             _mapper = mapper;
             _logger = logger;
@@ -47,14 +51,16 @@ namespace ASP.Blog.Controllers
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
+            _roleService = roleService;
         }
 
         [Route("Role/AddRole")]
         [HttpGet]
         public IActionResult AddRole()
         {
-            _logger.LogInformation("Выполняется переход на страницу добавления роли.");
-            return View(new RoleViewModel());
+            //_logger.LogInformation("Выполняется переход на страницу добавления роли.");
+            //return View(new RoleViewModel());
+            return View(_roleService.AddRole());
         }
         [Route("Role/AddRole")]
         [HttpPost]
@@ -68,9 +74,10 @@ namespace ASP.Blog.Controllers
                 var roleData = _mapper.Map<UserRole>(model);
                 role.Name = roleData.Name;
                 role.Description = roleData.Description;
-                
+
                 await _roleManager.CreateAsync(role);
                 _logger.LogInformation($"Создана роль {role.Name}");
+                //_roleService.AddRole(model);
             }
             else
             {
@@ -86,15 +93,16 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult AllRoles()
         {
-            var repo = _unitOfWork.GetRepository<UserRole>() as UserRoleRepository;
-            var roles = repo.GetUserRoles();
-            var rolesView = new List<RoleViewModel>();
-            foreach (var role in roles)
-            {
-                rolesView.Add(_mapper.Map<RoleViewModel>(role));
-            }
-            _logger.LogInformation($"Просмотр всех ролей");
-            return View(rolesView);
+            //var repo = _unitOfWork.GetRepository<UserRole>() as UserRoleRepository;
+            //var roles = repo.GetUserRoles();
+            //var rolesView = new List<RoleViewModel>();
+            //foreach (var role in roles)
+            //{
+            //    rolesView.Add(_mapper.Map<RoleViewModel>(role));
+            //}
+            //_logger.LogInformation($"Просмотр всех ролей");
+            //return View(rolesView);
+            return View(_roleService.AllRoles());
         }
 
         [Authorize(Roles = "Admin")]
@@ -102,11 +110,13 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateAsync(string roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
-            var roleView = _mapper.Map<RoleViewModel>(role);
-            _logger.LogInformation($"Роль для обновления: {roleView.Name}");
+            //var role = await _roleManager.FindByIdAsync(roleId);
+            //var roleView = _mapper.Map<RoleViewModel>(role);
+            //_logger.LogInformation($"Роль для обновления: {roleView.Name}");
 
+            var roleView = _roleService.UpdateRole(roleId);
             return View("EditRole", roleView);
+            //return View("EditRole", _roleService.UpdateRole(roleId));
         }
 
         [Authorize(Roles = "Admin")]
@@ -116,33 +126,34 @@ namespace ASP.Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = await _roleManager.FindByIdAsync(model.ID);
-                role.Convert(model);
-                
-                await _roleManager.UpdateAsync(role);
-                _logger.LogInformation($"Роль {role.Name} обновлена");
+                //var role = await _roleManager.FindByIdAsync(model.ID);
+                //role.Convert(model);
 
-                _logger.LogInformation($"Перенаправление на страницу просмотра всех ролей");
-                return RedirectToAction("AllRoles");
+                //await _roleManager.UpdateAsync(role);
+                //_logger.LogInformation($"Роль {role.Name} обновлена");
+                _roleService.UpdateRole(model);
             }
             else
             {
                 _logger.LogError("Модель RoleViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Некорректные данные");
-                return View("RoleEdit", model);
             }
+            _logger.LogInformation($"Перенаправление на страницу просмотра всех ролей");
+
+            return RedirectToAction("AllRoles");
         }
         [Authorize(Roles = "Admin")]
         [Route("Role/Delete")]
         [HttpPost]
         public async Task<IActionResult> Delete(string roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
-            if (role != null)
-            {
-                await _roleManager.DeleteAsync(role);
-                _logger.LogInformation($"Роль с ID = {roleId} удалена.");
-            }
+            //var role = await _roleManager.FindByIdAsync(roleId);
+            //if (role != null)
+            //{
+            //    await _roleManager.DeleteAsync(role);
+            //    _logger.LogInformation($"Роль с ID = {roleId} удалена.");
+            //}
+            _roleService.DeleteRole(roleId);
 
             return RedirectToAction("AllRoles");
         }
