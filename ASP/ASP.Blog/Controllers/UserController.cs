@@ -4,6 +4,7 @@ using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.Data.Entities;
+using ASP.Blog.Services.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -32,13 +33,15 @@ namespace ASP.Blog.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
                 IUnitOfWork unitOfWork, 
                 IMapper mapper,
                 ILogger<UserController> logger,
-                RoleManager<UserRole> roleManager)
+                RoleManager<UserRole> roleManager,
+                IUserService userService)
         {
             _mapper = mapper;
             _logger = logger;
@@ -46,6 +49,7 @@ namespace ASP.Blog.Controllers
             _signInManager = signInManager;
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
+            _userService = userService;
         }
 
         [Route("Register")]
@@ -102,7 +106,7 @@ namespace ASP.Blog.Controllers
 
                 }
             }
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         [Route("Login")]
@@ -176,33 +180,34 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> AllUsersAsync()
         {
-            _logger.LogInformation($"Вывод списка всех пользователей.");
-            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            var users = repo.GetUsers();
+            //_logger.LogInformation($"Вывод списка всех пользователей.");
+            //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+            //var users = repo.GetUsers();
 
-            var usersView = new List<UserViewModel>();
+            //var usersView = new List<UserViewModel>();
             
-            foreach (var user in users)
-            {
-                var userView = _mapper.Map<UserViewModel>(user);
+            //foreach (var user in users)
+            //{
+            //    var userView = _mapper.Map<UserViewModel>(user);
                 
-                var userRoleNames = await _userManager.GetRolesAsync(user);
-                var allRoles = await _roleManager.Roles.ToListAsync();
-                var userRoles = new List<UserRole>();
+            //    var userRoleNames = await _userManager.GetRolesAsync(user);
+            //    var allRoles = await _roleManager.Roles.ToListAsync();
+            //    var userRoles = new List<UserRole>();
 
-                foreach(var role in allRoles)
-                {
-                    if(userRoleNames.Contains(role.Name))
-                    {
-                        userRoles.Add(role);
-                    }
-                }
-                userView.UserRoles = userRoles;
+            //    foreach(var role in allRoles)
+            //    {
+            //        if(userRoleNames.Contains(role.Name))
+            //        {
+            //            userRoles.Add(role);
+            //        }
+            //    }
+            //    userView.UserRoles = userRoles;
 
-                usersView.Add(userView);
-            }
+            //    usersView.Add(userView);
+            //}
 
-            return View(usersView);
+            //return View(usersView);
+            return View(await _userService.AllUsers());
         }
 
         [Authorize(Roles = "Admin")]
@@ -210,28 +215,29 @@ namespace ASP.Blog.Controllers
         [HttpGet]
         public IActionResult Update(string userId)
         {
-            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            var user = repo.GetUserById(userId);
-            var userView = _mapper.Map<UserViewModel>(user);
-            _logger.LogInformation($"Пользователь для обновления: {user.UserName}");
+            //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+            //var user = repo.GetUserById(userId);
+            //var userView = _mapper.Map<UserViewModel>(user);
+            //_logger.LogInformation($"Пользователь для обновления: {user.UserName}");
 
-            var allRoles = _roleManager.Roles.ToList();
-            var checkedRolesDic = new Dictionary<UserRole, bool>();
-            foreach(var role in allRoles)
-            {
-                if(_userManager.IsInRoleAsync(user, role.Name).Result) 
-                {
-                    checkedRolesDic.Add(role, true);
-                }
-                else
-                {
-                    checkedRolesDic.Add(role, false);
-                }
-            }
+            //var allRoles = _roleManager.Roles.ToList();
+            //var checkedRolesDic = new Dictionary<UserRole, bool>();
+            //foreach (var role in allRoles)
+            //{
+            //    if (_userManager.IsInRoleAsync(user, role.Name).Result)
+            //    {
+            //        checkedRolesDic.Add(role, true);
+            //    }
+            //    else
+            //    {
+            //        checkedRolesDic.Add(role, false);
+            //    }
+            //}
 
-            userView.CheckedRolesDic = checkedRolesDic;
+            //userView.CheckedRolesDic = checkedRolesDic;
 
-            return View("EditUser", userView);
+            //return View("EditUser", userView);
+            return View("EditUser", _userService.UpdateUser(userId));
         }
 
         [Authorize(Roles = "Admin")]
@@ -241,52 +247,52 @@ namespace ASP.Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByIdAsync(model.Id);                
-                
-                var roles = await _roleManager.Roles.ToListAsync();
+                //var user = await _userManager.FindByIdAsync(model.Id);
 
-                foreach(var role in roles)
-                {
-                    //определяем есть ли роль у пользователя
-                    var IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
+                //var roles = await _roleManager.Roles.ToListAsync();
 
-                    //добавляем роль
-                    if (SelectedRoles.Contains(role.Id) && !IsInRole)
-                    {
-                        await _userManager.AddToRoleAsync(user, role.Name);
-                    }
-                    //убираем роль
-                    if (!SelectedRoles.Contains(role.Id) && IsInRole)
-                    {
-                        await _userManager.RemoveFromRoleAsync(user, role.Name);
-                    }
+                //foreach (var role in roles)
+                //{
+                //    //определяем есть ли роль у пользователя
+                //    var IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
 
-                }
+                //    //добавляем роль
+                //    if (SelectedRoles.Contains(role.Id) && !IsInRole)
+                //    {
+                //        await _userManager.AddToRoleAsync(user, role.Name);
+                //    }
+                //    //убираем роль
+                //    if (!SelectedRoles.Contains(role.Id) && IsInRole)
+                //    {
+                //        await _userManager.RemoveFromRoleAsync(user, role.Name);
+                //    }
 
-                user.Convert(model);
-                await _userManager.UpdateAsync(user);
-                _logger.LogInformation($"Пользователь {user.UserName} обновлен.");
+                //}
 
-                _logger.LogInformation($"Перенаправление на страницу просмотра всех пользователей");
-
-                return RedirectToAction("AllUsers");
+                //user.Convert(model);
+                //await _userManager.UpdateAsync(user);
+                //_logger.LogInformation($"Пользователь {user.UserName} обновлен.");
+                await _userService.UpdateUser(model, SelectedRoles);
             }
             else
             {
                 _logger.LogError("Модель UserViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Некорректные данные");
-                return View("EditUser", model);
             }
+            _logger.LogInformation($"Перенаправление на страницу просмотра всех пользователей");
+
+            return RedirectToAction("AllUsers");
         }
         [Authorize(Roles = "Admin")]
         [Route("User/Delete")]
         [HttpPost]
         public IActionResult Delete(string userId)
         {
-            var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            var user = repo.GetUserById(userId);
-            repo.DeleteUser(user);
-            _logger.LogInformation($"Пользователь с ID = {userId} удален.");
+            //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
+            //var user = repo.GetUserById(userId);
+            //repo.DeleteUser(user);
+            //_logger.LogInformation($"Пользователь с ID = {userId} удален.");
+            _userService.DeleteUser(userId);
 
             return RedirectToAction("AllUsers");
         }
