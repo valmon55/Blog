@@ -68,16 +68,16 @@ namespace ASP.Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Инициализируем так, чтобы заполнить ID
-                var role = new UserRole();
+                ////Инициализируем так, чтобы заполнить ID
+                //var role = new UserRole();
 
-                var roleData = _mapper.Map<UserRole>(model);
-                role.Name = roleData.Name;
-                role.Description = roleData.Description;
+                //var roleData = _mapper.Map<UserRole>(model);
+                //role.Name = roleData.Name;
+                //role.Description = roleData.Description;
 
-                await _roleManager.CreateAsync(role);
-                _logger.LogInformation($"Создана роль {role.Name}");
-                //_roleService.AddRole(model);
+                //await _roleManager.CreateAsync(role);
+                //_logger.LogInformation($"Создана роль {role.Name}");
+                await _roleService.AddRole(model);
             }
             else
             {
@@ -114,7 +114,7 @@ namespace ASP.Blog.Controllers
             //var roleView = _mapper.Map<RoleViewModel>(role);
             //_logger.LogInformation($"Роль для обновления: {roleView.Name}");
 
-            var roleView = _roleService.UpdateRole(roleId);
+            var roleView = await _roleService.UpdateRole(roleId);
             return View("EditRole", roleView);
             //return View("EditRole", _roleService.UpdateRole(roleId));
         }
@@ -131,7 +131,7 @@ namespace ASP.Blog.Controllers
 
                 //await _roleManager.UpdateAsync(role);
                 //_logger.LogInformation($"Роль {role.Name} обновлена");
-                _roleService.UpdateRole(model);
+                await _roleService.UpdateRole(model);
             }
             else
             {
@@ -153,7 +153,7 @@ namespace ASP.Blog.Controllers
             //    await _roleManager.DeleteAsync(role);
             //    _logger.LogInformation($"Роль с ID = {roleId} удалена.");
             //}
-            _roleService.DeleteRole(roleId);
+            await _roleService.DeleteRole(roleId);
 
             return RedirectToAction("AllRoles");
         }
