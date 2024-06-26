@@ -54,12 +54,16 @@ namespace ASP.Blog
                 .AddDbContext<BlogContext>(options => options.UseSqlServer(connection))
                 .AddUnitOfWork()
                 .AddCustomRepository<Article, ArticleRepository>()
+                .AddTransient<IArticleService, ArticleService>()
                 .AddCustomRepository<Comment, CommentRepository>()
+                .AddTransient<ICommentService, CommentService>()
                 .AddCustomRepository<Tag, TagRepository>()
                 .AddTransient<ITagService, TagService>()
                 .AddCustomRepository<Article_Tags, Article_TagsRepository>()
                 .AddCustomRepository<User, UserRepository>()
+                .AddTransient<IUserService, UserService>()
                 .AddCustomRepository<UserRole, UserRoleRepository>()
+                .AddTransient<IRoleService, RoleService>()
                 .AddIdentity<User, UserRole>(opts =>
                 {
                     opts.Password.RequiredLength = 6;
