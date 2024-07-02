@@ -2,16 +2,8 @@
 using ASP.Blog.API.DAL.UoW;
 using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Services.IServices;
-using ASP.Blog.BLL.Extentions;
-using ASP.Blog.BLL.ViewModels;
-using ASP.Blog.DAL.Entities;
-using ASP.Blog.DAL.Repositories;
-using ASP.Blog.DAL.UoW;
-using ASP.Blog.Data.Entities;
-using ASP.Blog.Services.IServices;
+using ASP.Blog.API.ViewModels;
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Security.Authentication;
 using System.Security.Claims;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ASP.Blog.API.Controllers
