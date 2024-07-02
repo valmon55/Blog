@@ -1,4 +1,4 @@
-﻿using ASP.Blog.BLL.ViewModels.Tag;
+﻿using ASP.Blog.API.ViewModels.Tag;
 using System.Collections.Generic;
 
 namespace ASP.Blog.API.Services.IServices

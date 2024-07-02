@@ -1,8 +1,11 @@
-﻿using ASP.Blog.API.DAL.Entities;
+﻿using ASP.Blog.API.Controllers;
+using ASP.Blog.API.DAL.Entities;
 using ASP.Blog.API.DAL.Repositories;
 using ASP.Blog.API.DAL.UoW;
 using ASP.Blog.API.Data.Entities;
-using ASP.Blog.Controllers;
+using ASP.Blog.API.Extentions;
+using ASP.Blog.API.Services.IServices;
+using ASP.Blog.API.ViewModels.Article;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -98,6 +101,12 @@ namespace ASP.Blog.API.Services
             }
             return articlesView;
         }
+
+        public List<ArticleViewModel> AllUserArticles()
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteArticle(int id)
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;

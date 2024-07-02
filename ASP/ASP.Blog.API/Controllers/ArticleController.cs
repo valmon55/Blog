@@ -2,6 +2,7 @@
 using ASP.Blog.API.DAL.UoW;
 using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Services.IServices;
+using ASP.Blog.API.ViewModels.Article;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

@@ -1,4 +1,4 @@
-﻿using ASP.Blog.BLL.ViewModels.Role;
+﻿using ASP.Blog.API.ViewModels.Role;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,7 +1,6 @@
-﻿using ASP.Blog.BLL.ViewModels.Article;
-using ASP.Blog.Data.Entities;
+﻿using ASP.Blog.API.Data.Entities;
+using ASP.Blog.API.ViewModels.Article;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ASP.Blog.API.Services.IServices
 {

@@ -1,4 +1,4 @@
-﻿using ASP.Blog.BLL.ViewModels;
+﻿using ASP.Blog.API.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
