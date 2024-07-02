@@ -1,8 +1,8 @@
-﻿using ASP.Blog.DAL.Repositories;
-using ASP.Blog.DAL.UoW;
+﻿using ASP.Blog.API.DAL.Repositories;
+using ASP.Blog.API.DAL.UoW;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ASP.Blog.DAL.Extentions
+namespace ASP.Blog.API.DAL.Extentions
 {
     public static class ServiceExtentions
     {

@@ -1,8 +1,8 @@
-﻿using ASP.Blog.Data.Entities;
+﻿using ASP.Blog.API.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ASP.Blog.DAL.Configs
+namespace ASP.Blog.API.DAL.Configs
 {
     public class ArticleConfiguration : IEntityTypeConfiguration<Article>
     {

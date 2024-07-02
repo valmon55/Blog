@@ -1,9 +1,9 @@
-﻿using ASP.Blog.DAL.Entities;
+﻿using ASP.Blog.API.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
-namespace ASP.Blog.Data.Entities
+namespace ASP.Blog.API.Data.Entities
 {
     public class User : IdentityUser
     {

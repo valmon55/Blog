@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace ASP.Blog.Data.Entities
+namespace ASP.Blog.API.Data.Entities
 {
     public class Tag
     {

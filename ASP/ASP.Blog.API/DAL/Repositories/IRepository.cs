@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.Blog.DAL.Repositories
+namespace ASP.Blog.API.DAL.Repositories
 {
     public interface IRepository<T> where T : class
     {

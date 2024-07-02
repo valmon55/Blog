@@ -1,6 +1,4 @@
-using System;
-
-namespace ASP.Blog.Models
+namespace ASP.Blog.API.Models
 {
     public class ErrorViewModel
     {

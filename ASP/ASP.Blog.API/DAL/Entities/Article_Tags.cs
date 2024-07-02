@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ASP.Blog.Data.Entities
+namespace ASP.Blog.API.Data.Entities
 {
     public class Article_Tags
     {

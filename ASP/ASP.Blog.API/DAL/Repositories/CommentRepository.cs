@@ -1,12 +1,9 @@
-﻿using ASP.Blog.Data;
-using ASP.Blog.Data.Entities;
-using System;
+﻿using ASP.Blog.API.Data;
+using ASP.Blog.API.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ASP.Blog.DAL.Repositories
+namespace ASP.Blog.API.DAL.Repositories
 {
     public class CommentRepository : Repository<Comment>
     {
