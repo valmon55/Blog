@@ -5,6 +5,8 @@ using ASP.Blog.API.Data.Entities;
 
 namespace ASP.Blog.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,7 +25,7 @@ namespace ASP.Blog.API.Controllers
             _logger.LogInformation("Выполняется переход на стартовую страницу.");
             return RedirectToAction("AllArticles", "Article");
         }
-
+        [Route("Privacy")]
         public IActionResult Privacy()
         {
             _logger.LogInformation("Выполняется переход на страницу Privacy.");

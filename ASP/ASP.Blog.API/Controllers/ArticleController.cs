@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 
 namespace ASP.Blog.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ArticleController : Controller
     {
         private IMapper _mapper;
@@ -44,12 +46,12 @@ namespace ASP.Blog.API.Controllers
         [Authorize]
         [Route("AddArticle")]
         [HttpPost]
-        public async Task<IActionResult> AddArticle(ArticleViewModel model, List<int> SelectedTags)
+        public async Task<IActionResult> AddArticle(ArticleViewModel model)
         {
             if(ModelState.IsValid) 
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                _articleService.AddArticle(model, SelectedTags, user);
+                _articleService.AddArticle(model, model.SelectedTags, user);
 
                 //return RedirectToAction("AllUserArticles");
                 return StatusCode(201);
@@ -92,12 +94,12 @@ namespace ASP.Blog.API.Controllers
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model, List<int> SelectedTags)
+        public async Task<IActionResult> Update(ArticleViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                _articleService.UpdateArticle(model,SelectedTags,user);
+                _articleService.UpdateArticle(model,model.SelectedTags,user);
 
                 //return RedirectToAction("AllUserArticles", "Article");
                 return StatusCode(201);

@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 
 namespace ASP.Blog.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : Controller
     {
         private IMapper _mapper;
@@ -43,7 +45,6 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _userService = userService;
         }
-
         [Route("Register")]
         [HttpGet]
         public IActionResult Register()
@@ -235,7 +236,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize(Roles = "Admin")]
         [Route("User/Update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAsync(UserViewModel model, List<string> SelectedRoles)
+        public async Task<IActionResult> UpdateAsync(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -264,7 +265,7 @@ namespace ASP.Blog.API.Controllers
                 //user.Convert(model);
                 //await _userManager.UpdateAsync(user);
                 //_logger.LogInformation($"Пользователь {user.UserName} обновлен.");
-                await _userService.UpdateUser(model, SelectedRoles);
+                await _userService.UpdateUser(model, model.SelectedRoles);
             }
             else
             {

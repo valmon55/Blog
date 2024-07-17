@@ -33,6 +33,7 @@ namespace ASP.Blog.API.ViewModels
         [Display(Name = "Логин", Description = "Введите логин")]
         public string Login { get; set; }
         public List<UserRole> UserRoles { get; set; }
+        public List<string> SelectedRoles { get; set; }
         public Dictionary<UserRole, bool> CheckedRolesDic { get; set; }
         public User User { get; set; }
         public UserViewModel(User user) => User = user;

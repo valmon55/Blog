@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace ASP.Blog.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class RoleController : Controller
     {
         private IMapper _mapper;

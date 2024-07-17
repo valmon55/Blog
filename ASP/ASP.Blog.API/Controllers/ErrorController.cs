@@ -2,6 +2,8 @@
 
 namespace ASP.Blog.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ErrorController : Controller
     {
         [Route("error")]
