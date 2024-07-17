@@ -16,30 +16,16 @@ namespace ASP.Blog.API.Services.IServices
     {
         private readonly IMapper _mapper;
         private readonly ILogger<TagController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TagService(UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork,
+        public TagService(IUnitOfWork unitOfWork,
                 IMapper mapper,
-                ILogger<TagController> logger,
-                RoleManager<UserRole> roleManager)
+                ILogger<TagController> logger)
         {
             _mapper = mapper;
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
             _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
         }
-        public TagViewModel AddTag()
-        {
-            return new TagViewModel();
-        }
-
         public void AddTag(TagViewModel model)
         {
             var tag = _mapper.Map<Tag>(model);
@@ -47,7 +33,6 @@ namespace ASP.Blog.API.Services.IServices
             repo.Create(tag);
             _logger.LogInformation($"Создан тег {tag.Tag_Name}");
         }
-
         public List<TagViewModel> AllTags()
         {
             _logger.LogInformation($"Вывод списка всех тегов.");
@@ -60,24 +45,12 @@ namespace ASP.Blog.API.Services.IServices
             }
             return tagsView;
         }
-
         public void DeleteTag(int id)
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
             repo.DeleteTag(repo.GetTagById(id));
             _logger.LogInformation($"Удален тег с ID = {id}");
         }
-
-        public TagViewModel UpdateTag(int id)
-        {
-            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            var tag = repo.GetTagById(id);
-            var tagView = _mapper.Map<TagViewModel>(tag);
-            _logger.LogInformation($"Тег для обновления: {tagView.Tag_Name}");
-            
-            return tagView;
-        }
-
         public void UpdateTag(TagViewModel model)
         {
             var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;

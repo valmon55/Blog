@@ -19,24 +19,15 @@ namespace ASP.Blog.API.Services
     {
         private readonly IMapper _mapper;
         private readonly ILogger<TagController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ArticleService(UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork,
+        public ArticleService(IUnitOfWork unitOfWork,
                 IMapper mapper,
-                ILogger<TagController> logger,
-                RoleManager<UserRole> roleManager)
+                ILogger<TagController> logger)
         {
             _mapper = mapper;
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
             _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
         }
         public ArticleViewModel AddArticle(User user)
         {

@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace ASP.Blog.API.Controllers
 {
@@ -37,12 +38,6 @@ namespace ASP.Blog.API.Controllers
             _tagService = tagService;
         }
         [Route("AddTag")]
-        [HttpGet]
-        public IActionResult AddTag()
-        {
-            return View(_tagService.AddTag());
-        }
-        [Route("AddTag")]
         [HttpPost]
         public IActionResult AddTag(TagViewModel model)
         {
@@ -55,38 +50,23 @@ namespace ASP.Blog.API.Controllers
                 _logger.LogError($"Ошибка в модели TagViewModel");
                 ModelState.AddModelError("", "Ошибка в модели!");
             }
-            return RedirectToAction("AllTags","Tag");
+            //return RedirectToAction("AllTags","Tag");
+            return StatusCode(201);
         }
         [Route("AllTags")]
         [HttpGet]
-        public IActionResult AllTags()
+        public List<TagViewModel> AllTags()
         {
-            return View(_tagService.AllTags());
-        }
-        [Route("Tag")]
-        [HttpGet]
-        public IActionResult TagById(int id)
-        {
-            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            var tag = repo.GetTagById(id);
-            var tagView = _mapper.Map<TagViewModel>(tag);
-
-            //пока неизвестно где буду использовать
-            return RedirectToAction("AllTags", "Tag");
+            return _tagService.AllTags();
         }
         [Route("DeleteTag")]
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             _tagService.DeleteTag(id);
 
-            return RedirectToAction("AllTags","Tag");
-        }
-        [Route("Tag/Update")]
-        [HttpGet]
-        public IActionResult Update(int id)
-        {
-            return View("EditTag", _tagService.UpdateTag(id));
+            //return RedirectToAction("AllTags","Tag");
+            return StatusCode(201);
         }
         [Route("Tag/Update")]
         [HttpPost]
@@ -100,10 +80,12 @@ namespace ASP.Blog.API.Controllers
             {
                 _logger.LogError("Модель TagViewModel не прошла проверку!");
                 ModelState.AddModelError("", "Ошибка в модели!");
+                return StatusCode(500);
             }
 
             _logger.LogInformation($"Перенаправление на страницу просмотра всех тегов.");
-            return RedirectToAction("AllTags", "Tag");
+            //return RedirectToAction("AllTags", "Tag");
+            return StatusCode(201);
         }
     }
 }

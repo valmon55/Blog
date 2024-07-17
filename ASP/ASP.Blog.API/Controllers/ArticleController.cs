@@ -43,15 +43,6 @@ namespace ASP.Blog.API.Controllers
         }
         [Authorize]
         [Route("AddArticle")]
-        [HttpGet]
-        public async Task<IActionResult> AddArticle() 
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-
-            return View(_articleService.AddArticle(user));
-        }
-        [Authorize]
-        [Route("AddArticle")]
         [HttpPost]
         public async Task<IActionResult> AddArticle(ArticleViewModel model, List<int> SelectedTags)
         {
@@ -60,59 +51,44 @@ namespace ASP.Blog.API.Controllers
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 _articleService.AddArticle(model, SelectedTags, user);
 
-                return RedirectToAction("AllUserArticles");
+                //return RedirectToAction("AllUserArticles");
+                return StatusCode(201);
             }
             else
             {
                 _logger.LogError("Модель ArticleViewModel не прошла проверку!");
 
                 ModelState.AddModelError("", "Ошибка в модели!");
-                return RedirectToAction("AllUserArticles");
+                //return RedirectToAction("AllUserArticles");
+                return StatusCode(403);
             }
         }
         [Authorize]
         [Route("AllUserArticles")]
         [HttpGet]
-        public async Task<IActionResult> AllUserArticles() 
+        public async Task<List<ArticleViewModel>> AllUserArticles() 
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            return View("AllArticles", _articleService.AllArticles(user));
+            return _articleService.AllArticles(user);
         }
 
         [Route("AllArticles")]
         [HttpGet]
-        public IActionResult AllArticles()
+        public List<ArticleViewModel> AllArticles()
         {
-            return View("AllArticles", _articleService.AllArticles());
+            return _articleService.AllArticles();
         }
-        [Route("ViewArticle")]
-        [HttpGet]
-        public IActionResult ViewArticle(int Id)
-        {
-            return View("Article", _articleService.ViewArticle(Id));
-        }
-
         [Authorize]
         [Route("Delete")]
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int Id) 
         {
             _articleService.DeleteArticle(Id);
 
-            return RedirectToAction("AllUserArticles","Article");
+            //return RedirectToAction("AllUserArticles","Article");
+            return StatusCode(201);
         }
-
-        [Authorize]
-        [Route("Article/Update")]
-        [HttpGet]
-        public async Task<IActionResult> Update(int Id)
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-         
-            return View("EditArticle", _articleService.UpdateArticle(Id, user));
-        }
-
         [Authorize]
         [Route("Article/Update")]
         [HttpPost]
@@ -123,14 +99,16 @@ namespace ASP.Blog.API.Controllers
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 _articleService.UpdateArticle(model,SelectedTags,user);
 
-                return RedirectToAction("AllUserArticles", "Article");
+                //return RedirectToAction("AllUserArticles", "Article");
+                return StatusCode(201);
             }
             else
             {
                 _logger.LogError($"Ошибка в модели ArticleViewModel");
                 ModelState.AddModelError("", "Ошибка в модели!");
 
-                return RedirectToAction("AllUserArticles", "Article");
+                //return RedirectToAction("AllUserArticles", "Article");
+                return StatusCode(403);
             }
         }
     }

@@ -6,6 +6,7 @@ using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Services;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.Validators;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,13 @@ namespace ASP.Blog.API
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("HP_Connection");
+            var mapperConfig = new MapperConfiguration(v =>
+            {
+                v.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ArticleViewModelValidator>())
