@@ -97,7 +97,7 @@ namespace ASP.Blog.Controllers
 
         [Authorize]
         [Route("Delete")]
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int Id) 
         {
             _articleService.DeleteArticle(Id);

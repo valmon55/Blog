@@ -192,7 +192,7 @@ namespace ASP.Blog.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [Route("Delete")]
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(string userId)
         {
             try

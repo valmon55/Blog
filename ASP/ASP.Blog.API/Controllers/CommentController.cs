@@ -64,7 +64,7 @@ namespace ASP.Blog.API.Controllers
             return _commentService.AllArticleComments(articleId);
         }
         [Route("Delete")]
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int id) 
         {
             var articleId = _commentService.DeleteComment(id);
