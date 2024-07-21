@@ -18,20 +18,6 @@ namespace ASP.Blog.API.Controllers
             _signInManager = signInManager;
         }
 
-        [Route("")]
-        [Route("[controller]/[action]")]
-        public IActionResult Index()
-        {
-            _logger.LogInformation("Выполняется переход на стартовую страницу.");
-            return RedirectToAction("AllArticles", "Article");
-        }
-        [Route("Privacy")]
-        public IActionResult Privacy()
-        {
-            _logger.LogInformation("Выполняется переход на страницу Privacy.");
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [Route("Home/Error")]
         public IActionResult Error(int? statusCode = null)
@@ -42,24 +28,22 @@ namespace ASP.Blog.API.Controllers
 
                 if (statusCode == 404)
                 {
-                    return View("ResourceNotFound");
+                    return StatusCode(404);
                 }
                 else if (statusCode == 403)
                 {
-                    return View("AccessRestricted");
+                    return StatusCode(403);
                 }
                 else
                 {
-                    return View("SomethingGoesWrong");
+                    return StatusCode(500);
                 }
             }
             else
             {
                 _logger.LogInformation($"Произошла ошибка, код ошибки неизвестен...");
-                return View("SomethingGoesWrong");
+                return StatusCode(500);
             }
-            //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            //return View("SomethingGoesWrong");
         }
     }
 }

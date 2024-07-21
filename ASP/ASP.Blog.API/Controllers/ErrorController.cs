@@ -12,15 +12,15 @@ namespace ASP.Blog.API.Controllers
         {
             if(code == 404) 
             {
-                return View("ResourceNotFound");                                        
+                return StatusCode(404);
             }            
             else if(code == 403)
             {
-                return View("AccessRestricted");
+                return StatusCode(403);
             }
             else
             {
-                return View("SomethingGoesWrong");
+                return StatusCode(500);
             }
         }
     }

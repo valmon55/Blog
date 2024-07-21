@@ -46,14 +46,6 @@ namespace ASP.Blog.API.Controllers
             _userService = userService;
         }
         [Route("Register")]
-        [HttpGet]
-        public IActionResult Register()
-        {
-            _logger.LogInformation("Регистрация нового пользователя.");
-            return View(new RegisterViewModel());
-        }
-
-        [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -64,7 +56,6 @@ namespace ASP.Blog.API.Controllers
                 //var userRole = new UserRole() { Name = "Admin", Description = "Администратор" };
                 //var userRole = new UserRole() { Name = "Moderator", Description = "Модератор" };
 
-                //var roles = _roleManager.Roles.ToList();
                 if (!_roleManager.RoleExistsAsync(userRole.Name).Result)
                 {
                     await _roleManager.CreateAsync(userRole);
@@ -86,7 +77,7 @@ namespace ASP.Blog.API.Controllers
 
                     _logger.LogInformation($"Пользователь {user.Last_Name} {user.First_Name} зарегистрирован.");
 
-                    return RedirectToAction("Index", "Home");
+                    return StatusCode(201);
                 }
                 else
                 {
@@ -96,18 +87,16 @@ namespace ASP.Blog.API.Controllers
                         _logger.LogError($"Код ошибки: {error.Code}{Environment.NewLine}Описание: {error.Description}");
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
-
+                    return StatusCode(403);
                 }
             }
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                _logger.LogError("Возникли ошибки в данных для регистрации пользователя.");
+                return StatusCode(500);
+            }
         }
 
-        [Route("Login")]
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
         [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -120,7 +109,7 @@ namespace ASP.Blog.API.Controllers
                 if (signedUser is null)
                 {
                     _logger.LogError($"Логин {user.Email} не найден");
-                    ModelState.AddModelError("", "Неверный логин!");
+                    return StatusCode(404);
                 }
                 /// Если ролей почему-то нет, то устанавливаем:
                 /// для пользователя Admin - роль Admin
@@ -153,143 +142,69 @@ namespace ASP.Blog.API.Controllers
                 else
                 {
                     _logger.LogError($"Логин {user.Email} не найден");
-                    ModelState.AddModelError("", $"Логин {user.Email} не найден");
+                    return StatusCode(404);
                 }
+                return StatusCode(201);
             }
-            _logger.LogInformation($"Перенаправление на главную страницу.");
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return StatusCode(500);
+            }
         }
         [Route("Logout")]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-            _logger.LogInformation($"Выполнен Logout.");
-
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                await _signInManager.SignOutAsync();
+                _logger.LogInformation($"Выполнен Logout.");
+                return StatusCode(201);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(403);
+            }
         }
         [Authorize(Roles="Admin")]
         [Route("AllUsers")]
         [HttpGet]
-        public async Task<IActionResult> AllUsersAsync()
+        public async Task<List<UserViewModel>> AllUsersAsync()
         {
-            //_logger.LogInformation($"Вывод списка всех пользователей.");
-            //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            //var users = repo.GetUsers();
-
-            //var usersView = new List<UserViewModel>();
-            
-            //foreach (var user in users)
-            //{
-            //    var userView = _mapper.Map<UserViewModel>(user);
-                
-            //    var userRoleNames = await _userManager.GetRolesAsync(user);
-            //    var allRoles = await _roleManager.Roles.ToListAsync();
-            //    var userRoles = new List<UserRole>();
-
-            //    foreach(var role in allRoles)
-            //    {
-            //        if(userRoleNames.Contains(role.Name))
-            //        {
-            //            userRoles.Add(role);
-            //        }
-            //    }
-            //    userView.UserRoles = userRoles;
-
-            //    usersView.Add(userView);
-            //}
-
-            //return View(usersView);
-            return View(await _userService.AllUsers());
+            return await _userService.AllUsers();
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("User/Update")]
-        [HttpGet]
-        public IActionResult Update(string userId)
-        {
-            //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            //var user = repo.GetUserById(userId);
-            //var userView = _mapper.Map<UserViewModel>(user);
-            //_logger.LogInformation($"Пользователь для обновления: {user.UserName}");
-
-            //var allRoles = _roleManager.Roles.ToList();
-            //var checkedRolesDic = new Dictionary<UserRole, bool>();
-            //foreach (var role in allRoles)
-            //{
-            //    if (_userManager.IsInRoleAsync(user, role.Name).Result)
-            //    {
-            //        checkedRolesDic.Add(role, true);
-            //    }
-            //    else
-            //    {
-            //        checkedRolesDic.Add(role, false);
-            //    }
-            //}
-
-            //userView.CheckedRolesDic = checkedRolesDic;
-
-            //return View("EditUser", userView);
-            return View("EditUser", _userService.UpdateUser(userId));
-        }
-
-        [Authorize(Roles = "Admin")]
-        [Route("User/Update")]
+        [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> UpdateAsync(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                //var user = await _userManager.FindByIdAsync(model.Id);
-
-                //var roles = await _roleManager.Roles.ToListAsync();
-
-                //foreach (var role in roles)
-                //{
-                //    //определяем есть ли роль у пользователя
-                //    var IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
-
-                //    //добавляем роль
-                //    if (SelectedRoles.Contains(role.Id) && !IsInRole)
-                //    {
-                //        await _userManager.AddToRoleAsync(user, role.Name);
-                //    }
-                //    //убираем роль
-                //    if (!SelectedRoles.Contains(role.Id) && IsInRole)
-                //    {
-                //        await _userManager.RemoveFromRoleAsync(user, role.Name);
-                //    }
-
-                //}
-
-                //user.Convert(model);
-                //await _userManager.UpdateAsync(user);
-                //_logger.LogInformation($"Пользователь {user.UserName} обновлен.");
                 await _userService.UpdateUser(model, model.SelectedRoles);
+                return StatusCode(201);
             }
             else
             {
                 _logger.LogError("Модель UserViewModel не прошла проверку!");
-                ModelState.AddModelError("", "Некорректные данные");
+                return StatusCode(500);
             }
-            _logger.LogInformation($"Перенаправление на страницу просмотра всех пользователей");
-
-            return RedirectToAction("AllUsers");
         }
         [Authorize(Roles = "Admin")]
-        [Route("User/Delete")]
+        [Route("Delete")]
         [HttpPost]
         public IActionResult Delete(string userId)
         {
-            //var repo = _unitOfWork.GetRepository<User>() as UserRepository;
-            //var user = repo.GetUserById(userId);
-            //repo.DeleteUser(user);
-            //_logger.LogInformation($"Пользователь с ID = {userId} удален.");
-            _userService.DeleteUser(userId);
-
-            return RedirectToAction("AllUsers");
+            try
+            {
+                _userService.DeleteUser(userId);
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
-
     }
 }
  

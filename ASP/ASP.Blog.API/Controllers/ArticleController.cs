@@ -86,13 +86,18 @@ namespace ASP.Blog.API.Controllers
         [HttpDelete]
         public IActionResult Delete(int Id) 
         {
-            _articleService.DeleteArticle(Id);
-
-            //return RedirectToAction("AllUserArticles","Article");
-            return StatusCode(201);
+            try
+            {
+                _articleService.DeleteArticle(Id);
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(403);
+            }
         }
         [Authorize]
-        [Route("Article/Update")]
+        [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(ArticleViewModel model)
         {

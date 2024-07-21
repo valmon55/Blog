@@ -46,14 +46,14 @@ namespace ASP.Blog.API.Controllers
             if (ModelState.IsValid)
             {
                 _tagService.AddTag(model);
+                return StatusCode(201);
             }
             else
             {
                 _logger.LogError($"Ошибка в модели TagViewModel");
                 ModelState.AddModelError("", "Ошибка в модели!");
+                return StatusCode(403);
             }
-            //return RedirectToAction("AllTags","Tag");
-            return StatusCode(201);
         }
         [Route("AllTags")]
         [HttpGet]
@@ -65,18 +65,24 @@ namespace ASP.Blog.API.Controllers
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            _tagService.DeleteTag(id);
-
-            //return RedirectToAction("AllTags","Tag");
-            return StatusCode(201);
+            try
+            {
+                _tagService.DeleteTag(id);
+                return StatusCode(201);
+            }
+            catch
+            {
+                return StatusCode(403);
+            }
         }
-        [Route("Tag/Update")]
+        [Route("Update")]
         [HttpPost]
         public IActionResult Update(TagViewModel model)
         {
             if(ModelState.IsValid) 
             {
                 _tagService.UpdateTag(model);
+                return StatusCode(201);
             }
             else
             {
@@ -84,10 +90,6 @@ namespace ASP.Blog.API.Controllers
                 ModelState.AddModelError("", "Ошибка в модели!");
                 return StatusCode(500);
             }
-
-            _logger.LogInformation($"Перенаправление на страницу просмотра всех тегов.");
-            //return RedirectToAction("AllTags", "Tag");
-            return StatusCode(201);
         }
     }
 }
