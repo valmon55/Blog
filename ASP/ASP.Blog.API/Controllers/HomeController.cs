@@ -19,7 +19,7 @@ namespace ASP.Blog.API.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        [Route("Home/Error")]
+        [Route("Error")]
         public IActionResult Error(int? statusCode = null)
         {
             if (statusCode.HasValue) 
