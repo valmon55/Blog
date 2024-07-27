@@ -5,6 +5,7 @@ using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.ViewModels.Tag;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -39,6 +40,7 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _tagService = tagService;
         }
+        [Authorize]
         [Route("AddTag")]
         [HttpPost]
         public IActionResult AddTag(TagViewModel model)
@@ -61,6 +63,7 @@ namespace ASP.Blog.API.Controllers
         {
             return _tagService.AllTags();
         }
+        [Authorize(Roles = "Admin,Moderator")]
         [Route("DeleteTag")]
         [HttpDelete]
         public IActionResult Delete(int id)
@@ -75,6 +78,7 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        [Authorize(Roles = "Admin,Moderator")]
         [Route("Update")]
         [HttpPost]
         public IActionResult Update(TagViewModel model)

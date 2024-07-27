@@ -105,16 +105,16 @@ namespace ASP.Blog.API.Controllers
             {
                 var user = _mapper.Map<User>(model);
                 User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
-                var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 if (signedUser is null)
                 {
                     _logger.LogError($"Логин {user.Email} не найден");
                     return StatusCode(404);
                 }
+                var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
                 /// Если ролей почему-то нет, то устанавливаем:
                 /// для пользователя Admin - роль Admin
                 /// для остальных - User
-                if(userRole is null) 
+                if (userRole is null) 
                 {
                     _logger.LogError($"У пользователя {signedUser.UserName} нет роли!");
                     if(signedUser.UserName == "Admin")
@@ -129,21 +129,13 @@ namespace ASP.Blog.API.Controllers
                     _logger.LogWarning($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
                 }
 
-                if (signedUser != null)
+                var claims = new List<Claim>()
                 {
-                    var claims = new List<Claim>()
-                    {
-                        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                        new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
-                    };
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
+                };
 
                     await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
-                }
-                else
-                {
-                    _logger.LogError($"Логин {user.Email} не найден");
-                    return StatusCode(404);
-                }
                 return StatusCode(201);
             }
             else
