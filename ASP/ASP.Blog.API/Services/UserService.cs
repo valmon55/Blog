@@ -77,9 +77,16 @@ namespace ASP.Blog.API.Services
             _logger.LogInformation($"Пользователь с ID = {userId} удален.");
         }
 
-        public void Login(LoginViewModel model)
+        public async Task<SignInResult> Login(LoginViewModel model)
         {
-            throw new System.NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if(user == null)
+            {
+                return _ = SignInResult.Failed;
+            }
+            var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
+            return result;
         }
 
         public void Register(RegisterViewModel model)

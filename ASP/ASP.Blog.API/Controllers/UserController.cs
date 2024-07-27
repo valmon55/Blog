@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -103,6 +104,16 @@ namespace ASP.Blog.API.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+                    throw new ArgumentNullException("Запрос не корректен");
+
+                var result = await _userService.Login(model);
+
+                if (!result.Succeeded)
+                    throw new AuthenticationException("Введенный пароль не корректен или не найден аккаунт");
+                
+                /// TODO: сделать авторизацию
+
                 var user = _mapper.Map<User>(model);
                 User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
                 if (signedUser is null)
@@ -135,7 +146,7 @@ namespace ASP.Blog.API.Controllers
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
                 };
 
-                    await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
+                await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
                 return StatusCode(201);
             }
             else
