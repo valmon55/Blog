@@ -102,57 +102,50 @@ namespace ASP.Blog.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-                    throw new ArgumentNullException("Запрос не корректен");
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+                throw new ArgumentNullException("Запрос не корректен");
 
-                var result = await _userService.Login(model);
+            var result = await _userService.Login(model);
 
-                if (!result.Succeeded)
-                    throw new AuthenticationException("Введенный пароль не корректен или не найден аккаунт");
+            if (!result.Succeeded)
+                throw new AuthenticationException("Введенный пароль не корректен или не найден аккаунт");
                 
-                /// TODO: сделать авторизацию
+            /// TODO: сделать авторизацию
 
-                var user = _mapper.Map<User>(model);
-                User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
-                if (signedUser is null)
-                {
-                    _logger.LogError($"Логин {user.Email} не найден");
-                    return StatusCode(404);
-                }
-                var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
-                /// Если ролей почему-то нет, то устанавливаем:
-                /// для пользователя Admin - роль Admin
-                /// для остальных - User
-                if (userRole is null) 
-                {
-                    _logger.LogError($"У пользователя {signedUser.UserName} нет роли!");
-                    if(signedUser.UserName == "Admin")
-                    {
-                        await _userManager.AddToRoleAsync(signedUser, "Admin");
-                    }
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(signedUser, "User");
-                    }
-                    userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
-                    _logger.LogWarning($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
-                }
-
-                var claims = new List<Claim>()
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
-                };
-
-                await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
-                return StatusCode(201);
-            }
-            else
+            var user = _mapper.Map<User>(model);
+            User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
+            if (signedUser is null)
             {
-                return StatusCode(500);
+                _logger.LogError($"Логин {user.Email} не найден");
+                return StatusCode(404);
             }
+            var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
+            /// Если ролей почему-то нет, то устанавливаем:
+            /// для пользователя Admin - роль Admin
+            /// для остальных - User
+            if (userRole is null) 
+            {
+                _logger.LogError($"У пользователя {signedUser.UserName} нет роли!");
+                if(signedUser.UserName == "Admin")
+                {
+                    await _userManager.AddToRoleAsync(signedUser, "Admin");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(signedUser, "User");
+                }
+                userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
+                _logger.LogWarning($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
+            }
+
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
+            };
+
+            await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
+            return StatusCode(201);
         }
         [Route("Logout")]
         [HttpGet]
