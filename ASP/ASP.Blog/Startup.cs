@@ -23,6 +23,7 @@ using FluentValidation.AspNetCore;
 using ASP.Blog.BLL.Validators;
 using ASP.Blog.Services.IServices;
 using ASP.Blog.Services;
+using Microsoft.Extensions.Options;
 
 namespace ASP.Blog
 {
@@ -83,10 +84,13 @@ namespace ASP.Blog
                             return Task.CompletedTask;
                         }
                     };
-                    options.LoginPath = "/Login";
-                    options.LogoutPath = "/Logout";
-                    options.AccessDeniedPath = "/Home/Error";
                 });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+                options.AccessDeniedPath = "/Home/Error";
+            });
 
             services.AddControllersWithViews();
             services.AddRazorPages();
