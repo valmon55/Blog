@@ -83,6 +83,9 @@ namespace ASP.Blog
                             return Task.CompletedTask;
                         }
                     };
+                    options.LoginPath = "/Login";
+                    options.LogoutPath = "/Logout";
+                    options.AccessDeniedPath = "/Home/Error";
                 });
 
             services.AddControllersWithViews();
