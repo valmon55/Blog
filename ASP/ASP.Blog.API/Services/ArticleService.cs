@@ -20,14 +20,21 @@ namespace ASP.Blog.API.Services
         private readonly IMapper _mapper;
         private readonly ILogger<TagController> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepository<Article> _articleRepository;
+        private readonly IRepository<Tag> _tagRepository;
 
         public ArticleService(IUnitOfWork unitOfWork,
                 IMapper mapper,
-                ILogger<TagController> logger)
+                ILogger<TagController> logger,
+                IRepository<Article> articleRepository,
+                IRepository<Tag> tagRepository
+                )
         {
             _mapper = mapper;
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _articleRepository = articleRepository;
+            _tagRepository = tagRepository;
         }
         //public ArticleViewModel AddArticle(User user)
         //{
@@ -61,14 +68,26 @@ namespace ASP.Blog.API.Services
             //    var _tag = tagRepo.G
             //}
             //model.Tags = Tags;
-            model.ArticleDate = DateTime.Now;
 
-            var article = _mapper.Map<Article>(model);
-            article.User = user;
-            var repo = _unitOfWork.GetRepository<Article>();
+            var dbTags = new List<Tag>();
+
+            if(model.Tags != null)
+            {
+                var tagsId = model.Tags.Select(t => t.Id).ToList();
+                dbTags = _tagRepository.GetAll().Where(t => tagsId.Contains(t.ID)).ToList();
+            }
+
+            var article = new Article()
+            {
+                ArticleDate = DateTime.Now,
+                Title = model.Title,
+                Content = model.Content,
+                User = user,
+                Tags = dbTags
+            };
 
             _logger.LogInformation("Выполняется добавление новой статьи статьи.");
-            repo.Create(article);
+            _articleRepository.Create(article);
             //_logger.LogInformation($"Выполняется переход на страницу просмотра статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
         }
 

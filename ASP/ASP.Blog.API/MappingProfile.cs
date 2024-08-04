@@ -77,8 +77,8 @@ namespace ASP.Blog.API
             CreateMap<ArticleAddRequest, Article>()
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.ArticleDate, opt => opt.MapFrom(c => c.ArticleDate))
-                .ForMember(x => x.Title, opt => opt.MapFrom(c => c.Title))
-                .ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags));
+                .ForMember(x => x.Title, opt => opt.MapFrom(c => c.Title));
+//                .ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags));
 
             CreateMap<Tag, TagViewModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
