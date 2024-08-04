@@ -25,8 +25,8 @@ namespace ASP.Blog.Controllers
             _signInManager = signInManager;
         }
 
-        [Route("")]
-        [Route("[controller]/[action]")]
+        //[Route("")]
+        //[Route("[controller]/[action]")]
         public IActionResult Index()
         {
             _logger.LogInformation("Выполняется переход на стартовую страницу.");
@@ -36,6 +36,8 @@ namespace ASP.Blog.Controllers
         public IActionResult Privacy()
         {
             _logger.LogInformation("Выполняется переход на страницу Privacy.");
+            //return StatusCode(500);
+            //return StatusCode(403);
             return View();
         }
 
@@ -65,8 +67,6 @@ namespace ASP.Blog.Controllers
                 _logger.LogInformation($"Произошла ошибка, код ошибки неизвестен...");
                 return View("SomethingGoesWrong");
             }
-            //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            //return View("SomethingGoesWrong");
         }
     }
 }
