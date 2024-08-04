@@ -29,40 +29,47 @@ namespace ASP.Blog.API.Services
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
-        public ArticleViewModel AddArticle(User user)
-        {
-            var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            var allTags = repo.GetTags();
-            _logger.LogInformation("Выполняется переход на страницу добавления статьи.");
+        //public ArticleViewModel AddArticle(User user)
+        //{
+        //    var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+        //    var allTags = repo.GetTags();
+        //    _logger.LogInformation("Выполняется переход на страницу добавления статьи.");
 
-            return new ArticleViewModel(user) { Tags = allTags, ArticleDate = DateTime.Now };
-        }
+        //    return new ArticleViewModel(user) { Tags = allTags, ArticleDate = DateTime.Now };
+        //}
 
-        public void AddArticle(ArticleViewModel model, List<int> SelectedTags, User user)
+        public void AddArticle(ArticleAddRequest model, User user)
         {
-            var tagsId = new List<int>();
-            var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID));
-            var tags = new List<Tag>();
-            foreach (var tag in tagsId)
-            {
-                tags.Add(tagRepo.GetTagById((int)tag));
-                _logger.LogInformation($"Выбран тег {tagRepo.GetTagById((int)tag).Tag_Name}");
-            }
+            //var tagsId = new List<int>();
+            //var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            //SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID));
+            //var tags = new List<Tag>();
+            //foreach (var tag in tagsId)
+            //{
+            //    tags.Add(tagRepo.GetTagById((int)tag));
+            //    _logger.LogInformation($"Выбран тег {tagRepo.GetTagById((int)tag).Tag_Name}");
+            //}
 
             //var user = await _userManager.FindByNameAsync(User.Identity.Name);
             _logger.LogInformation($"Создаёт статью пользователь {user.UserName} : {user.First_Name} {user.Last_Name}");
-            model.User = user;
-            model.Tags = tags;
+
+            //model.User = user;
+            //var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+            //var tags = new List<Tag>();
+            //foreach(var tag in Tags)
+            //{
+            //    var _tag = tagRepo.G
+            //}
+            //model.Tags = Tags;
             model.ArticleDate = DateTime.Now;
 
             var article = _mapper.Map<Article>(model);
+            article.User = user;
             var repo = _unitOfWork.GetRepository<Article>();
 
             _logger.LogInformation("Выполняется добавление новой статьи статьи.");
             repo.Create(article);
-            _logger.LogInformation($"Выполняется переход на страницу просмотра статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
-
+            //_logger.LogInformation($"Выполняется переход на страницу просмотра статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
         }
 
         public List<ArticleViewModel> AllArticles(User user = null)

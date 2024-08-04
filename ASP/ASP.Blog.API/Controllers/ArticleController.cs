@@ -46,14 +46,13 @@ namespace ASP.Blog.API.Controllers
         [Authorize]
         [Route("AddArticle")]
         [HttpPost]
-        public async Task<IActionResult> AddArticle(ArticleViewModel model)
+        public async Task<IActionResult> AddArticle(ArticleAddRequest model)
         {
             if(ModelState.IsValid) 
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                _articleService.AddArticle(model, model.SelectedTags, user);
+                _articleService.AddArticle(model, user);
 
-                //return RedirectToAction("AllUserArticles");
                 return StatusCode(201);
             }
             else
@@ -61,7 +60,6 @@ namespace ASP.Blog.API.Controllers
                 _logger.LogError("Модель ArticleViewModel не прошла проверку!");
 
                 ModelState.AddModelError("", "Ошибка в модели!");
-                //return RedirectToAction("AllUserArticles");
                 return StatusCode(403);
             }
         }

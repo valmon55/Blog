@@ -6,7 +6,7 @@ namespace ASP.Blog.API.Services.IServices
 {
     public interface IArticleService
     {
-        public void AddArticle(ArticleViewModel article, List<int> SelectedTags, User user);
+        public void AddArticle(ArticleAddRequest article, User user);
         public List<ArticleViewModel> AllUserArticles();
         public List<ArticleViewModel> AllArticles(User user = null);
         public void DeleteArticle(int id);
