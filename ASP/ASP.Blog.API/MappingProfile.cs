@@ -78,7 +78,14 @@ namespace ASP.Blog.API
                 .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
                 .ForMember(x => x.ArticleDate, opt => opt.MapFrom(c => c.ArticleDate))
                 .ForMember(x => x.Title, opt => opt.MapFrom(c => c.Title));
-//                .ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags));
+
+            CreateMap<Article, ArticleViewRequest>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
+                .ForMember(x => x.Content, opt => opt.MapFrom(c => c.Content))
+                .ForMember(x => x.AuthorId, opt => opt.MapFrom(c => c.UserId))
+                .ForMember(x => x.ArticleDate, opt => opt.MapFrom(c => c.ArticleDate))
+                .ForMember(x => x.Title, opt => opt.MapFrom(c => c.Title))
+                .ForMember(x => x.Tags, opt => opt.MapFrom(c => c.Tags));
 
             CreateMap<Tag, TagViewModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))

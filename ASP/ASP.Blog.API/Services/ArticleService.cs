@@ -6,6 +6,7 @@ using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Extentions;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.ViewModels.Article;
+using ASP.Blog.API.ViewModels.Tag;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -47,27 +48,7 @@ namespace ASP.Blog.API.Services
 
         public void AddArticle(ArticleAddRequest model, User user)
         {
-            //var tagsId = new List<int>();
-            //var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            //SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID));
-            //var tags = new List<Tag>();
-            //foreach (var tag in tagsId)
-            //{
-            //    tags.Add(tagRepo.GetTagById((int)tag));
-            //    _logger.LogInformation($"Выбран тег {tagRepo.GetTagById((int)tag).Tag_Name}");
-            //}
-
-            //var user = await _userManager.FindByNameAsync(User.Identity.Name);
             _logger.LogInformation($"Создаёт статью пользователь {user.UserName} : {user.First_Name} {user.Last_Name}");
-
-            //model.User = user;
-            //var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-            //var tags = new List<Tag>();
-            //foreach(var tag in Tags)
-            //{
-            //    var _tag = tagRepo.G
-            //}
-            //model.Tags = Tags;
 
             var dbTags = new List<Tag>();
 
@@ -91,35 +72,35 @@ namespace ASP.Blog.API.Services
             //_logger.LogInformation($"Выполняется переход на страницу просмотра статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
         }
 
-        public List<ArticleViewModel> AllArticles(User user = null)
+        public List<ArticleViewRequest> AllArticles(User user = null)
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var articles = new List<Article>();
-            var articlesView = new List<ArticleViewModel>();
+            var articlesView = new List<ArticleViewRequest>();
 
             if (user is not null)
             {
-                _logger.LogInformation($"Выполняется переход на страницу просмотра всех статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
                 articles = repo.GetArticlesByUserId(user.Id);
-                _logger.LogInformation($"Статьи пользователя {user.UserName} : {user.First_Name} {user.Last_Name}:");
             }
             else
             {
-                _logger.LogInformation("Выполняется переход на страницу просмотра всех статей.");
                 articles = repo.GetArticles();
-                _logger.LogInformation("Все статьи:");
             }
-                
-            foreach (var article in articles)
+
+            articlesView = articles.Select(p => new ArticleViewRequest()
             {
-                articlesView.Add(_mapper.Map<ArticleViewModel>(article));
-                _logger.LogInformation($"Дата: {article.ArticleDate.ToShortDateString()} {article.ArticleDate.ToShortTimeString()} \n" +
-                    $"заголовок: {article.Title}");
-            }
+                Id = p.ID,
+                ArticleDate = p.ArticleDate,
+                AuthorId = p.UserId,
+                Title = p.Title,
+                Content = p.Content,
+                Tags = p.Tags.Select(t => new TagRequest() { Id = t.ID, Tag_Name = t.Tag_Name }).ToList()
+            }).ToList();
+
             return articlesView;
         }
 
-        public List<ArticleViewModel> AllUserArticles()
+        public List<ArticleViewRequest> AllUserArticles()
         {
             throw new NotImplementedException();
         }

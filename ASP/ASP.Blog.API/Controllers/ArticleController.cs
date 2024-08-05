@@ -66,7 +66,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize]
         [Route("AllUserArticles")]
         [HttpGet]
-        public async Task<List<ArticleViewModel>> AllUserArticles() 
+        public async Task<List<ArticleViewRequest>> AllUserArticles() 
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
@@ -75,7 +75,7 @@ namespace ASP.Blog.API.Controllers
 
         [Route("AllArticles")]
         [HttpGet]
-        public List<ArticleViewModel> AllArticles()
+        public List<ArticleViewRequest> AllArticles()
         {
             return _articleService.AllArticles();
         }
