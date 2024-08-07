@@ -1,5 +1,6 @@
 ﻿using ASP.Blog.API.DAL.Entities;
 using ASP.Blog.API.Data.Entities;
+using ASP.Blog.API.ViewModels.Role;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -32,11 +33,6 @@ namespace ASP.Blog.API.ViewModels
         [DataType(DataType.Text)]
         [Display(Name = "Логин", Description = "Введите логин")]
         public string Login { get; set; }
-        public List<UserRole> UserRoles { get; set; }
-        public List<string> SelectedRoles { get; set; }
-        public Dictionary<UserRole, bool> CheckedRolesDic { get; set; }
-        public User User { get; set; }
-        public UserViewRequest(User user) => User = user;
-        public UserViewRequest() { }
+        public List<RoleRequest> UserRoles { get; set; }
     }
 }

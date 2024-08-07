@@ -6,6 +6,7 @@ using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Extentions;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.ViewModels;
+using ASP.Blog.API.ViewModels.Role;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -53,16 +54,16 @@ namespace ASP.Blog.API.Services
 
                 var userRoleNames = await _userManager.GetRolesAsync(user);
                 var allRoles = await _roleManager.Roles.ToListAsync();
-                var userRoles = new List<UserRole>();
+                var userRolesReq = new List<RoleRequest>();
 
                 foreach (var role in allRoles)
                 {
                     if (userRoleNames.Contains(role.Name))
                     {
-                        userRoles.Add(role);
+                        userRolesReq.Add(new RoleRequest() { ID = role.Id, Name = role.Name, Description = role.Description });
                     }
                 }
-                userView.UserRoles = userRoles;
+                userView.UserRoles = userRolesReq;
 
                 usersView.Add(userView);
             }
@@ -115,7 +116,7 @@ namespace ASP.Blog.API.Services
                 }
             }
 
-            userView.CheckedRolesDic = checkedRolesDic;
+            //userView.CheckedRolesDic = checkedRolesDic;
 
             return userView;
         }

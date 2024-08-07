@@ -212,7 +212,7 @@ namespace ASP.Blog.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _userService.UpdateUser(model, model.SelectedRoles);
+                //await _userService.UpdateUser(model, model.SelectedRoles);
                 return StatusCode(201);
             }
             else
