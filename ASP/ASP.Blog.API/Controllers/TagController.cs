@@ -43,7 +43,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize]
         [Route("AddTag")]
         [HttpPost]
-        public IActionResult AddTag(TagViewModel model)
+        public IActionResult AddTag(TagAddRequest model)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace ASP.Blog.API.Controllers
         }
         [Route("AllTags")]
         [HttpGet]
-        public List<TagViewModel> AllTags()
+        public List<TagRequest> AllTags()
         {
             return _tagService.AllTags();
         }
@@ -81,7 +81,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize(Roles = "Admin,Moderator")]
         [Route("Update")]
         [HttpPost]
-        public IActionResult Update(TagViewModel model)
+        public IActionResult Update(TagRequest model)
         {
             if(ModelState.IsValid) 
             {
