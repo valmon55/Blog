@@ -2,8 +2,7 @@
 
 namespace ASP.Blog.API.ViewModels.Tag
 {
-    public class TagRequest
-
+    public class TagViewModel
     {
         public int Id { get; set; }
         [Required]
