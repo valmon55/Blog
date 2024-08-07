@@ -121,31 +121,48 @@ namespace ASP.Blog.API.Services
             return userView;
         }
 
-        public async Task UpdateUser(UserViewRequest model, List<string> SelectedRoles)
+        public async Task UpdateUser(UserEditRequest model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
-
+            var userRoleNames = await _userManager.GetRolesAsync(user);
             var roles = await _roleManager.Roles.ToListAsync();
 
+            var userRoles = new List<UserRole>();
             foreach (var role in roles)
             {
-                //определяем есть ли роль у пользователя
-                var IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
+                if(userRoleNames.Contains(role.Name))
+                { 
+                    userRoles.Add(role); 
+                }
+            }
 
-                //добавляем роль
-                if (SelectedRoles.Contains(role.Id) && !IsInRole)
+            var checkedModelRolesId = model.UserRoles.Select(x => x.ID).Intersect(roles.Select(x => x.Id)).ToList();
+
+            var addRolesId = checkedModelRolesId.Except(userRoles.Select(x => x.Id));
+            var delRolesId = userRoles.Select(x => x.Id).Except(checkedModelRolesId).ToList();
+
+            // Очищаем
+            //article.Tags.Clear();
+            //Добавляем
+            foreach (var role in roles)
+            {
+                if (addRolesId.Contains(role.Id))
                 {
+                    //article.Tags.Add(dbTag);
                     await _userManager.AddToRoleAsync(user, role.Name);
                 }
-                //убираем роль
-                if (!SelectedRoles.Contains(role.Id) && IsInRole)
+                if (delRolesId.Contains(role.Id))
                 {
                     await _userManager.RemoveFromRoleAsync(user, role.Name);
                 }
-
             }
-
-            user.Convert(model);
+            user.BirthDate = model.BirthDate; 
+            user.Email = model.Email;
+            user.First_Name = model.First_Name;
+            user.Last_Name = model.Last_Name;
+            user.Middle_Name = model.Middle_Name;
+            user.UserName = model.Login;
+            
             await _userManager.UpdateAsync(user);
             _logger.LogInformation($"Пользователь {user.UserName} обновлен.");
         }

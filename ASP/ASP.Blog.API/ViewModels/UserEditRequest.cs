@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using ASP.Blog.API.DAL.Entities;
+using ASP.Blog.API.ViewModels.Role;
 
 namespace ASP.Blog.API.ViewModels
 {
-    public class UserEditViewModel
+    public class UserEditRequest
     {
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "ID", Prompt = "ID пользователя")]
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [Display(Name = "Имя", Prompt = "Введите имя")]
@@ -32,8 +33,7 @@ namespace ASP.Blog.API.ViewModels
         [DataType(DataType.Text)]
         [Display(Name = "Логин", Description = "Введите логин")]
         public string Login { get; set; }
-
-        public List<UserRole> UserRoles { get; set; }
+        public List<RoleRequest> UserRoles { get; set; }
 
     }
 }

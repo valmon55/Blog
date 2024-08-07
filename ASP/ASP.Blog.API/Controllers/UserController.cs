@@ -208,11 +208,11 @@ namespace ASP.Blog.API.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAsync(UserViewRequest model)
+        public async Task<IActionResult> UpdateAsync(UserEditRequest model)
         {
             if (ModelState.IsValid)
             {
-                //await _userService.UpdateUser(model, model.SelectedRoles);
+                await _userService.UpdateUser(model);
                 return StatusCode(201);
             }
             else

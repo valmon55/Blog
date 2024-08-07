@@ -11,7 +11,7 @@ namespace ASP.Blog.API.Services.IServices
         public Task<SignInResult> Login(LoginRequest model);
         public Task<List<UserViewRequest>> AllUsers();
         public UserViewRequest UpdateUser(string userId);
-        public Task UpdateUser(UserViewRequest model, List<string> SelectedRoles);
+        public Task UpdateUser(UserEditRequest model);
         public void DeleteUser(string userId);
     }
 }

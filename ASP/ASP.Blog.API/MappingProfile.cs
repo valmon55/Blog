@@ -45,8 +45,8 @@ namespace ASP.Blog.API
                 .ForMember(x => x.Day, opt => opt.MapFrom(c => c.BirthDate.Day))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email));
 
-            CreateMap<User, UserEditViewModel>()
-                .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id));
+            CreateMap<User, UserEditRequest>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id));
 
             CreateMap<UserRole, RoleRequest>()
                 .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
