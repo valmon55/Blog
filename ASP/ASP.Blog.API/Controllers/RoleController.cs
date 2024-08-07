@@ -44,7 +44,7 @@ namespace ASP.Blog.API.Controllers
 
         [Route("AddRole")]
         [HttpPost]
-        public async Task<IActionResult> AddRole(RoleViewModel model)
+        public async Task<IActionResult> AddRole(RoleAddRequest model)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace ASP.Blog.API.Controllers
 
         [Route("AllRoles")]
         [HttpGet]
-        public List<RoleViewModel> AllRoles()
+        public List<RoleRequest> AllRoles()
         {
             return _roleService.AllRoles();
         }
@@ -68,7 +68,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAsync(RoleViewModel model)
+        public async Task<IActionResult> UpdateAsync(RoleRequest model)
         {
             if (ModelState.IsValid)
             {

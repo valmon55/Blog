@@ -48,12 +48,12 @@ namespace ASP.Blog.API
             CreateMap<User, UserEditViewModel>()
                 .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id));
 
-            CreateMap<UserRole, RoleViewModel>()
+            CreateMap<UserRole, RoleRequest>()
                 .ForMember(x => x.ID, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.Name, opt => opt.MapFrom(c => c.Name))
                 .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description));
 
-            CreateMap<RoleViewModel, UserRole>()
+            CreateMap<RoleRequest, UserRole>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.ID))
                 .ForMember(x => x.Name, opt => opt.MapFrom(c => c.Name))
                 .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description));

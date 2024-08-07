@@ -5,7 +5,7 @@ namespace ASP.Blog.API.Extentions
 {
     public static class RoleFromModel
     {
-        public static UserRole Convert(this UserRole role, RoleViewModel roleeditvm)
+        public static UserRole Convert(this UserRole role, RoleRequest roleeditvm)
         {
             role.Name = roleeditvm.Name;
             role.Description = roleeditvm.Description;

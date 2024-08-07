@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ASP.Blog.API.Validators
 {
-    public class RoleViewModelValidator : AbstractValidator<RoleViewModel>
+    public class RoleViewModelValidator : AbstractValidator<RoleRequest>
     {
         public RoleViewModelValidator() 
         { 

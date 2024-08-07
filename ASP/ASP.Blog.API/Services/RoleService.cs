@@ -37,33 +37,33 @@ namespace ASP.Blog.API.Services
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
         }
-        public RoleViewModel AddRole()
+        public RoleRequest AddRole()
         {
             _logger.LogInformation("Выполняется переход на страницу добавления роли.");
-            return new RoleViewModel();
+            return new RoleRequest();
         }
 
-        public async Task AddRole(RoleViewModel model)
+        public async Task AddRole(RoleAddRequest model)
         {
             //Инициализируем так, чтобы заполнить ID
             var role = new UserRole();
 
-            var roleData = _mapper.Map<UserRole>(model);
-            role.Name = roleData.Name;
-            role.Description = roleData.Description;
+            //var roleData = _mapper.Map<UserRole>(model);
+            role.Name = model.Name;
+            role.Description = model.Description;
 
             await _roleManager.CreateAsync(role);
             _logger.LogInformation($"Создана роль {role.Name}");
         }
 
-        public List<RoleViewModel> AllRoles()
+        public List<RoleRequest> AllRoles()
         {
             var repo = _unitOfWork.GetRepository<UserRole>() as UserRoleRepository;
             var roles = repo.GetUserRoles();
-            var rolesView = new List<RoleViewModel>();
+            var rolesView = new List<RoleRequest>();
             foreach (var role in roles)
             {
-                rolesView.Add(_mapper.Map<RoleViewModel>(role));
+                rolesView.Add(_mapper.Map<RoleRequest>(role));
             }
             _logger.LogInformation($"Просмотр всех ролей");
 
@@ -80,16 +80,16 @@ namespace ASP.Blog.API.Services
             }
         }
 
-        public async Task<RoleViewModel> UpdateRole(string roleId)
+        public async Task<RoleRequest> UpdateRole(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
-            var roleView = _mapper.Map<RoleViewModel>(role);
+            var roleView = _mapper.Map<RoleRequest>(role);
             _logger.LogInformation($"Роль для обновления: {roleView.Name}");
             
             return roleView;
         }
 
-        public async Task UpdateRole(RoleViewModel model)
+        public async Task UpdateRole(RoleRequest model)
         {
             var role = await _roleManager.FindByIdAsync(model.ID);
             role.Convert(model);
