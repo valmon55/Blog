@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ASP.Blog.API.ViewModels
 {
-    public class UserViewModel
+    public class UserViewRequest
     {
         public string Id { get; set; }
         [Required(ErrorMessage = "Поле имя обязательно к заполнению")]
@@ -36,7 +36,7 @@ namespace ASP.Blog.API.ViewModels
         public List<string> SelectedRoles { get; set; }
         public Dictionary<UserRole, bool> CheckedRolesDic { get; set; }
         public User User { get; set; }
-        public UserViewModel(User user) => User = user;
-        public UserViewModel() { }
+        public UserViewRequest(User user) => User = user;
+        public UserViewRequest() { }
     }
 }

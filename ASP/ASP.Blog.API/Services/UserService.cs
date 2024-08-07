@@ -39,17 +39,17 @@ namespace ASP.Blog.API.Services
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
         }
-        public async Task<List<UserViewModel>> AllUsers()
+        public async Task<List<UserViewRequest>> AllUsers()
         {
             _logger.LogInformation($"Вывод списка всех пользователей.");
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var users = repo.GetUsers();
 
-            var usersView = new List<UserViewModel>();
+            var usersView = new List<UserViewRequest>();
 
             foreach (var user in users)
             {
-                var userView = _mapper.Map<UserViewModel>(user);
+                var userView = _mapper.Map<UserViewRequest>(user);
 
                 var userRoleNames = await _userManager.GetRolesAsync(user);
                 var allRoles = await _roleManager.Roles.ToListAsync();
@@ -77,7 +77,7 @@ namespace ASP.Blog.API.Services
             _logger.LogInformation($"Пользователь с ID = {userId} удален.");
         }
 
-        public async Task<SignInResult> Login(LoginViewModel model)
+        public async Task<SignInResult> Login(LoginRequest model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
 
@@ -89,16 +89,16 @@ namespace ASP.Blog.API.Services
             return result;
         }
 
-        public void Register(RegisterViewModel model)
+        public void Register(RegisterRequest model)
         {
             throw new System.NotImplementedException();
         }
 
-        public UserViewModel UpdateUser(string userId)
+        public UserViewRequest UpdateUser(string userId)
         {
             var repo = _unitOfWork.GetRepository<User>() as UserRepository;
             var user = repo.GetUserById(userId);
-            var userView = _mapper.Map<UserViewModel>(user);
+            var userView = _mapper.Map<UserViewRequest>(user);
             _logger.LogInformation($"Пользователь для обновления: {user.UserName}");
 
             var allRoles = _roleManager.Roles.ToList();
@@ -120,7 +120,7 @@ namespace ASP.Blog.API.Services
             return userView;
         }
 
-        public async Task UpdateUser(UserViewModel model, List<string> SelectedRoles)
+        public async Task UpdateUser(UserViewRequest model, List<string> SelectedRoles)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
 

@@ -18,14 +18,14 @@ namespace ASP.Blog.API
     {
         public MappingProfile() 
         {
-            CreateMap<RegisterViewModel, User>()
+            CreateMap<RegisterRequest, User>()
                 .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
 
-            CreateMap<LoginViewModel, User>();
+            CreateMap<LoginRequest, User>();
 
-            CreateMap<UserViewModel, User>()
+            CreateMap<UserViewRequest, User>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
                 .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))
@@ -34,7 +34,7 @@ namespace ASP.Blog.API
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login))
                 .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)));
 
-            CreateMap<User, UserViewModel>()
+            CreateMap<User, UserViewRequest>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
                 .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))

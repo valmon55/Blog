@@ -2,7 +2,7 @@
 
 namespace ASP.Blog.API.ViewModels
 {
-    public class LoginViewModel
+    public class LoginRequest
     {
         [Required(ErrorMessage = "Поле Email обязательно к заполнению")]
         [EmailAddress]

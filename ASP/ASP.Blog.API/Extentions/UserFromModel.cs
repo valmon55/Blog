@@ -5,7 +5,7 @@ namespace ASP.Blog.API.Extentions
 {
     public static class UserFromModel
     {
-        public static User Convert(this User user, UserViewModel usereditvm)
+        public static User Convert(this User user, UserViewRequest usereditvm)
         {
             user.Last_Name = usereditvm.Last_Name;
             user.Middle_Name = usereditvm.Middle_Name;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ASP.Blog.API.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterRequest
     {
         [Required]
         [Display(Name = "Имя", Prompt = "Введите имя")]

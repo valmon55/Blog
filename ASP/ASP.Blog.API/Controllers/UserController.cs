@@ -50,7 +50,7 @@ namespace ASP.Blog.API.Controllers
         }
         [Route("Register")]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterRequest model)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace ASP.Blog.API.Controllers
 
         [Route("Login")]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginRequest model)
         {
             if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
                 throw new ArgumentNullException("Запрос не корректен");
@@ -200,7 +200,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize(Roles="Admin")]
         [Route("AllUsers")]
         [HttpGet]
-        public async Task<List<UserViewModel>> AllUsersAsync()
+        public async Task<List<UserViewRequest>> AllUsersAsync()
         {
             return await _userService.AllUsers();
         }
@@ -208,7 +208,7 @@ namespace ASP.Blog.API.Controllers
         [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAsync(UserViewModel model)
+        public async Task<IActionResult> UpdateAsync(UserViewRequest model)
         {
             if (ModelState.IsValid)
             {
