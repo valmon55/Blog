@@ -10,6 +10,6 @@ namespace ASP.Blog.API.Services.IServices
         public List<ArticleViewRequest> AllUserArticles();
         public List<ArticleViewRequest> AllArticles(User user = null);
         public void DeleteArticle(int id);
-        public void UpdateArticle(ArticleViewModel article, List<int> SelectedTags, User user);
+        public void UpdateArticle(ArticleEditRequest article, User user);
     }
 }

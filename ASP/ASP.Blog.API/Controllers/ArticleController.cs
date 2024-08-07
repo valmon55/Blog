@@ -97,12 +97,12 @@ namespace ASP.Blog.API.Controllers
         [Authorize]
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(ArticleViewModel model)
+        public async Task<IActionResult> Update(ArticleEditRequest model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                _articleService.UpdateArticle(model,model.SelectedTags,user);
+                _articleService.UpdateArticle(model, user);
 
                 //return RedirectToAction("AllUserArticles", "Article");
                 return StatusCode(201);

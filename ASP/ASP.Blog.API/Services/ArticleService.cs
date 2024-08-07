@@ -151,27 +151,39 @@ namespace ASP.Blog.API.Services
             };
         }
 
-        public void UpdateArticle(ArticleViewModel model, List<int> SelectedTags, User user)
+        public void UpdateArticle(ArticleEditRequest model, User user)
         {
-            var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-
-            var tagsId = new List<int>();
-            SelectedTags.ForEach(id => tagsId.Add(tagRepo.GetTagById(id).ID));
-            var tags = new List<Tag>();
-            foreach (var tag in tagsId)
-            {
-                tags.Add(tagRepo.GetTagById((int)tag));
-            }
-            model.CheckedTagsDic = SelectedTags
-                .Select(tagId => tagRepo.Get(tagId))
-                .ToDictionary(tag => tag, tag => true);
-            model.User = user;
-            model.Tags = tags;
-            model.ArticleDate = DateTime.Now;
-
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var article = repo.GetArticleById(model.Id);
-            article.Convert(model);
+
+            var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
+
+            var dbTags = tagRepo.GetAll().ToList();
+
+            var checkedModelTagsId = model.Tags.Select(x => x.Id).Intersect(dbTags.Select(x => x.ID)).ToList();
+
+            var addTagsId = checkedModelTagsId.Except(article.Tags.Select(x => x.ID)).ToList();
+            var delTagsId = article.Tags.Select(x => x.ID).Except(checkedModelTagsId).ToList();
+
+            // Очищаем
+            //article.Tags.Clear();
+            //Добавляем
+            foreach (var dbTag in dbTags)
+            {
+                if(addTagsId.Contains(dbTag.ID))
+                {
+                    article.Tags.Add(dbTag);
+                }
+                if(delTagsId.Contains(dbTag.ID))
+                {
+                    article.Tags.Remove(dbTag);
+                }
+            }
+        
+            article.User = user;
+            article.ArticleDate = model.ArticleDate;
+            article.Title = model.Title;
+            article.Content = model.Content;
 
             _logger.LogInformation($"Обновление статьи:\n" + $"дата {article.ArticleDate.ToShortDateString()} {article.ArticleDate.ToShortTimeString()} \n" +
                     $"заголовок {article.Title} \n" + $"текст {article.Content}");
