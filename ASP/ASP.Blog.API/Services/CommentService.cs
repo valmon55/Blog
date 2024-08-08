@@ -46,7 +46,7 @@ namespace ASP.Blog.API.Services
             return new CommentViewModel() { ArticleId = articleId };
         }
 
-        public void AddComment(CommentViewModel model, User user)
+        public void AddComment(CommentAddRequest model, User user)
         {
             var comment = _mapper.Map<Comment>(model);
 

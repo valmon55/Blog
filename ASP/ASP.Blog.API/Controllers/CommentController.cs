@@ -43,7 +43,7 @@ namespace ASP.Blog.API.Controllers
 
         [Route("AddComment")]
         [HttpPost]
-        public async Task<IActionResult> AddComment(CommentViewModel model) 
+        public async Task<IActionResult> AddComment(CommentAddRequest model) 
         {
             if (ModelState.IsValid) 
             { 
