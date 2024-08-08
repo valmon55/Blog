@@ -43,7 +43,28 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _articleService = articleService;
         }
-        [Authorize]
+        /// <summary>
+        /// Создание статьи
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// 
+        /// POST
+        /// {
+        ///     "title": "string",
+        ///     "articleDate": "2024-08-08T15:40:30.469Z",
+        ///     "content": "string",
+        ///     "tags": [
+        ///         {
+        ///             "id": 0,
+        ///             "tag_Name": "string"
+        ///         }
+        ///     ]
+        /// }
+        /// </remarks>
+        /// <param name="model">Содержит заголовок, текст и дату статьи</param>
+        /// <returns></returns>
+[Authorize]
         [Route("AddArticle")]
         [HttpPost]
         public async Task<IActionResult> AddArticle(ArticleAddRequest model)

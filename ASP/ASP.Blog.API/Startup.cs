@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace ASP.Blog.API
@@ -66,7 +68,18 @@ namespace ASP.Blog.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ASP.Blog.API", Version = "v1" });
+                var baseDir = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(baseDir, "ASP.Blog.API.xml");
+
+                c.IncludeXmlComments(xmlPath);
+
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Version = "v 1.1",
+                    Title = "ASP.Blog.API", 
+                    Contact = new OpenApiContact() { Email = "fedor_ka@mail.ru", Name = "Fedor K.A.", 
+                        Url = new System.Uri("https://www.blog.com") }
+                });
             });
             //Подключение куки
             services.AddAuthentication(optionts => optionts.DefaultScheme = "Cookies")
