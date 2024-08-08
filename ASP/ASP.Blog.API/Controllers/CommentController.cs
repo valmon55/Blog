@@ -79,7 +79,7 @@ namespace ASP.Blog.API.Controllers
         }
         [Route("Update")]
         [HttpPost]
-        public IActionResult Update(CommentViewModel model)
+        public IActionResult Update(CommentEditRequest model)
         {
             int articleId;
 

@@ -118,6 +118,9 @@ namespace ASP.Blog.API
                 .ForMember(x => x.Comment, opt => opt.MapFrom(c => c.Comment_Text))
                 .ForMember(x => x.CommentDate, opt => opt.MapFrom(c => c.CommentDate))
                 .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.UserId));
+
+            CreateMap<CommentEditRequest, Comment>()
+                .ForMember(x => x.Comment_Text, opt => opt.MapFrom(c => c.Comment));
         }
     }
 }
