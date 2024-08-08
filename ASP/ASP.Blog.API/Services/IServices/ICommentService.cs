@@ -11,6 +11,6 @@ namespace ASP.Blog.API.Services.IServices
         public List<CommentViewRequest> AllArticleComments(int articleId);
         public int? DeleteComment(int id);
         public CommentViewModel UpdateComment(int id);
-        public int UpdateComment(CommentEditRequest model);
+        public int UpdateComment(CommentEditRequest model, User user);
     }
 }

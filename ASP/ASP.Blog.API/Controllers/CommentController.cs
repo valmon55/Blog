@@ -79,13 +79,14 @@ namespace ASP.Blog.API.Controllers
         }
         [Route("Update")]
         [HttpPost]
-        public IActionResult Update(CommentEditRequest model)
+        public async Task<IActionResult> Update(CommentEditRequest model)
         {
             int articleId;
 
             if (ModelState.IsValid) 
             {
-                articleId = _commentService.UpdateComment(model);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                articleId = _commentService.UpdateComment(model, user);
                 _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {articleId.ToString()}");
                 return StatusCode(201);
             }

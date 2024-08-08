@@ -95,11 +95,12 @@ namespace ASP.Blog.API.Services
             return commentView;
         }
 
-        public int UpdateComment(CommentEditRequest model)
+        public int UpdateComment(CommentEditRequest model, User user)
         {
             var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
             var comment = repo.GetCommentById(model.Id);
             comment.Comment_Text = model.Comment;
+            comment.User = user;
 
             repo.Update(comment);
 
