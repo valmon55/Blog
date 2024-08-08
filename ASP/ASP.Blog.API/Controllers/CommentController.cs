@@ -59,7 +59,7 @@ namespace ASP.Blog.API.Controllers
         }
         [Route("AllArticleComments")]
         [HttpGet]
-        public List<CommentViewModel> AllArticleComments(int articleId)
+        public List<CommentViewRequest> AllArticleComments(int articleId)
         {
             return _commentService.AllArticleComments(articleId);
         }

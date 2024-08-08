@@ -58,17 +58,17 @@ namespace ASP.Blog.API.Services
             _logger.LogInformation($"Комментарий создал пользователь {comment.User.UserName} : {comment.User.First_Name} {comment.User.Last_Name}");
         }
 
-        public List<CommentViewModel> AllArticleComments(int articleId)
+        public List<CommentViewRequest> AllArticleComments(int articleId)
         {
             _logger.LogInformation($"Выполняется переход на страницу просмотра всех статей комментариев статьи с ID = {articleId}.");
             var repo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
             var comments = repo.GetComments();
-            var commentsView = new List<CommentViewModel>();
+            var commentsView = new List<CommentViewRequest>();
             foreach (var comment in comments)
             {
                 if (comment.ArticleId == articleId)
                 {
-                    commentsView.Add(_mapper.Map<CommentViewModel>(comment));
+                    commentsView.Add(_mapper.Map<CommentViewRequest>(comment));
                 }
             }
             return commentsView;

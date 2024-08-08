@@ -8,7 +8,7 @@ namespace ASP.Blog.API.Services.IServices
     {
         public CommentViewModel AddComment(int articleId);
         public void AddComment(CommentAddRequest model, User user);
-        public List<CommentViewModel> AllArticleComments(int articleId);
+        public List<CommentViewRequest> AllArticleComments(int articleId);
         public int? DeleteComment(int id);
         public CommentViewModel UpdateComment(int id);
         public int UpdateComment(CommentViewModel model);
