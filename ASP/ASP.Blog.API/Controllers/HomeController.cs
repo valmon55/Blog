@@ -17,7 +17,11 @@ namespace ASP.Blog.API.Controllers
             _logger = logger;
             _signInManager = signInManager;
         }
-
+        /// <summary>
+        /// Глобальный обработчик ошибок
+        /// </summary>
+        /// <param name="statusCode"></param>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [Route("Error")]
         [HttpGet]

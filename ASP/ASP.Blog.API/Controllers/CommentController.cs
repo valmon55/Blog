@@ -40,7 +40,19 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _commentService = commentService;
         }
-
+        /// <summary>
+        /// Добавление комментария к статье
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// POST
+        /// {
+        ///  "comment": "string",
+        ///  "articleId": 0
+        /// }
+        /// </remarks>
+        /// <param name="model">Данные комментария для добавления</param>
+        /// <returns></returns>
         [Route("AddComment")]
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentAddRequest model) 
@@ -57,12 +69,22 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Вывод всех комментарие к статье
+        /// </summary>
+        /// <param name="articleId"> Id статьи </param>
+        /// <returns> Список комментариев </returns>
         [Route("AllArticleComments")]
         [HttpGet]
         public List<CommentViewRequest> AllArticleComments(int articleId)
         {
             return _commentService.AllArticleComments(articleId);
         }
+        /// <summary>
+        /// Удаление комментария
+        /// </summary>
+        /// <param name="id"> Id комментария</param>
+        /// <returns></returns>
         [Route("Delete")]
         [HttpDelete]
         public IActionResult Delete(int id) 
@@ -77,6 +99,19 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Обновление комментария
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///   "id": 0,
+        ///   "comment": "string"
+        /// }
+        /// </remarks>
+        /// <param name="model"> Данные для обновления комментария </param>
+        /// <returns></returns>
         [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(CommentEditRequest model)

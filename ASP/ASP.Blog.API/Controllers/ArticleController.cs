@@ -64,7 +64,7 @@ namespace ASP.Blog.API.Controllers
         /// </remarks>
         /// <param name="model">Содержит заголовок, текст и дату статьи</param>
         /// <returns></returns>
-[Authorize]
+        [Authorize]
         [Route("AddArticle")]
         [HttpPost]
         public async Task<IActionResult> AddArticle(ArticleAddRequest model)
@@ -84,6 +84,10 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Вывод всех статей автора
+        /// </summary>
+        /// <returns>Список статей</returns>
         [Authorize]
         [Route("AllUserArticles")]
         [HttpGet]
@@ -93,13 +97,21 @@ namespace ASP.Blog.API.Controllers
 
             return _articleService.AllArticles(user);
         }
-
+        /// <summary>
+        /// Вывод всех статей
+        /// </summary>
+        /// <returns>Список статей</returns>
         [Route("AllArticles")]
         [HttpGet]
         public List<ArticleViewRequest> AllArticles()
         {
             return _articleService.AllArticles();
         }
+        /// <summary>
+        /// Удаление статьи
+        /// </summary>
+        /// <param name="Id"> Id статьи</param>
+        /// <returns></returns>
         [Authorize]
         [Route("Delete")]
         [HttpDelete]
@@ -115,6 +127,26 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Редактирование статьи
+        /// </summary>
+        /// <remarks>
+        /// POST
+        /// {
+        ///  "id": 0,
+        ///  "title": "string",
+        ///  "articleDate": "2024-08-09T09:04:57.392Z",
+        ///  "content": "string",
+        ///  "tags": [
+        ///    {
+        ///      "id": 0,
+        ///      "tag_Name": "string"
+        ///    }
+        ///  ]
+        /// }
+        /// </remarks>>
+        /// <param name="model">Данные со значениями статьи для обновления</param>
+        /// <returns></returns>
         [Authorize]
         [Route("Update")]
         [HttpPost]

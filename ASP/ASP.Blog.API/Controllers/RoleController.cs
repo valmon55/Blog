@@ -41,7 +41,19 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _roleService = roleService;
         }
-
+        /// <summary>
+        /// Добавление роли
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "name": "string",
+        ///  "description": "string"
+        ///}
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("AddRole")]
         [HttpPost]
         public async Task<IActionResult> AddRole(RoleAddRequest model)
@@ -57,14 +69,30 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
-
+        /// <summary>
+        /// Вывод всех ролей
+        /// </summary>
+        /// <returns></returns>
         [Route("AllRoles")]
         [HttpGet]
         public List<RoleRequest> AllRoles()
         {
             return _roleService.AllRoles();
         }
-
+        /// <summary>
+        /// Обновление роли
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "id": "string",
+        ///  "name": "string",
+        ///  "description": "string"
+        ///}
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
@@ -81,6 +109,12 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Удаление роли
+        /// Доступно только пользователям с ролью Admin
+        /// </summary>
+        /// <param name="roleId"> Id роли </param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [Route("Delete")]
         [HttpDelete]

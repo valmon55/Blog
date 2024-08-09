@@ -40,6 +40,18 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _tagService = tagService;
         }
+        /// <summary>
+        /// Добавление тега
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "tag_Name": "string"
+        /// }
+        /// </remarks>
+        /// <param name="model"> Данные для добавления тега </param>
+        /// <returns></returns>
         [Authorize]
         [Route("AddTag")]
         [HttpPost]
@@ -57,12 +69,22 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Вывод списка всех тегов
+        /// </summary>
+        /// <returns></returns>
         [Route("AllTags")]
         [HttpGet]
         public List<TagRequest> AllTags()
         {
             return _tagService.AllTags();
         }
+        /// <summary>
+        /// Удаление тегов
+        /// Доступно для пользователей с ролями Admin и Moderator
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin,Moderator")]
         [Route("DeleteTag")]
         [HttpDelete]
@@ -78,6 +100,20 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Обновление тегов
+        /// Доступно для пользователей с ролями Admin и Moderator
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "id": 0,
+        ///  "tag_Name": "string"
+        /// }
+        /// </remarks>
+        /// <param name="model"> Данные для обновления тега</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin,Moderator")]
         [Route("Update")]
         [HttpPost]

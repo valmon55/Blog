@@ -48,6 +48,27 @@ namespace ASP.Blog.API.Controllers
             _roleManager = roleManager;
             _userService = userService;
         }
+        /// <summary>
+        /// Регистрация пользователя
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "first_Name": "string",
+        ///  "last_Name": "string",
+        ///  "middle_Name": "string",
+        ///  "email": "user@example.com",
+        ///  "year": 0,
+        ///  "month": 0,
+        ///  "day": 0,
+        ///  "passwordReg": "string",
+        ///  "passwordConfirm": "string",
+        ///  "login": "string"
+        /// }
+        /// </remarks>
+        /// <param name="model"> Данные регистрируемого пользователя </param>
+        /// <returns></returns>
         [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest model)
@@ -99,7 +120,21 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(500);
             }
         }
-
+        /// <summary>
+        /// Аутентификация пользователя
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "email": "user@example.com",
+        ///  "password": "string"
+        ///}
+        /// </remarks>
+        /// <param name="model"> Данные для входа в систему </param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="AuthenticationException"></exception>
         [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest model)
@@ -182,6 +217,10 @@ namespace ASP.Blog.API.Controllers
             //await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
             //return StatusCode(201);
         }
+        /// <summary>
+        /// Выход из системы
+        /// </summary>
+        /// <returns></returns>
         [Route("Logout")]
         [HttpGet]
         public async Task<IActionResult> Logout()
@@ -197,6 +236,11 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(403);
             }
         }
+        /// <summary>
+        /// Вывод списка всех пользователей
+        /// Доступно только для пользователей с ролью Admin
+        /// </summary>
+        /// <returns> Список пользоватей </returns>
         [Authorize(Roles="Admin")]
         [Route("AllUsers")]
         [HttpGet]
@@ -204,7 +248,32 @@ namespace ASP.Blog.API.Controllers
         {
             return await _userService.AllUsers();
         }
-
+        /// <summary>
+        /// Обновление данных пользователя
+        /// Доступно только для пользователей с ролью Admin
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса
+        /// POST
+        /// {
+        ///  "id": "string",
+        ///  "first_Name": "string",
+        ///  "last_Name": "string",
+        ///  "middle_Name": "string",
+        ///  "email": "user@example.com",
+        ///  "birthDate": "2024-08-09",
+        ///  "login": "string",
+        ///  "userRoles": [
+        ///    {
+        ///      "id": "string",
+        ///      "name": "string",
+        ///      "description": "string"
+        ///    }
+        ///  ]
+        /// }
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
@@ -221,6 +290,12 @@ namespace ASP.Blog.API.Controllers
                 return StatusCode(500);
             }
         }
+        /// <summary>
+        /// Удаление прользователя
+        /// Доступно только для пользователей с ролью Admin
+        /// </summary>
+        /// <param name="userId">Id удаляемого пользователя </param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [Route("Delete")]
         [HttpDelete]
