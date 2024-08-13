@@ -124,7 +124,7 @@ namespace ASP.Blog.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(403);
+                return StatusCode(403,ex.Message);
             }
         }
         /// <summary>
@@ -154,11 +154,17 @@ namespace ASP.Blog.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                _articleService.UpdateArticle(model, user);
+                try
+                {
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    _articleService.UpdateArticle(model, user);
 
-                //return RedirectToAction("AllUserArticles", "Article");
-                return StatusCode(201);
+                    return StatusCode(201);
+                }
+                catch(Exception ex) 
+                { 
+                    return Problem(ex.Message);
+                }
             }
             else
             {
@@ -166,7 +172,7 @@ namespace ASP.Blog.API.Controllers
                 ModelState.AddModelError("", "Ошибка в модели!");
 
                 //return RedirectToAction("AllUserArticles", "Article");
-                return StatusCode(403);
+                return StatusCode(403,"Неверные данные!");
             }
         }
     }

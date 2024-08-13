@@ -147,7 +147,6 @@ namespace ASP.Blog.API.Controllers
             if (!result.Succeeded)
                 throw new AuthenticationException("Введенный пароль не корректен или не найден аккаунт");
 
-            /// TODO: сделать авторизацию
             var user = await _userManager.FindByEmailAsync(model.Email);
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -182,40 +181,6 @@ namespace ASP.Blog.API.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
             return StatusCode(200);
-            //var user = _mapper.Map<User>(model);
-            //User signedUser = _userManager.Users.Include(x => x.userRole).FirstOrDefault(u => u.Email == model.Email);
-            //if (signedUser is null)
-            //{
-            //    _logger.LogError($"Логин {user.Email} не найден");
-            //    return StatusCode(404);
-            //}
-            //var userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
-            ///// Если ролей почему-то нет, то устанавливаем:
-            ///// для пользователя Admin - роль Admin
-            ///// для остальных - User
-            //if (userRole is null) 
-            //{
-            //    _logger.LogError($"У пользователя {signedUser.UserName} нет роли!");
-            //    if(signedUser.UserName == "Admin")
-            //    {
-            //        await _userManager.AddToRoleAsync(signedUser, "Admin");
-            //    }
-            //    else
-            //    {
-            //        await _userManager.AddToRoleAsync(signedUser, "User");
-            //    }
-            //    userRole = _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault();
-            //    _logger.LogWarning($"Пользователю {signedUser.userRole} присвоили роль {userRole}");
-            //}
-
-            //var claims = new List<Claim>()
-            //{
-            //    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-            //    new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole)
-            //};
-
-            //await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
-            //return StatusCode(201);
         }
         /// <summary>
         /// Выход из системы

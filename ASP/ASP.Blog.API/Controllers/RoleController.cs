@@ -15,6 +15,7 @@ namespace ASP.Blog.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private IMapper _mapper;
@@ -93,7 +94,6 @@ namespace ASP.Blog.API.Controllers
         /// </remarks>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin")]
         [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> UpdateAsync(RoleRequest model)
@@ -115,7 +115,6 @@ namespace ASP.Blog.API.Controllers
         /// </summary>
         /// <param name="roleId"> Id роли </param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin")]
         [Route("Delete")]
         [HttpDelete]
         public async Task<IActionResult> Delete(string roleId)

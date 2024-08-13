@@ -37,14 +37,6 @@ namespace ASP.Blog.API.Services
             _articleRepository = articleRepository;
             _tagRepository = tagRepository;
         }
-        //public ArticleViewModel AddArticle(User user)
-        //{
-        //    var repo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-        //    var allTags = repo.GetTags();
-        //    _logger.LogInformation("Выполняется переход на страницу добавления статьи.");
-
-        //    return new ArticleViewModel(user) { Tags = allTags, ArticleDate = DateTime.Now };
-        //}
 
         public void AddArticle(ArticleAddRequest model, User user)
         {
@@ -108,7 +100,8 @@ namespace ASP.Blog.API.Services
         public void DeleteArticle(int id)
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-            _logger.LogInformation($"Удаление статьи, заголовок: {repo.Get(id).Title}");
+
+            //_logger.LogInformation($"Удаление статьи, заголовок: {repo.Get(id).Title}");
             repo.DeleteArticle(repo.Get(id));
         }
 
@@ -155,28 +148,32 @@ namespace ASP.Blog.API.Services
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var article = repo.GetArticleById(model.Id);
+            if (article == null) 
+                throw new ArgumentNullException("Статья не найдена!");
 
             var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
 
             var dbTags = tagRepo.GetAll().ToList();
-
+            
+            // Проверяем ID тегов из запроса
+            // убираем те, которых нет
             var checkedModelTagsId = model.Tags.Select(x => x.Id).Intersect(dbTags.Select(x => x.ID)).ToList();
-
-            var addTagsId = checkedModelTagsId.Except(article.Tags.Select(x => x.ID)).ToList();
-            var delTagsId = article.Tags.Select(x => x.ID).Except(checkedModelTagsId).ToList();
-
-            // Очищаем
-            //article.Tags.Clear();
-            //Добавляем
-            foreach (var dbTag in dbTags)
+            
+            if (checkedModelTagsId.Count > 0)
             {
-                if(addTagsId.Contains(dbTag.ID))
+                var addTagsId = checkedModelTagsId.Except(article.Tags.Select(x => x.ID)).ToList();
+                var delTagsId = article.Tags.Select(x => x.ID).Except(checkedModelTagsId).ToList();
+
+                foreach (var dbTag in dbTags)
                 {
-                    article.Tags.Add(dbTag);
-                }
-                if(delTagsId.Contains(dbTag.ID))
-                {
-                    article.Tags.Remove(dbTag);
+                    if (addTagsId.Contains(dbTag.ID))
+                    {
+                        article.Tags.Add(dbTag);
+                    }
+                    if (delTagsId.Contains(dbTag.ID))
+                    {
+                        article.Tags.Remove(dbTag);
+                    }
                 }
             }
         

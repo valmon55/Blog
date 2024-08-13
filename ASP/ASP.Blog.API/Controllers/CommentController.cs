@@ -4,6 +4,7 @@ using ASP.Blog.API.Data.Entities;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.ViewModels.Comment;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -53,6 +54,7 @@ namespace ASP.Blog.API.Controllers
         /// </remarks>
         /// <param name="model">Данные комментария для добавления</param>
         /// <returns></returns>
+        [Authorize]
         [Route("AddComment")]
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentAddRequest model) 
@@ -85,6 +87,7 @@ namespace ASP.Blog.API.Controllers
         /// </summary>
         /// <param name="id"> Id комментария</param>
         /// <returns></returns>
+        [Authorize]
         [Route("Delete")]
         [HttpDelete]
         public IActionResult Delete(int id) 
@@ -112,6 +115,7 @@ namespace ASP.Blog.API.Controllers
         /// </remarks>
         /// <param name="model"> Данные для обновления комментария </param>
         /// <returns></returns>
+        [Authorize]
         [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(CommentEditRequest model)

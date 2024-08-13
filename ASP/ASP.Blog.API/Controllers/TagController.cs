@@ -52,7 +52,7 @@ namespace ASP.Blog.API.Controllers
         /// </remarks>
         /// <param name="model"> Данные для добавления тега </param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Roles = "Admin,Moderator")]
         [Route("AddTag")]
         [HttpPost]
         public IActionResult AddTag(TagAddRequest model)
