@@ -40,7 +40,7 @@ namespace ASP.Blog.API.Services
             _userManager = userManager;
         }
 
-        public void AddArticle(ArticleAddRequest model, User user)
+        public int AddArticle(ArticleAddRequest model, User user)
         {
             _logger.LogInformation($"Создаёт статью пользователь {user.UserName} : {user.First_Name} {user.Last_Name}");
 
@@ -63,7 +63,8 @@ namespace ASP.Blog.API.Services
 
             _logger.LogInformation("Выполняется добавление новой статьи статьи.");
             _articleRepository.Create(article);
-            //_logger.LogInformation($"Выполняется переход на страницу просмотра статей пользователя {user.UserName} : {user.First_Name} {user.Last_Name}.");
+
+            return article.ID;
         }
 
         public List<ArticleViewRequest> AllArticles(User user = null)
@@ -103,7 +104,6 @@ namespace ASP.Blog.API.Services
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
 
-            //_logger.LogInformation($"Удаление статьи, заголовок: {repo.Get(id).Title}");
             repo.DeleteArticle(repo.Get(id));
         }
 
