@@ -154,17 +154,10 @@ namespace ASP.Blog.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                    _articleService.UpdateArticle(model, user);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                _articleService.UpdateArticle(model, user);
 
-                    return StatusCode(201);
-                }
-                catch(Exception ex) 
-                { 
-                    return Problem(ex.Message);
-                }
+                return StatusCode(201);
             }
             else
             {

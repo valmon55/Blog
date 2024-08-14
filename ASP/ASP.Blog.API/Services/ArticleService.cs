@@ -107,57 +107,18 @@ namespace ASP.Blog.API.Services
             repo.DeleteArticle(repo.Get(id));
         }
 
-        //public ArticleViewModel UpdateArticle(int id, User user)
-        //{
-        //    var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-        //    var article = repo.GetArticleById(id);
-        //    _logger.LogInformation($"Статья для обновления:\n" + $"дата {article.ArticleDate.ToShortDateString()} {article.ArticleDate.ToShortTimeString()} \n" +
-        //            $"заголовок {article.Title} \n" + $"текст {article.Content}");
-        //    // TODO: менять автора статьи? возможно не потребуется
-        //    article.User = user;
-        //    var articleView = _mapper.Map<ArticleViewModel>(article);
-
-        //    var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
-        //    var allTags = tagRepo.GetTags();
-
-        //    var checkedTags = article.Tags;
-
-        //    var checkedTagsDic = new Dictionary<Tag, bool>();
-
-        //    foreach (var tag in allTags)
-        //    {
-        //        checkedTagsDic.Add(tag, false);
-        //        foreach (var checkedTag in checkedTags)
-        //        {
-        //            if (tag.Tag_Name == checkedTag.Tag_Name)
-        //            {
-        //                checkedTagsDic[tag] = true;
-        //            }
-        //        }
-        //    }
-
-        //    return new ArticleViewModel(user)
-        //    {
-        //        Tags = allTags,
-        //        CheckedTagsDic = checkedTagsDic,
-        //        ArticleDate = articleView.ArticleDate,
-        //        Title = articleView.Title,
-        //        Content = articleView.Content
-        //    };
-        //}
-
         public async void UpdateArticle(ArticleEditRequest model, User user)
         {
             var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
             var article = repo.GetArticleById(model.Id);
-            if (article == null) 
-                throw new ArgumentNullException("Статья не найдена!");
+            if (article == null)
+                return;
             // Если пользователь не админ, не модератор и если это не его статья
             // то изменять статью нельзя
-            if (!(article.User.Id == user.Id || 
-                    _userManager.IsInRoleAsync(user, "Admin").Result || 
-                    _userManager.IsInRoleAsync(user, "Admin").Result) )
-                throw new Exception("Пользователь не имеет прав на обновление статьи!");
+            if (!(article.User.Id == user.Id ||
+                    _userManager.IsInRoleAsync(user, "Admin").Result ||
+                    _userManager.IsInRoleAsync(user, "Admin").Result))
+                return;
 
             var tagRepo = _unitOfWork.GetRepository<Tag>() as TagRepository;
 
@@ -195,21 +156,5 @@ namespace ASP.Blog.API.Services
 
             repo.Update(article);
         }
-
-        //public ArticleViewModel ViewArticle(int id)
-        //{
-        //    _logger.LogInformation($"Выполняется переход на страницу просмотра статьи.");
-        //    var repo = _unitOfWork.GetRepository<Article>() as ArticleRepository;
-        //    var article = repo.GetArticleById(id);
-        //    _logger.LogInformation($"Статья: \n" + $"дата: {article.ArticleDate.ToShortDateString()} {article.ArticleDate.ToShortTimeString()} \n" +
-        //            $"заголовок: {article.Title} \n" + $"текст: {article.Content}");
-        //    var commentRepo = _unitOfWork.GetRepository<Comment>() as CommentRepository;
-        //    var comments = commentRepo.GetCommentsByArticleId(id);
-        //    _logger.LogInformation($"Количество комментариев: {comments.Count}");
-        //    var articleView = _mapper.Map<ArticleViewModel>(article);
-        //    articleView.Comments = comments;
-
-        //    return articleView;
-        //}
     }
 }
