@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -124,10 +125,17 @@ namespace ASP.Blog.API.Controllers
 
             if (ModelState.IsValid) 
             {
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                articleId = _commentService.UpdateComment(model, user);
-                _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {articleId.ToString()}");
-                return StatusCode(201);
+                try
+                {
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    articleId = _commentService.UpdateComment(model, user);
+                    _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {articleId.ToString()}");
+                    return StatusCode(201);
+                }
+                catch(Exception ex) 
+                { 
+                    return Problem(ex.Message);
+                }
             }
             else
             {

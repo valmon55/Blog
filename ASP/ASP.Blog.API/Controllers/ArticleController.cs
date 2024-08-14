@@ -171,7 +171,6 @@ namespace ASP.Blog.API.Controllers
                 _logger.LogError($"Ошибка в модели ArticleViewModel");
                 ModelState.AddModelError("", "Ошибка в модели!");
 
-                //return RedirectToAction("AllUserArticles", "Article");
                 return StatusCode(403,"Неверные данные!");
             }
         }
