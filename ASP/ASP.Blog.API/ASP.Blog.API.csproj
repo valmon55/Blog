@@ -20,8 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DAL\" />
     <Folder Include="ViewModels\Account\" />
     <Folder Include="ViewModels\User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ASP.Blog.DAL\ASP.Blog.DAL.csproj" />
   </ItemGroup>
 
 </Project>
