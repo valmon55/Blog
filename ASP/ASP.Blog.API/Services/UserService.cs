@@ -18,8 +18,8 @@ namespace ASP.Blog.API.Services
 {
     public class UserService : IUserService
     {
-        private IMapper _mapper;
-        private ILogger<UserController> _logger;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;

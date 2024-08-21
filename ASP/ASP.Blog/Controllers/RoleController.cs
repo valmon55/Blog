@@ -28,28 +28,13 @@ namespace ASP.Blog.Controllers
 {
     public class RoleController : Controller
     {
-        private IMapper _mapper;
-        private ILogger<UserController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<UserController> _logger;
         private readonly IRoleService _roleService;
 
-        public RoleController(UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, 
-                IMapper mapper,
-                ILogger<UserController> logger,
-                RoleManager<UserRole> roleManager,
+        public RoleController(ILogger<UserController> logger,
                 IRoleService roleService)
         {
-            _mapper = mapper;
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
             _roleService = roleService;
         }
 

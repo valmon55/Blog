@@ -7,7 +7,7 @@ namespace ASP.Blog.DAL.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        BlogContext db;
+        readonly BlogContext db;
         public UserRepository(BlogContext db) : base(db) { this.db = db; }
 
         public List<User> GetUsers() 

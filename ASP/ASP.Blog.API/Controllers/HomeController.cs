@@ -10,12 +10,10 @@ namespace ASP.Blog.API.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SignInManager<User> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger, SignInManager<User> signInManager)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _signInManager = signInManager;
         }
         /// <summary>
         /// Глобальный обработчик ошибок

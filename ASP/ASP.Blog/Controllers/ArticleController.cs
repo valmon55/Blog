@@ -18,28 +18,17 @@ namespace ASP.Blog.Controllers
 {
     public class ArticleController : Controller
     {
-        private IMapper _mapper;
         private readonly ILogger<ArticleController> _logger;
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IArticleService _articleService;
 
         public ArticleController(ILogger<ArticleController> logger, 
                 UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, IMapper mapper, 
-                RoleManager<UserRole> roleManager,
                 IArticleService articleService
             )
         {
             _logger = logger;
-            _mapper = mapper;
             _userManager = userManager;
-            _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
             _articleService = articleService;
         }
         [Authorize]

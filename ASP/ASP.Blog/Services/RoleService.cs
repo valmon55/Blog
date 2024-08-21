@@ -16,24 +16,18 @@ namespace ASP.Blog.Services
 {
     public class RoleService : IRoleService
     {
-        private IMapper _mapper;
-        private ILogger<UserController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RoleService(UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork,
+        public RoleService(IUnitOfWork unitOfWork,
                 IMapper mapper,
                 ILogger<UserController> logger,
                 RoleManager<UserRole> roleManager)
         {
             _mapper = mapper;
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
         }

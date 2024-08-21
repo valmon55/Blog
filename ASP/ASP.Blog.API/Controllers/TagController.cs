@@ -16,27 +16,12 @@ namespace ASP.Blog.API.Controllers
     [Route("[controller]")]
     public class TagController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly ILogger<TagController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ITagService _tagService;
-        public TagController(UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, 
-                IMapper mapper,
-                ILogger<TagController> logger,
-                RoleManager<UserRole> roleManager,
+        public TagController(ILogger<TagController> logger,
                 ITagService tagService)
         {
-            _mapper = mapper;
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
             _tagService = tagService;
         }
         /// <summary>

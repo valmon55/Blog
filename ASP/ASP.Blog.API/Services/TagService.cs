@@ -13,15 +13,12 @@ namespace ASP.Blog.API.Services.IServices
 {
     public class TagService : ITagService
     {
-        private readonly IMapper _mapper;
         private readonly ILogger<TagController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
         public TagService(IUnitOfWork unitOfWork,
-                IMapper mapper,
                 ILogger<TagController> logger)
         {
-            _mapper = mapper;
             _logger = logger;
             _unitOfWork = unitOfWork;
         }

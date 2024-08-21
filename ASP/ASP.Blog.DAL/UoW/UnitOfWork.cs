@@ -8,7 +8,7 @@ namespace ASP.Blog.DAL.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private BlogContext _blogContext;
+        private readonly BlogContext _blogContext;
         private Dictionary<Type, object> _repositories;
         
         public UnitOfWork(BlogContext blogContext)

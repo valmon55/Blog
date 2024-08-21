@@ -15,29 +15,18 @@ namespace ASP.Blog.Services
 {
     public class CommentService : ICommentService
     {
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly ILogger<ArticleController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IArticleService _articleService;
 
         public CommentService(ILogger<ArticleController> logger,
-                UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, IMapper mapper,
-                RoleManager<UserRole> roleManager,
-                IArticleService articleService
+                IUnitOfWork unitOfWork, 
+                IMapper mapper
             )
         {
             _logger = logger;
             _mapper = mapper;
-            _userManager = userManager;
-            _signInManager = signInManager;
             _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
-            _articleService = articleService;
         }
         public CommentViewModel AddComment(int articleId)
         {
