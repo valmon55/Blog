@@ -1,5 +1,5 @@
 using ASP.Blog.BLL;
-using ASP.Blog.Data;
+using ASP.Blog.DAL;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +14,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using ASP.Blog.Data.Entities;
 using ASP.Blog.DAL.UoW;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;

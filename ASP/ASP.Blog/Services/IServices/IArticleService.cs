@@ -1,5 +1,5 @@
 ﻿using ASP.Blog.BLL.ViewModels.Article;
-using ASP.Blog.Data.Entities;
+using ASP.Blog.DAL.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

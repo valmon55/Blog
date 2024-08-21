@@ -1,5 +1,4 @@
 ﻿using ASP.Blog.DAL.Entities;
-using ASP.Blog.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

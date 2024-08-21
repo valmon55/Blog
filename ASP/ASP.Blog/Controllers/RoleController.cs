@@ -5,7 +5,6 @@ using ASP.Blog.BLL.ViewModels.Role;
 using ASP.Blog.DAL.Entities;
 using ASP.Blog.DAL.Repositories;
 using ASP.Blog.DAL.UoW;
-using ASP.Blog.Data.Entities;
 using ASP.Blog.Services;
 using ASP.Blog.Services.IServices;
 using AutoMapper;

@@ -4,7 +4,6 @@ using ASP.Blog.BLL.ViewModels.Comment;
 using ASP.Blog.BLL.ViewModels.Role;
 using ASP.Blog.BLL.ViewModels.Tag;
 using ASP.Blog.DAL.Entities;
-using ASP.Blog.Data.Entities;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

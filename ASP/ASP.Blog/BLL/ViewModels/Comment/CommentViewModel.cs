@@ -1,5 +1,5 @@
 ﻿using System;
-using Entities = ASP.Blog.Data.Entities;
+using Entities = ASP.Blog.DAL.Entities;
 
 namespace ASP.Blog.BLL.ViewModels.Comment
 {

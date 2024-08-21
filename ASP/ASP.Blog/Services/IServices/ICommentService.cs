@@ -1,5 +1,5 @@
 ﻿using ASP.Blog.BLL.ViewModels.Comment;
-using ASP.Blog.Data.Entities;
+using ASP.Blog.DAL.Entities;
 using System.Collections.Generic;
 
 namespace ASP.Blog.Services.IServices

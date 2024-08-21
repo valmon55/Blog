@@ -8,9 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ASP.Blog.Models;
 using Microsoft.AspNetCore.Identity;
-using ASP.Blog.Data.Entities;
+using ASP.Blog.DAL.Entities;
 
 namespace ASP.Blog.Controllers
 {

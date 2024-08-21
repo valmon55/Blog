@@ -1,5 +1,5 @@
 ﻿using ASP.Blog.BLL.ViewModels.Tag;
-using ASP.Blog.Data.Entities;
+using ASP.Blog.DAL.Entities;
 using System.Runtime.CompilerServices;
 
 namespace ASP.Blog.BLL.Extentions

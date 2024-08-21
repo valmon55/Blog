@@ -1,5 +1,5 @@
 ﻿using ASP.Blog.BLL.ViewModels.Comment;
-using ASP.Blog.Data.Entities;
+using ASP.Blog.DAL.Entities;
 
 namespace ASP.Blog.BLL.Extentions
 {
