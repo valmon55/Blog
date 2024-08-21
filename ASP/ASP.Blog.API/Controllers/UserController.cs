@@ -24,17 +24,15 @@ namespace ASP.Blog.API.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        private IMapper _mapper;
-        private ILogger<UserController> _logger;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<UserRole> _roleManager;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
 
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, 
                 IMapper mapper,
                 ILogger<UserController> logger,
                 RoleManager<UserRole> roleManager,
@@ -44,7 +42,6 @@ namespace ASP.Blog.API.Controllers
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
             _roleManager = roleManager;
             _userService = userService;
         }
@@ -99,7 +96,7 @@ namespace ASP.Blog.API.Controllers
 
                     await _signInManager.RefreshSignInAsync(currentUser);
 
-                    _logger.LogInformation($"Пользователь {user.Last_Name} {user.First_Name} зарегистрирован.");
+                    _logger.LogInformation($"Пользователь {1} {2} зарегистрирован.", user.Last_Name, user.First_Name);
 
                     return StatusCode(201);
                 }
@@ -108,7 +105,7 @@ namespace ASP.Blog.API.Controllers
                     _logger.LogError("Возникли ошибки при регистрации:");
                     foreach (var error in result.Errors)
                     {
-                        _logger.LogError($"Код ошибки: {error.Code}{Environment.NewLine}Описание: {error.Description}");
+                        _logger.LogError($"Код ошибки: {1} {Environment.NewLine} Описание: {2}", error.Code, error.Description);
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                     return StatusCode(403);
@@ -140,7 +137,7 @@ namespace ASP.Blog.API.Controllers
         public async Task<IActionResult> Login(LoginRequest model)
         {
             if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-                throw new ArgumentNullException("Запрос не корректен");
+                throw new ArgumentNullException($"Запрос не корректен. Email = {model.Email}, Password = {model.Password}");
 
             var result = await _userService.Login(model);
 
@@ -196,7 +193,7 @@ namespace ASP.Blog.API.Controllers
                 _logger.LogInformation($"Выполнен Logout.");
                 return StatusCode(201);
             }
-            catch (Exception ex) 
+            catch
             {
                 return StatusCode(403);
             }
@@ -271,7 +268,7 @@ namespace ASP.Blog.API.Controllers
                 _userService.DeleteUser(userId);
                 return StatusCode(201);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500);
             }

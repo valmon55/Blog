@@ -18,28 +18,16 @@ namespace ASP.Blog.API.Controllers
     [Route("[controller]")]
     public class CommentController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly ILogger<CommentController> _logger;
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<UserRole> _roleManager;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ICommentService _commentService;
 
         public CommentController(UserManager<User> userManager,
-                SignInManager<User> signInManager,
-                IUnitOfWork unitOfWork, 
-                IMapper mapper,
                 ILogger<CommentController> logger,
-                RoleManager<UserRole> roleManager,
                 ICommentService commentService)
         {
-            _mapper = mapper;
             _logger = logger;
             _userManager = userManager;
-            _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
-            _roleManager = roleManager;
             _commentService = commentService;
         }
         /// <summary>
@@ -129,7 +117,7 @@ namespace ASP.Blog.API.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(User.Identity.Name);
                     articleId = _commentService.UpdateComment(model, user);
-                    _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {articleId.ToString()}");
+                    _logger.LogInformation($"Выполняется переход на страницу просмотра статьи c ID = {articleId}");
                     return StatusCode(201);
                 }
                 catch(Exception ex) 

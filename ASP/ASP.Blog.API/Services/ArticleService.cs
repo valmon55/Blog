@@ -18,21 +18,18 @@ namespace ASP.Blog.API.Services
 {
     public class ArticleService : IArticleService
     {
-        private readonly IMapper _mapper;
         private readonly ILogger<TagController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Article> _articleRepository;
         private readonly IRepository<Tag> _tagRepository;
         private readonly UserManager<User> _userManager;
         public ArticleService(IUnitOfWork unitOfWork,
-                IMapper mapper,
                 ILogger<TagController> logger,
                 IRepository<Article> articleRepository,
                 IRepository<Tag> tagRepository,
                 UserManager<User> userManager
                 )
         {
-            _mapper = mapper;
             _logger = logger;
             _unitOfWork = unitOfWork;
             _articleRepository = articleRepository;
