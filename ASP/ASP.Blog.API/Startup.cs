@@ -1,8 +1,7 @@
-using ASP.Blog.API.DAL.Entities;
-using ASP.Blog.API.DAL.Extentions;
-using ASP.Blog.API.DAL.Repositories;
-using ASP.Blog.API.Data;
-using ASP.Blog.API.Data.Entities;
+using ASP.Blog.DAL;
+using ASP.Blog.DAL.Entities;
+using ASP.Blog.DAL.Extentions;
+using ASP.Blog.DAL.Repositories;
 using ASP.Blog.API.Services;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.Validators;

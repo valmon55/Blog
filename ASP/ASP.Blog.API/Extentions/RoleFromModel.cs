@@ -1,4 +1,4 @@
-﻿using ASP.Blog.API.DAL.Entities;
+﻿using ASP.Blog.DAL.Entities;
 using ASP.Blog.API.ViewModels.Role;
 
 namespace ASP.Blog.API.Extentions

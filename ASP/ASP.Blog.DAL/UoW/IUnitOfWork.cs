@@ -1,7 +1,7 @@
-﻿using ASP.Blog.API.DAL.Repositories;
+﻿using ASP.Blog.DAL.Repositories;
 using System;
 
-namespace ASP.Blog.API.DAL.UoW
+namespace ASP.Blog.DAL.UoW
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -1,9 +1,9 @@
-﻿using ASP.Blog.API.DAL.Entities;
-using ASP.Blog.API.Data;
+﻿using ASP.Blog.DAL.Entities;
+using ASP.Blog.DAL;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ASP.Blog.API.DAL.Repositories
+namespace ASP.Blog.DAL.Repositories
 {
     public class UserRoleRepository : Repository<UserRole>
     {

@@ -1,4 +1,4 @@
-﻿using Entity = ASP.Blog.API.Data.Entities;
+﻿using Entity = ASP.Blog.DAL.Entities;
 using System.Collections.Generic;
 using System;
 

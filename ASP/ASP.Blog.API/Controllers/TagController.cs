@@ -1,7 +1,6 @@
-﻿using ASP.Blog.API.DAL.Entities;
-using ASP.Blog.API.DAL.Repositories;
-using ASP.Blog.API.DAL.UoW;
-using ASP.Blog.API.Data.Entities;
+﻿using ASP.Blog.DAL.Entities;
+using ASP.Blog.DAL.Repositories;
+using ASP.Blog.DAL.UoW;
 using ASP.Blog.API.Services.IServices;
 using ASP.Blog.API.ViewModels.Tag;
 using AutoMapper;

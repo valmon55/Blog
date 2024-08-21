@@ -1,4 +1,4 @@
-﻿using ASP.Blog.API.Data;
+﻿using ASP.Blog.DAL;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.Blog.API.DAL.Repositories
+namespace ASP.Blog.DAL.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {

@@ -1,10 +1,10 @@
-﻿using ASP.Blog.API.DAL.Repositories;
-using ASP.Blog.API.Data;
+﻿using ASP.Blog.DAL.Repositories;
+using ASP.Blog.DAL;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 
-namespace ASP.Blog.API.DAL.UoW
+namespace ASP.Blog.DAL.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {

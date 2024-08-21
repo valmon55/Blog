@@ -1,9 +1,9 @@
-﻿using ASP.Blog.API.Data;
-using ASP.Blog.API.Data.Entities;
+﻿using ASP.Blog.DAL;
+using ASP.Blog.DAL.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ASP.Blog.API.DAL.Repositories
+namespace ASP.Blog.DAL.Repositories
 {
     public class Article_TagsRepository : Repository<Article_Tags>
     {

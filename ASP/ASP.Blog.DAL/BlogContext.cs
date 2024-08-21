@@ -1,9 +1,9 @@
-﻿using ASP.Blog.API.DAL.Configs;
-using ASP.Blog.API.Data.Entities;
+﻿using ASP.Blog.DAL.Configs;
+using ASP.Blog.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ASP.Blog.API.Data
+namespace ASP.Blog.DAL
 {
     public class BlogContext : IdentityDbContext<User>
     {

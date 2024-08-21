@@ -1,5 +1,4 @@
-﻿using ASP.Blog.API.DAL.Entities;
-using ASP.Blog.API.Data.Entities;
+﻿using ASP.Blog.DAL.Entities;
 using ASP.Blog.API.ViewModels;
 using ASP.Blog.API.ViewModels.Article;
 using ASP.Blog.API.ViewModels.Comment;

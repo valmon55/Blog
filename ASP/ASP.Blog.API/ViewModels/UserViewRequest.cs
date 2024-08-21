@@ -1,5 +1,4 @@
-﻿using ASP.Blog.API.DAL.Entities;
-using ASP.Blog.API.Data.Entities;
+﻿using ASP.Blog.DAL.Entities;
 using ASP.Blog.API.ViewModels.Role;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using ASP.Blog.API.Data.Entities;
+using ASP.Blog.DAL.Entities;
 
 namespace ASP.Blog.API.Controllers
 {

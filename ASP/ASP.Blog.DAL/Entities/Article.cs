@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ASP.Blog.API.Data.Entities
+namespace ASP.Blog.DAL.Entities
 {
     public class Article
     {

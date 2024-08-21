@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
-using ASP.Blog.API.DAL.Entities;
+using ASP.Blog.DAL.Entities;
 using ASP.Blog.API.ViewModels.Role;
 
 namespace ASP.Blog.API.ViewModels

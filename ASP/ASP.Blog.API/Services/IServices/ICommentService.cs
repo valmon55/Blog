@@ -1,4 +1,4 @@
-﻿using ASP.Blog.API.Data.Entities;
+﻿using ASP.Blog.DAL.Entities;
 using ASP.Blog.API.ViewModels.Comment;
 using System.Collections.Generic;
 

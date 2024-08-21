@@ -1,5 +1,4 @@
-﻿using Entity = ASP.Blog.API.Data.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.ComponentModel.DataAnnotations;
 using ASP.Blog.API.ViewModels.Tag;
